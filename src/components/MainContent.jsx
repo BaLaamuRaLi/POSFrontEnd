@@ -1,7 +1,7 @@
 export default function MainContent(){
     return (
-        <div className="MainContent">
-            {/* <button>click</button> */}
+        <div className="MainContent center">
+          <button>click</button>
         </div>
     );
 }

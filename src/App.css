@@ -21,6 +21,11 @@
   background-color: #95A4F8;
   padding:1%;
   gap: 8px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
 }
 .sidebar.expanded {
   /* width: 12vw; */
@@ -34,10 +39,11 @@
 
 
 
-/* 
+ 
 .MainContent{
   width: 100%;
-} */
+
+} 
 
 img{
   object-fit: fill;
