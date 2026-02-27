@@ -2,17 +2,17 @@
 .App {
   height:100%;
   width: 100%;
-  background-color: #3A42B4;
+  
  
   /* padding: 0.5%; */
 }
 
-.Vertical{
+.vertical{
   display: flex;
   flex-direction: column;
   
 }
-.Horizontal {
+.horizontal {
   display: flex;
   flex-direction: row;
 }
@@ -55,6 +55,35 @@ img{
   width: 100%; 
   aspect-ratio : 1/1;
   object-fit : fill;
+     
+}
+
+.last{
+  margin-top: auto;
+}
+
+.logout{
+  background-color: rgb(238, 75, 129);
+}
+
+.center{
+  display: grid;
+  place-items: center;
+}
+
+.fullscreen{
+  height: 100%;
+  width: 100vw;
+}
+
+.logContainer{
+  background-color: #95A4F8;
+  height: 40%;
+  width: 40%;
   
-   
+}
+
+.toParentSize{
+  height: 100%;
+  width: 100%;
 }

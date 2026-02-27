@@ -4,7 +4,7 @@ import AccountLogo from "./AccountLogo";
 import MenuItems from "./MenuItems";
 
 
-export default function SideBar () {
+export default function SideBar ({onlogout}) {
 
     
     
@@ -16,7 +16,7 @@ export default function SideBar () {
       
 
 
-    <div className={`sidebar Vertical ${isExpanded ? " expanded " : " collapsed "}`}
+    <div className={`sidebar vertical ${isExpanded ? " expanded " : " collapsed "}`}
     onMouseEnter={() => setIsExpanded(true)}
     onMouseLeave={() => setIsExpanded(false)}
     >
@@ -25,6 +25,9 @@ export default function SideBar () {
         (<>
           <AccountLogo/>
           <MenuItems/>
+          <button className="logout last"
+          onClick={onlogout}
+          >logout</button>
           </>
       
         )}  
