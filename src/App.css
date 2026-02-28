@@ -1,24 +1,21 @@
 :root{
   --font-primary :'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-size-normal:14px;
-  --font-weight-button:500;
-  
-  
-  
+  --font-weight-button:500; 
+    
 }
 
 .App {
   height:100%;
   width: 100%;
-  
- 
-  /* padding: 0.5%; */
+   
 }
 
 button{
   font-family:var(--font-primary);
   font-size: var(--font-size-normal);
   font-weight: var(--font-weight-button);
+  cursor: pointer;
 
 }
 .vertical{
@@ -51,6 +48,7 @@ button{
 .sidebar.collapsed {
   width: clamp(30px,3vw ,45px);
   padding: 0%;
+  cursor:pointer;
 }
 
 

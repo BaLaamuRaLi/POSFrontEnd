@@ -4,29 +4,32 @@ import AccountLogo from "./AccountLogo";
 import MenuItems from "./MenuItems";
 
 
-export default function SideBar ({onlogout}) {
-
-    
+export default function SideBar ({setMenu, onlogout}) {    
     
      const [isExpanded, setIsExpanded] = useState(false);
+  const handleLogout = () => {
+  const confirm = window.confirm("Are you sure you want to logout?");
+  if (confirm) {
+    onlogout();
+  }
+  };
+
 
     return(
     <>
-
-      
-
+    
 
     <div className={`sidebar vertical ${isExpanded ? " expanded " : " collapsed "}`}
-    onMouseEnter={() => setIsExpanded(true)}
+    onClick={() => setIsExpanded(true)}
     onMouseLeave={() => setIsExpanded(false)}
     >
       {!isExpanded ? (<Menu onExpand={() => setIsExpanded(true)} />)
         :
         (<>
           <AccountLogo/>
-          <MenuItems/>
+          <MenuItems onMenuClick={setMenu} />
           <button className="logout last"
-          onClick={onlogout}
+          onClick={handleLogout}
           >logout</button>
           </>
       

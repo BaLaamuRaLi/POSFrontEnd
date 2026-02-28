@@ -4,7 +4,7 @@ export default function({onExpand}){
           src="src\assets\menu.svg"
           alt="menu"
           className="floating-menu logo"
-          onMouseEnter={onExpand}
+          onClick={onExpand}
         //   style={{width:'3%',maxWidth:'45px'}}
         
         />
