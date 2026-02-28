@@ -7,6 +7,7 @@ import Reports from "../Pages/Reports";
 import Returns from "../Pages/Returns";
 import Accounts from "../Pages/Accounts";
 
+
  
 export default function MainContent({menuClicked}){
 const menuComponents = { 
@@ -22,13 +23,8 @@ const Component = menuComponents[menuClicked];
    
     
     return (
-    <div className="MainContent center">
-        <div className="backDesign center">
-            
-            <Component/>              
-            
-            
-        </div>
+    <div className="MainContent">
+        <Component/>
     </div>
     );
 }

@@ -5,7 +5,7 @@ html, body, #root {
   width: 100%;        
   margin: 0;         
   padding: 0px;
-  background-color: #3A42B4;
+  background-color:var(--outer-background-color);
   font-family:var(--font-primary);
  
 }

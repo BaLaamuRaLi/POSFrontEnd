@@ -13,7 +13,7 @@ function App() {
 
   return (
   
-   isLoggedIn?(<div className="App horizontal">
+   isLoggedIn?(<div className="App">
       <SideBar setMenu={setMenu} onlogout={()=>{setLog(false)}}/>
       <MainContent menuClicked={Clicked} />
     </div>)
