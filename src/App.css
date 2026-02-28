@@ -65,14 +65,7 @@ button{
 
 
  
-.SearchBarLayout{
-  display: grid;
-  grid-template-columns:1fr 20% 1fr 72% 1fr;
-  grid-template-rows: 1fr 95% 1fr;
-  width: 100%;
-  height: 100%;
-  
-} 
+
 
 img{
   object-fit: fill;
@@ -120,7 +113,7 @@ img{
 /* to behave like a button */
 .button {
   cursor: pointer;                
-  transition: background-color 0.2s, transform 0.1s;
+
   
 }
 .button:active {
@@ -131,6 +124,19 @@ img{
   opacity: 0.8;                     /* slightly faded on hover */
 }
 
+
+/* Search Bar layout starts here */
+
+.SearchBarLayout{
+  display: grid;
+  grid-template-columns:1fr 20% 1fr 72% 1fr;
+  grid-template-rows: 1fr 95% 1fr;
+  width: 100%;
+  height: 100%;
+  
+} 
+
+
 .searchBar{
   grid-row: 2/3;
   grid-column: 2/3;
@@ -138,8 +144,74 @@ img{
 }
 
 .content{
+  /* position of content in the parent */
   grid-row: 2/3;
   grid-column: 4/5;
-  background-color:var(--inner-background-color);
+  /**************************/
+
   
+  /* grid layout of content as parent*/
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 20% 1fr 10% 50% 10%;
+
+  /* *********** */
+  background-color:var(--inner-background-color);
 }
+
+.header{ /*for Add button, Searching */
+  grid-area: 1 / 1 / 2 / 2;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.filterSection{ /*for filter buttons */
+  grid-area: 3 / 1 / 4 / 2;
+
+}
+
+.resultSection{ /*for showing result table */
+  grid-area: 4 / 1 / 5 / 2; 
+}
+
+.footerSection{ /*for showing Total amount */
+  grid-area: 5 / 1 / 6 / 2;
+}
+
+.Add {
+  aspect-ratio: 1/1;
+  height: 80px;
+}
+
+.SearchBox{
+  width: 15vw;
+  height: 2rem;
+  font-size: 15px;
+  line-height: 20px;
+  border: 2px solid #596acc;
+  border-radius: 10px;
+  background-color: white;
+}
+
+
+button.Print{
+  background-color: rgb(236, 222, 20);
+  /* border: 2px solid #596acc; */
+  border-radius: 10px;
+  align-items: center;
+  gap: 0.5rem;
+}
+.Print{
+  aspect-ratio: 1/1;
+  height: 3rem;
+}
+
+.Print > p{
+  font-size: large;
+  color: black;
+  
+
+
+}
+
+/* ******Search bar layout ends here******** */

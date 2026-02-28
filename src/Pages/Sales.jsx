@@ -1,4 +1,6 @@
 import AddButton from "../Components/AddButton";
+import PrintButton from "../Components/PrintButton";
+import SearchBox from "../Components/SearchBox";
 
 export default function(){
     return(
@@ -7,8 +9,12 @@ export default function(){
                
             </div> 
             <div className="content">
-                <AddButton/>
-                <h1>Sales page</h1>
+                <div className="header horizontal">
+                    <AddButton/>
+                    <SearchBox/>
+                    <PrintButton/>
+                    
+                </div>
             </div>
             
         </div>
