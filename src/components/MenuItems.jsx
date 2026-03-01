@@ -3,9 +3,9 @@ const menuItems = ["Dashboard", "Sales", "Purchase","Inventory", "Accounts" ,"Pa
 
 
 return (
-    menuItems.map((item, index) => (
+    menuItems.map((item) => (
     
-        <button onClick={()=>onMenuClick(item)} key={index} className="menu-item">{item}</button>
+        <button onClick={()=>onMenuClick(item)} key={item} className="menu-item">{item}</button>
         
       ))
 );

@@ -1,11 +1,10 @@
 export default function(){
-    
+    const buttons = ["All", "Pending", "Paid"];
+
+
     return(
         <div className="filterSection horizontal">
-        <button>sdfdf</button>
-        <button >sfd</button>
-        <button>sdf</button>
-        <button >dsf</button>
+            {buttons.map((name) => (<button>{name}</button>))}
         </div>
     );
 }
