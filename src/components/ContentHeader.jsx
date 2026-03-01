@@ -1,13 +1,18 @@
-import AddButton from "./AddButton";
-import PrintButton from "./PrintButton";
-import SearchBox from "./SearchBox";
 
-export default function(){
+
+
+export default function({Components}){
     return(
         <div className="header horizontal">
+
+        {Components.map((Component,index)=>(
+            <Component key={index}/>
+            ))}
+
+{/*             
             <AddButton/>
             <SearchBox/>
-            <PrintButton/>            
+            <PrintButton/>             */}
         </div>
     );
 }

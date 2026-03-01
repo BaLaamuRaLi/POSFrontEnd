@@ -3,7 +3,8 @@ export default function(){
         <div>
             <input className="SearchBox"
             type="text"
-            placeholder="Invoice no"  />
+            placeholder="Invoice no"  
+            />
                         
         </div>
 
