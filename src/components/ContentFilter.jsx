@@ -1,6 +1,5 @@
-export default function(){
-    const buttons = ["All", "Pending", "Paid"];
-
+export default function({buttons}){
+    
 
     return(
         <div className="filterSection horizontal">

@@ -8,6 +8,7 @@ import SearchBox from "../Components/SearchBox";
 
 
 export default function(){
+    const filterButtons = ["All", "Pending", "Paid"];
     return(
         <div className="SearchBarLayout">
            <div className="searchBar">
@@ -15,7 +16,7 @@ export default function(){
             </div> 
             <div className="content">
                  <ContentHeader Components={[AddButton,SearchBox ,PrintButton]} />
-                 <ContentFilter/>
+                 <ContentFilter buttons = {filterButtons} />
                  <ResultTable/>
             
             </div>
