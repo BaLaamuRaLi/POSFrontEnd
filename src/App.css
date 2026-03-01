@@ -154,7 +154,7 @@ img{
   /* grid layout of content as parent*/
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 20% 1fr 10% 50% 10%;
+  grid-template-rows: 20% 1fr 10% 60% 10%;
 
   /* *********** */
   background-color:var(--inner-background-color);
@@ -173,6 +173,9 @@ img{
 
 .resultSection{ /*for showing result table */
   grid-area: 4 / 1 / 5 / 2; 
+  padding-left: 10%;
+  padding-right: 10%;
+  
 }
 
 .footerSection{ /*for showing Total amount */
@@ -210,8 +213,41 @@ button.Print{
   color: black;
   
 }
+
 /*********** print button ends****** */
 
+/* table layout */
 
+.tableWrapper{
+ overflow: auto;
+ height: 100%;
+}
+
+.resultTable{
+  width: 100%;
+}
+
+table{
+  background-color: white;
+  
+}
+
+td ,th{
+  text-align: center;
+}
+
+th{
+  position: sticky;
+  top: 0;
+  background-color: #4472C4;
+  color: white;
+
+}
+
+tbody>tr:nth-child(even){
+  background-color: rgb(196, 193, 193);
+}
+
+/* table layout ends here */
 
 /* ******Search bar layout ends here******** */
