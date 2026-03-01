@@ -1,6 +1,5 @@
-import AddButton from "../Components/AddButton";
-import PrintButton from "../Components/PrintButton";
-import SearchBox from "../Components/SearchBox";
+import ContentFilter from "../Components/ContentFilter";
+import ContentHeader from "../Components/ContentHeader";
 
 export default function(){
     return(
@@ -9,12 +8,8 @@ export default function(){
                
             </div> 
             <div className="content">
-                <div className="header horizontal">
-                    <AddButton/>
-                    <SearchBox/>
-                    <PrintButton/>
-                    
-                </div>
+                 <ContentHeader/>
+                 <ContentFilter/>
             </div>
             
         </div>
