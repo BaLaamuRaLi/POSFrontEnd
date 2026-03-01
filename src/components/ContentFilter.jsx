@@ -4,7 +4,10 @@ export default function(){
 
     return(
         <div className="filterSection horizontal">
-            {buttons.map((name) => (<button>{name}</button>))}
+            {buttons.map((name) => 
+                (
+                <button key={name} >{name}</button>
+                ))}
         </div>
     );
 }

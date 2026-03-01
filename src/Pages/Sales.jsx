@@ -1,5 +1,6 @@
 import ContentFilter from "../Components/ContentFilter";
 import ContentHeader from "../Components/ContentHeader";
+import ResultTable from "../Components/ResultTable";
 
 export default function(){
     return(
@@ -10,6 +11,7 @@ export default function(){
             <div className="content">
                  <ContentHeader/>
                  <ContentFilter/>
+                 <ResultTable/>
             </div>
             
         </div>
