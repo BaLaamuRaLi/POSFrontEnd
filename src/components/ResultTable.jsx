@@ -14,12 +14,12 @@ export default function(){
     { id: 11, client: "Client B", amount: 3500 },
     { id: 12, client: "Client A", amount: 2000 },
     { id: 13, client: "Client B", amount: 3500 },
-    { id: 2, client: "Client B", amount: 3500 },
-    { id: 1, client: "Client A", amount: 2000 },
-    { id: 2, client: "Client B", amount: 3500 },
-    { id: 2, client: "Client B", amount: 3500 },
-    { id: 1, client: "Client A", amount: 2000 },
-    { id: 2, client: "Client B", amount: 3500 },
+    { id: 14, client: "Client B", amount: 3500 },
+    { id: 15, client: "Client A", amount: 2000 },
+    { id: 16, client: "Client B", amount: 3500 },
+    { id: 17, client: "Client B", amount: 3500 },
+    { id: 18, client: "Client A", amount: 2000 },
+    { id: 19, client: "Client B", amount: 3500 },
     ];
     const headers = Object.keys(invoices[0]);
    

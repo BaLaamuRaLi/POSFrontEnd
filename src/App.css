@@ -240,13 +240,15 @@ th{
   position: sticky;
   top: 0;
   background-color: #4472C4;
-  color: white;
+  color: rgb(241, 228, 228);
 
 }
 
 tbody>tr:nth-child(even){
-  background-color: rgb(196, 193, 193);
+  background-color: rgb(236, 232, 232);
 }
+
+tbody > tr:hover {background-color: #D6EEEE;}
 
 /* table layout ends here */
 
