@@ -1,5 +1,5 @@
-export default function({onMenuClick}){
-const menuItems = ["Dashboard", "Sales", "Purchase","Inventory", "Accounts" ,"Payments" ,"Returns" ,"Reports" ];
+export default function({menuItems, onMenuClick}){
+
 
 
 return (

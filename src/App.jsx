@@ -15,6 +15,7 @@ function App() {
   
    isLoggedIn?(<div className="App">
       <SideBar setMenu={setMenu} onlogout={()=>{setLog(false)}}/>
+        
       <MainContent menuClicked={Clicked} />
     </div>)
     :

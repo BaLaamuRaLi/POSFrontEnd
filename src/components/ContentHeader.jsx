@@ -1,18 +1,13 @@
+import { Children } from "react";
 
 
 
-export default function({Components}){
+export default function({children}){
     return(
         <div className="header horizontal">
 
-        {Components.map((Component,index)=>(
-            <Component key={index}/>
-            ))}
+        {children}
 
-{/*             
-            <AddButton/>
-            <SearchBox/>
-            <PrintButton/>             */}
         </div>
     );
 }

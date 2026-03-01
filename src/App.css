@@ -142,6 +142,9 @@ img{
   grid-row: 2/3;
   grid-column: 2/3;
    background-color: var(--inner-background-color);
+   align-items: center;
+   padding-top: 10%;
+   gap: 1rem;
 }
 
 .content{
@@ -203,16 +206,24 @@ button.Print{
   background-color: rgb(236, 222, 20);
   border-radius: 10px;
   gap: 0.5rem;
+  border: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 .Print{
   aspect-ratio: 1/1;
-  height: 3rem;
+  height: 2rem;
 }
 
 .Print > p{
   font-size: large;
   color: black;
   
+}
+
+
+select{
+  height: 2rem;
+  width: auto;
 }
 
 /*********** print button ends****** */
@@ -230,6 +241,7 @@ button.Print{
 
 table{
   background-color: white;
+  cursor: pointer;
   
 }
 

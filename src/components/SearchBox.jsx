@@ -1,9 +1,9 @@
-export default function(){
+export default function({searchPretext}){
     return(
         <div>
-            <input className="SearchBox"
+            <input className="SearchBox" 
             type="text"
-            placeholder="Invoice no"  
+            placeholder={searchPretext}
             />
                         
         </div>

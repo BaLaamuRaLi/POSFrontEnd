@@ -5,14 +5,21 @@ import MenuItems from "./MenuItems";
 
 
 export default function SideBar ({setMenu, onlogout}) {    
-    
+    const menuItems = ["Dashboard", 
+                      "Sales", 
+                      "Purchase",
+                      "Inventory", 
+                      "Accounts" ,
+                      "Payments" ,
+                      "Returns" ,
+                      "Reports" ];
      const [isExpanded, setIsExpanded] = useState(false);
   const handleLogout = () => {
-  const confirm = window.confirm("Are you sure you want to logout?");
-  if (confirm) {
-    onlogout();
-  }
-  };
+        const confirm = window.confirm("Are you sure you want to logout?");
+        if (confirm) {
+          onlogout();
+        }
+        };
 
 
     return(
@@ -27,7 +34,7 @@ export default function SideBar ({setMenu, onlogout}) {
         :
         (<>
           <AccountLogo/>
-          <MenuItems onMenuClick={setMenu} />
+          <MenuItems menuItems={menuItems} onMenuClick={setMenu} />
           <button className="logout last"
           onClick={handleLogout}
           >logout</button>
