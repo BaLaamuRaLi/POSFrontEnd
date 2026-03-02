@@ -48,18 +48,10 @@ export default function(){
         "last 5 years", "last 10 years" ,"custom"
     ];
 
-function openWindow(){
-    const newWindow= window.open("/newSales", "_blank","width=600,height=400,menubar=no,toolbar=no,location=no,status=no,resizable=no");
-    
-  if(newWindow){
-    newWindow.opener=null;
-  }
-
-    }
-
+ 
 
     const headerConfig =[
-        {id: "add",component:AddButton ,clickHandler:openWindow },
+        {id: "add",component:AddButton },
         {id: "search",component:SearchBox, placeholder:"Invoice number"},
         {id: "print",component:PrintButton}
     ];

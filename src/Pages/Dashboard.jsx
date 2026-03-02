@@ -1,7 +1,7 @@
 export default function(){
     return(
-        <div>
-            <h1>Dashboard page</h1>
+        <div className="center">
+            <h1 style={{color:"white"}}>Dashboard page</h1>
         </div>
     );
 }
