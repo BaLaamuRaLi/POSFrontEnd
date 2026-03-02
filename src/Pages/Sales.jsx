@@ -6,6 +6,7 @@ import PrintButton from "../Components/PrintButton";
 import SearchBox from "../Components/SearchBox";
 import SearchComponents from "../Components/SearchComponents";
 import DropBox from "../Components/DropBox";
+import Input from "../Components/Input";
 
 
 
@@ -47,17 +48,25 @@ export default function(){
         "last 5 years", "last 10 years" ,"custom"
     ];
 
+function openWindow(){
+    const newWindow= window.open("/newSales", "_blank","width=600,height=400,menubar=no,toolbar=no,location=no,status=no,resizable=no");
+    
+  if(newWindow){
+    newWindow.opener=null;
+  }
+
+    }
+
+
     const headerConfig =[
-        {id: "add",component:AddButton},
+        {id: "add",component:AddButton ,clickHandler:openWindow },
         {id: "search",component:SearchBox, placeholder:"Invoice number"},
         {id: "print",component:PrintButton}
     ];
 const searchConfigs =[
-    {id: "type",Component:SearchBox ,placeholder:"type: pipe,bulb"},
-    {id: "size",Component:SearchBox, placeholder:'size: 3",9W'},
-    {id: "company",Component:SearchBox,placeholder:"company: Goldmedal"},
-    {id: "industry",Component:SearchBox,placeholder:"industry: electrical"},
-    {id: "batch",Component:SearchBox,placeholder:"Batch no"},
+    {id: "Name",Component:SearchBox ,placeholder:"Customer Name"},
+    {id: "Date",Component:Input, type:"date"},
+    {id: "Amount",Component:SearchBox,placeholder:"Amount"},
     {id: "duration",Component:DropBox,message:"Duration", items:items ,name:"Duration"}
 ];
 

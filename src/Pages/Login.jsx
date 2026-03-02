@@ -11,6 +11,7 @@ export default function ({onlogin}){
             gap: "20px",
             justifyContent:"space-around"
           }}
+          onSubmit={(e)=>e.preventDefault()}
          >
               <h1 style={{color:'white'}}>LOGIN</h1>
 

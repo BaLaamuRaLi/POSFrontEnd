@@ -6,6 +6,7 @@ import ResultTable from "../Components/ResultTable";
 import SearchBox from "../Components/SearchBox";
 import DropBox from "../Components/DropBox";
 import SearchComponents from "../Components/SearchComponents";
+import Input from "../Components/Input";
 
 export default function(){
 
@@ -51,12 +52,9 @@ export default function(){
     ];
 
 const searchConfigs =[
-    {id: "type",Component:SearchBox ,placeholder:"type: pipe,bulb"},
-    {id: "size",Component:SearchBox, placeholder:'size: 3",9W'},
-    {id: "company",Component:SearchBox,placeholder:"company: Goldmedal"},
-    {id: "industry",Component:SearchBox,placeholder:"industry: electrical"},
-    {id: "batch",Component:SearchBox,placeholder:"Batch no"},
-    {id: "duration",Component:DropBox,message:"Duration", items:items ,name:"Duration"}
+    {id: "Code",Component:SearchBox ,placeholder:"Supplier Code"},
+    {id: "Name",Component:SearchBox, placeholder:'Supplier Name'},
+    {id: "Date",Component:Input,type:"date"} 
 ];
 
     return(
