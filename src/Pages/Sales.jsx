@@ -13,13 +13,14 @@ export default function(){
     const filterButtons = [{name:"unsaved",clickHandler: fun1}, 
         {name:"Estimates",clickHandler:fun2}, 
         {name:"Bills" ,clickHandler:fun3},
-        {name:"Not Paid",clickHandler:fun4}];
-
+        {name:"Not Paid",clickHandler:fun4}
+    ];
+ //#region callbacks
     function fun1() {console.log("clicked unsaved");}
    function fun2() { console.log("clicked estimates");}
    function fun3() { console.log("clicked Bills");}
    function fun4() { console.log("clicked Not paid");}
-
+//#endregion
     const result = [
     { id: 1, client: "Shibu", amount: 2000 },
     { id: 2, client: "Client B", amount: 3500 },
@@ -45,24 +46,32 @@ export default function(){
         "last 5 years", "last 10 years" ,"custom"
     ];
 
+    const headerConfig =[
+        {id: "add",component:AddButton},
+        {id: "search",component:SearchBox, searchPretext:"Invoice number"},
+        {id: "print",component:PrintButton}
+    ];
+
+
     return(
         <div className="SearchBarLayout">
            <div className="searchBar vertical">
 
             <SearchComponents>
+                <SearchBox searchPretext="Customer Code"/>
                 <SearchBox searchPretext="Customer name"/>
-                <SearchBox searchPretext="Category"/>
                 <SearchBox searchPretext="Address"/>
                 <DropBox message={"Duration"} items={items} name={"Duration"} />
             </SearchComponents>
                
             </div> 
             <div className="content">
-                <ContentHeader>
+                {/* <ContentHeader>
                     <AddButton/>
                     <SearchBox searchPretext ="Invoice no"/>
                     <PrintButton/>
-                </ContentHeader>
+                </ContentHeader> */}
+                <ContentHeader components={headerConfig} />
 
                  <ContentFilter buttons = {filterButtons} />
                  <ResultTable invoices={result}/>

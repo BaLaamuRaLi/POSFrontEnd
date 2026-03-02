@@ -44,6 +44,12 @@ export default function(){
         "last 5 years", "last 10 years" ,"custom"
     ];
 
+     const headerConfig =[
+            {id: "add",component:AddButton},
+            {id: "search",component:SearchBox, searchPretext:"Invoice number"},
+            {id: "print",component:PrintButton}
+    ];
+
     return(
         <div className="SearchBarLayout">
                 <div className="searchBar vertical">
@@ -61,12 +67,7 @@ export default function(){
 
                 </div> 
                 <div className="content">
-                    <ContentHeader>
-                        <AddButton/>
-                        <SearchBox searchPretext ="Invoice no"/>
-                        <PrintButton/>
-                    </ContentHeader>
-
+                    <ContentHeader components={headerConfig} />
                     <ContentFilter buttons = {filterButtons} />
                     <ResultTable invoices={result}/>
 
