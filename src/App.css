@@ -20,7 +20,9 @@
   grid-column: 2/3;
   grid-row: 1/2;
 }
-
+.Active{
+   background-color: #ffae00;
+}
 
 button{
   font-family:var(--font-primary);
@@ -201,6 +203,12 @@ img{
   padding-left: 1rem;
 }
 
+input[readonly]{
+  outline: none;
+  border: none;
+  /* font-weight: 550; */
+}
+
 /* print button  */
 button.Print{
   background-color: rgb(236, 222, 20);
@@ -266,3 +274,6 @@ tbody > tr:hover {background-color: #D6EEEE;}
 /* table layout ends here */
 
 /* ******Search bar layout ends here******** */
+
+
+

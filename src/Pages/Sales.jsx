@@ -21,6 +21,7 @@ export default function(){
    function fun3() { console.log("clicked Bills");}
    function fun4() { console.log("clicked Not paid");}
 //#endregion
+    
     const result = [
     { id: 1, client: "Shibu", amount: 2000 },
     { id: 2, client: "Client B", amount: 3500 },
@@ -48,33 +49,31 @@ export default function(){
 
     const headerConfig =[
         {id: "add",component:AddButton},
-        {id: "search",component:SearchBox, searchPretext:"Invoice number"},
+        {id: "search",component:SearchBox, placeholder:"Invoice number"},
         {id: "print",component:PrintButton}
     ];
-
+const searchConfigs =[
+    {id: "type",Component:SearchBox ,placeholder:"type: pipe,bulb"},
+    {id: "size",Component:SearchBox, placeholder:'size: 3",9W'},
+    {id: "company",Component:SearchBox,placeholder:"company: Goldmedal"},
+    {id: "industry",Component:SearchBox,placeholder:"industry: electrical"},
+    {id: "batch",Component:SearchBox,placeholder:"Batch no"},
+    {id: "duration",Component:DropBox,message:"Duration", items:items ,name:"Duration"}
+];
 
     return(
         <div className="SearchBarLayout">
            <div className="searchBar vertical">
-
-            <SearchComponents>
-                <SearchBox searchPretext="Customer Code"/>
-                <SearchBox searchPretext="Customer name"/>
-                <SearchBox searchPretext="Address"/>
-                <DropBox message={"Duration"} items={items} name={"Duration"} />
-            </SearchComponents>
+         
+            <SearchComponents components={searchConfigs} />
                
             </div> 
             <div className="content">
-                {/* <ContentHeader>
-                    <AddButton/>
-                    <SearchBox searchPretext ="Invoice no"/>
-                    <PrintButton/>
-                </ContentHeader> */}
-                <ContentHeader components={headerConfig} />
+            
+            <ContentHeader components={headerConfig} />
 
-                 <ContentFilter buttons = {filterButtons} />
-                 <ResultTable invoices={result}/>
+            <ContentFilter buttons = {filterButtons} />
+            <ResultTable invoices={result}/>
             
             </div>
             

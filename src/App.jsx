@@ -14,9 +14,9 @@ function App() {
   return (
   
    isLoggedIn?(<div className="App">
-      <SideBar setMenu={setMenu} onlogout={()=>{setLog(false)}}/>
+      <SideBar setMenu={setMenu} onlogout={()=>{setLog(false)}} clickedMenu={Clicked}/>
         
-      <MainContent menuClicked={Clicked} />
+      <MainContent menuClicked={Clicked}/>
     </div>)
     :
     ( <Login onlogin={()=>{setLog(true); setMenu("Dashboard")}}/>

@@ -46,33 +46,30 @@ export default function(){
 
      const headerConfig =[
             {id: "add",component:AddButton},
-            {id: "search",component:SearchBox, searchPretext:"Invoice number"},
+            {id: "search",component:SearchBox, placeholder:"Invoice number"},
             {id: "print",component:PrintButton}
     ];
+
+const searchConfigs =[
+    {id: "type",Component:SearchBox ,placeholder:"type: pipe,bulb"},
+    {id: "size",Component:SearchBox, placeholder:'size: 3",9W'},
+    {id: "company",Component:SearchBox,placeholder:"company: Goldmedal"},
+    {id: "industry",Component:SearchBox,placeholder:"industry: electrical"},
+    {id: "batch",Component:SearchBox,placeholder:"Batch no"},
+    {id: "duration",Component:DropBox,message:"Duration", items:items ,name:"Duration"}
+];
 
     return(
         <div className="SearchBarLayout">
                 <div className="searchBar vertical">
-        
-                <SearchComponents>
-                    <SearchBox searchPretext="Supplier Code"/>
-                    <SearchBox searchPretext="Supplier Name"/>
-                    <SearchBox searchPretext="Address"/>
-                    <DropBox message={"Duration"} items={items} name={"Duration"} />
-                </SearchComponents>
-            
-                
-                
-                
-
+         
+                <SearchComponents components={searchConfigs} />
                 </div> 
                 <div className="content">
                     <ContentHeader components={headerConfig} />
                     <ContentFilter buttons = {filterButtons} />
                     <ResultTable invoices={result}/>
-
-               
-                    
+  
                 </div>
                     
         </div>

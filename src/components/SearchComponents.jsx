@@ -1,7 +1,11 @@
-export default function({children}){
+export default function({components}){
     return(
-        <>
-            {children}
-        </>
+    <>
+        {components.map(({id ,Component,...props})=>(
+
+        <Component key={id} {...props} />
+       
+       ))}
+    </>
     );
 }

@@ -1,9 +1,9 @@
-export default function({searchPretext}){
+export default function({...props}){
     return(
         <div>
             <input className="SearchBox" 
             type="text"
-            placeholder={searchPretext}
+            {...props}
             />
                         
         </div>

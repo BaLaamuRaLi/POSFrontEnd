@@ -4,7 +4,7 @@ import AccountLogo from "./AccountLogo";
 import MenuItems from "./MenuItems";
 
 
-export default function SideBar ({setMenu, onlogout}) {    
+export default function SideBar ({setMenu, onlogout ,clickedMenu}) {    
     const menuItems = ["Dashboard", 
                       "Sales", 
                       "Purchase",
@@ -12,7 +12,8 @@ export default function SideBar ({setMenu, onlogout}) {
                       "Accounts" ,
                       "Payments" ,
                       "Returns" ,
-                      "Reports" ];
+                      "Reports" 
+                    ];
      const [isExpanded, setIsExpanded] = useState(false);
   const handleLogout = () => {
         const confirm = window.confirm("Are you sure you want to logout?");
@@ -34,7 +35,7 @@ export default function SideBar ({setMenu, onlogout}) {
         :
         (<>
           <AccountLogo/>
-          <MenuItems menuItems={menuItems} onMenuClick={setMenu} />
+          <MenuItems menuItems={menuItems} onMenuClick={setMenu} clickedMenu={clickedMenu} />
           <button className="logout last"
           onClick={handleLogout}
           >logout</button>
