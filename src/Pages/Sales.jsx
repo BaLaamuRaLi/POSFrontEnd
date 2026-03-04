@@ -7,16 +7,21 @@ import SearchBox from "../Components/SearchBox";
 import SearchComponents from "../Components/SearchComponents";
 import DropBox from "../Components/DropBox";
 import Input from "../Components/Input";
+import SalesInvoice from "./SalesInvoice";
+import { useState } from "react";
 
 
 
 export default function(){
+    const [isWindowOpen, setWindow] = useState(false);
+
+     //#region callbacks
     const filterButtons = [{name:"unsaved",clickHandler: fun1}, 
         {name:"Estimates",clickHandler:fun2}, 
         {name:"Bills" ,clickHandler:fun3},
         {name:"Not Paid",clickHandler:fun4}
     ];
- //#region callbacks
+
     function fun1() {console.log("clicked unsaved");}
    function fun2() { console.log("clicked estimates");}
    function fun3() { console.log("clicked Bills");}
@@ -51,7 +56,7 @@ export default function(){
  
 
     const headerConfig =[
-        {id: "add",component:AddButton },
+        {id: "add",component:AddButton ,onClick:()=>setWindow(true) },
         {id: "search",component:SearchBox, placeholder:"Invoice number"},
         {id: "print",component:PrintButton}
     ];
@@ -63,7 +68,10 @@ const searchConfigs =[
 ];
 
     return(
+
+
         <div className="SearchBarLayout">
+            <SalesInvoice isOpen={isWindowOpen} setWindow={()=> setWindow(false)}/>
            <div className="searchBar vertical">
          
             <SearchComponents components={searchConfigs} />
