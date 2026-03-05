@@ -7,6 +7,7 @@ import SearchBox from "../Components/SearchBox";
 import SearchComponents from "../Components/SearchComponents";
 import DropBox from "../Components/DropBox";
 import Input from "../Components/Input";
+import Popup from "../Components/Popup";
 import SalesInvoice from "./SalesInvoice";
 import { useState } from "react";
 
@@ -71,7 +72,10 @@ const searchConfigs =[
 
 
         <div className="SearchBarLayout">
-            <SalesInvoice isOpen={isWindowOpen} setWindow={()=> setWindow(false)}/>
+           
+            <Popup isOpen={isWindowOpen} >
+                <SalesInvoice setWindow={()=> setWindow(false)} />
+            </Popup>
            <div className="searchBar vertical">
          
             <SearchComponents components={searchConfigs} />

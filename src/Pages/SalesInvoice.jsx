@@ -1,4 +1,3 @@
-import { createPortal } from "react-dom";
 import CloseButton from "../Components/CloseButton";
 import LeftPane from "../Components/LeftPane";
 import RightPane from "../Components/RightPane";
@@ -10,7 +9,7 @@ import Display from "../Components/Display";
 
 
 
-export default function({isOpen ,setWindow}){
+export default function({setWindow}){
 
        const result = [
     { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
@@ -96,8 +95,8 @@ export default function({isOpen ,setWindow}){
 //#endregion 
     
 
-    if(!isOpen) return null;
-    return createPortal(
+
+    return (
         <div className="modal center">
             
 
@@ -119,5 +118,5 @@ export default function({isOpen ,setWindow}){
             </div>
             
         </div>
-    ,document.body);
+    );
 }
