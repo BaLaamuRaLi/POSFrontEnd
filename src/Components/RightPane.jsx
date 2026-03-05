@@ -1,11 +1,18 @@
 
-export default function ({rheadcomps, rcontentcomps ,rfootcomps}){
+export default function ({rheadcomps,rbuttons, rcontentcomps ,rfootcomps}){
     return(
          <div className="rightPane">
             
             <div className="headerRightPane horizontal">
                 {
                     rheadcomps.map(({id,Component,...props})=>(
+                        <Component key={id} {...props}/>
+                    ))
+                }
+            </div>
+            <div className="buttonsRightPane horizontal" >
+                {
+                    rbuttons.map(({id,Component,...props})=>(
                         <Component key={id} {...props}/>
                     ))
                 }

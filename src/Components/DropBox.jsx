@@ -1,6 +1,6 @@
-export default function({message,items,name ,id}){
+export default function({message,items,name ,id,value}){
     return(
-    <select name={name} id={id}>
+    <select name={name} id={id} defaultValue={value}>
    
         <option value="">{message}</option>
         {items.map((item)=>(

@@ -36,15 +36,22 @@ export default function({isOpen ,setWindow}){
 
 //#region left pane Config
     const lheaderConfig =[
-        {id:"Add", Component:Button ,text:"Add Customer"},
+        {id:"sCustomer", Component:Button ,text:"Search Customer"},
+        {id:"sAgent", Component:Button ,text:"Search Agent"},
+        {id:"Add", Component:Button ,text:"Add Account"},
 
     ];
      const items =["Buy 1 get 1","3 for 100Rs" ,"No offer" ,
     ];
+
+    const tax =["40%","18%" ,"5%" ,
+    ];
+    
     const lproductConfig =[
-        {id:"profit", Component:Input,type:"text",placeholder:"profit %:"},
-        {id:"Qty", Component:Input,type:"text",placeholder:"Quantity:"},
-        {id:"Discount", Component:Input,type:"text",placeholder:"Discount %:"},
+        {id:"Batch", Component:Input,type:"text",placeholder:"Batch no:"},
+        {id:"Discount", Component:Input,type:"text",placeholder:"Discount %:"},     
+        {id:"Unit", Component:Input,type:"text",placeholder:"Unit:"},
+        {id:"Tax", Component:DropBox,message:"select Tax" ,items:tax,name:"Tax" ,id:"tax", value:"18%"},
         {id:"offer", Component:DropBox,message:"select offer" ,items:items,name:"offer" ,id:"off"},
 
 
@@ -62,12 +69,19 @@ export default function({isOpen ,setWindow}){
 
 //#region rightpaneConfig
     const rheaderConfig =[
+        {id:"Date", Component:Display ,label:"Date",text:"01/01/1000"},
         {id:"Draft", Component:Display ,label:"Draft No",text:"A1001"},
         {id:"Name", Component:Display ,label:"Name",text:"Shibu"},
         {id:"GST", Component:Display ,label:"GSTIN",text:"GA23948324"},
         {id:"phone", Component:Display ,label:"phone",text:"98989238473"},
         {id:"Address", Component:Display ,label:"Address",text:"Pulikattil"},
+        {id:"Agent", Component:Display ,label:"Agent",text:"shashi"},
        
+    ];
+
+    const rbuttonsconfig=[
+        {id:"addProd", Component:Button ,text:"search product"},
+        
     ];
 
     const rcontentConfig=[
@@ -85,6 +99,7 @@ export default function({isOpen ,setWindow}){
     if(!isOpen) return null;
     return createPortal(
         <div className="modal center">
+            
 
             <div className="popup">
                 
@@ -96,6 +111,7 @@ export default function({isOpen ,setWindow}){
             />
 
             <RightPane rheadcomps={rheaderConfig} 
+                rbuttons={rbuttonsconfig}
                 rcontentcomps={rcontentConfig} 
                 rfootcomps={rfooterConfig}
             />

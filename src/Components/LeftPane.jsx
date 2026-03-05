@@ -1,7 +1,7 @@
 export default function ({lheadcomps, lproductcomps ,lbillcomps}){
     return(
          <div className="leftPane">
-            <div className="headerleftPane">
+            <div className="headerleftPane vertical">
                 {
                     lheadcomps.map(({id,Component,...props})=>(
                         <Component key={id} {...props}/>
