@@ -23,7 +23,7 @@ export default function({invoices}){
               <tr key={invoice.id}>
                 {headers.map((key) => (
 
-                 key==="Qty"
+                 key==="Qty" || key==="Profit"
                  ?
                  (
                  <td key={key} >
