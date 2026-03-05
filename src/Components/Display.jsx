@@ -1,6 +1,8 @@
-export default function({text}){
+export default function({label,text}){
     return(
-       <span>{text}</span>
-
+       <div className="dataContainer horizontal"> 
+       <span className="label" >{label}</span> 
+       <span className="data">{text}</span>
+        </div>
     );
 }

@@ -13,25 +13,25 @@ import Display from "../Components/Display";
 export default function({isOpen ,setWindow}){
 
        const result = [
-    { id: 1, client: "Shibu", amount: 2000 },
-    { id: 2, client: "Client B", amount: 3500 },
-    { id: 3, client: "Client A", amount: 2000 },
-    { id: 4, client: "Client B", amount: 3500 },
-    { id: 5, client: "Client B", amount: 3500 },
-    { id: 6, client: "Client A", amount: 2000 },
-    { id: 7, client: "Client B", amount: 3500 },
-    { id: 8, client: "Client B", amount: 3500 },
-    { id: 9, client: "Client A", amount: 2000 },
-    { id: 10, client: "Client B", amount: 3500 },
-    { id: 11, client: "Client B", amount: 3500 },
-    { id: 12, client: "Client A", amount: 2000 },
-    { id: 13, client: "Client B", amount: 3500 },
-    { id: 14, client: "Client B", amount: 3500 },
-    { id: 15, client: "Client A", amount: 2000 },
-    { id: 16, client: "Client B", amount: 3500 },
-    { id: 17, client: "Client B", amount: 3500 },
-    { id: 18, client: "Client A", amount: 2000 },
-    { id: 19, client: "Client B", amount: 3500 },
+    { id: 1, Product: "apple", Qty: 2000 },
+    { id: 2, Product: "orange", Qty: 3500 },
+    { id: 3, Product: "apple", Qty: 2000 },
+    { id: 4, Product: "apple", Qty: 3500 },
+    { id: 5, Product: "apple", Qty: 3500 },
+    { id: 6, Product: "apple", Qty: 2000 },
+    { id: 7, Product: "apple", Qty: 3500 },
+    { id: 8, Product: "apple", Qty: 3500 },
+    { id: 9, Product: "apple", Qty: 2000 },
+    { id: 10, Product: "apple", Qty: 3500 },
+    { id: 11, Product: "apple", Qty: 3500 },
+    { id: 12, Product: "apple", Qty: 2000 },
+    { id: 13, Product: "apple", Qty: 3500 },
+    { id: 14, Product: "apple", Qty: 3500 },
+    { id: 15, Product: "apple", Qty: 2000 },
+    { id: 16, Product: "apple", Qty: 3500 },
+    { id: 17, Product: "apple", Qty: 3500 },
+    { id: 18, Product: "apple", Qty: 2000 },
+    { id: 19, Product: "apple", Qty: 3500 },
     ];
 
 //#region left pane Config
@@ -62,11 +62,11 @@ export default function({isOpen ,setWindow}){
 
 //#region rightpaneConfig
     const rheaderConfig =[
-        {id:"Draft", Component:Display ,text:"Draft No"},
-        {id:"Name", Component:Display ,text:"Customer Name"},
-        {id:"GST", Component:Display ,text:"GSTIN"},
-        {id:"phone", Component:Display ,text:"phone"},
-        {id:"Address", Component:Display ,text:"Address"},
+        {id:"Draft", Component:Display ,label:"Draft No",text:"A1001"},
+        {id:"Name", Component:Display ,label:"Name",text:"Shibu"},
+        {id:"GST", Component:Display ,label:"GSTIN",text:"GA23948324"},
+        {id:"phone", Component:Display ,label:"phone",text:"98989238473"},
+        {id:"Address", Component:Display ,label:"Address",text:"Pulikattil"},
        
     ];
 
@@ -76,7 +76,8 @@ export default function({isOpen ,setWindow}){
     ];
 
     const rfooterConfig =[
-        {id:"Total", Component:Display ,text:"Amount"},
+        {id:"balance", Component:Display ,label:"Previous Balance",text:"100.0"},
+        {id:"Total", Component:Display ,label:"Amount",text:"1000.0"},
     ];
 //#endregion 
     
