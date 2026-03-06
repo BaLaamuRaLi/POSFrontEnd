@@ -5,7 +5,16 @@ export default function({onClose}){
     <div className="modal center">
         <div className="popup SearchProduct">
             <CloseButton onClick={onClose} />
-            <h1>Search Product</h1>
+            <div className="selectedProducts">
+             <h1>Search Product</h1>
+            </div>
+            <div className="filterProducts">
+
+            </div>
+            <div className="listProducts">
+
+            </div>
+           
         </div>
     </div>
 
