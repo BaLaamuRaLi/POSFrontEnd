@@ -3,6 +3,7 @@ import CloseButton from "../Components/CloseButton";
 import ComponentsExtractor from "../Components/ComponentsExtractor";
 import Input from "../Components/Input";
 import ResultTable from "../Components/ResultTable";
+import Button from "../Components/Button";
 
 export default function({onClose}){
     const filterConfigs=[
@@ -10,10 +11,13 @@ export default function({onClose}){
     {id:"Size", Component:Input,type:"text",placeholder:'Size: 9W, 1"'},
     {id:"Company", Component:Input,type:"text",placeholder:'Company: Luker, Supreme'},
     {id:"Batch", Component:Input,type:"text",placeholder:"Batch no:"},
+    {id:"Batch1", Component:Input,type:"text",placeholder:"Batch no:"},
+    {id:"Batch2", Component:Input,type:"text",placeholder:"Batch no:"},
+    {id:"Batch3", Component:Input,type:"text",placeholder:"Batch no:"},
 
     ];
 
-        const result = useMemo(()=>[
+        const selected = useMemo(()=>[
         { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
         { id: 2, Product: "orange", Qty: 3500 ,Profit:10},
         { id: 3, Product: "apple", Qty: 2000 ,Profit:10},
@@ -44,20 +48,27 @@ export default function({onClose}){
         
         ],[]);
     
+    const footerconfigs= [
+        {id:"Add" ,Component:Button,text:"Add"}
+    ];
 
     return(
     <div className="modal center">
         <div className="popup SearchProduct">
             <CloseButton onClick={onClose} />
             <div className="selectedProducts vertical">
-             <ResultTable invoices={result}/>
+             <ResultTable invoices={selected}/>
 
             </div>
             <div className="filterProducts horizontal">
             <ComponentsExtractor components={filterConfigs} />
             </div>
             <div className="listProducts">
-
+               <ResultTable invoices={selected}/>
+            </div>
+            <div className="footerSearchProducts horizontal">
+            <ComponentsExtractor components={footerconfigs}/>
+            
             </div>
            
         </div>

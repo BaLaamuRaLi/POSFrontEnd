@@ -301,7 +301,7 @@ tbody > tr:hover {background-color: #D6EEEE;}
 .SearchProduct{
   display: grid;
   grid-template-columns: 30% 1fr;
-  grid-template-rows: 20% 1fr;
+  grid-template-rows: 15% 1fr 10%;
   height: 80%;
   width: 80%;
   padding: 20px;
@@ -310,7 +310,7 @@ tbody > tr:hover {background-color: #D6EEEE;}
 }
 
 .selectedProducts{
-  grid-area: 1 / 1 / 3 / 2;
+  grid-area: 1 / 1 / 4 / 2;
 }
 
 .selectedProducts .tableWrapper{
@@ -318,7 +318,7 @@ tbody > tr:hover {background-color: #D6EEEE;}
 }
 
 .filterProducts{
-   grid-area: 1 / 2 / 2 / 3;
+   grid-area: 1 / 2 / 2 / 3; 
    gap:10px;
    flex-wrap: wrap;
   
@@ -326,6 +326,10 @@ tbody > tr:hover {background-color: #D6EEEE;}
 
 .listProducts{
   grid-area: 2 / 2 / 3 / 3;
+}
+
+.footerSearchProducts{
+  grid-area: 3 / 2 / 4 / 3;
 }
 
 .modal{
