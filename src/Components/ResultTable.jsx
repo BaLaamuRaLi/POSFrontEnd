@@ -1,8 +1,8 @@
 
 
-export default function({invoices}){
+export default function({list}){
     
-    const headers = Object.keys(invoices[0]);
+    const headers = Object.keys(list[0]);
   
    
     
@@ -19,7 +19,7 @@ export default function({invoices}){
               </tr>
             </thead>
             <tbody>
-              {invoices.map((invoice) => (
+              {list.map((invoice) => (
                 <tr key={invoice.id}>
                   {headers.map((key) => (
                    key==="Qty" || key==="Profit"

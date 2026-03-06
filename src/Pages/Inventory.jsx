@@ -72,7 +72,7 @@ return(
             <ContentHeader components={headerConfig} />
               <ContentFilter buttons = {filterButtons} />
             <div className="resultSection">
-                <ResultTable invoices={result}/>
+                <ResultTable list={result}/>
             </div>
             </div>
             

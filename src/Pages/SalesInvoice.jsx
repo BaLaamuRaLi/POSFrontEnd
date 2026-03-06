@@ -86,7 +86,7 @@ export default function({onClose ,openWindow}){
     ];
 
     const rcontentConfig=[
-        {id:"result", Component:ResultTable ,invoices:result},
+        {id:"result", Component:ResultTable ,list:result},
 
     ];
 

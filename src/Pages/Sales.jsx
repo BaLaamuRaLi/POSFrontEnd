@@ -70,6 +70,16 @@ const searchConfigs =[
     {id: "duration",Component:DropBox,message:"Duration", items:items ,name:"Duration"}
 ];
 
+    const customers=[
+        {id:"1",Name:"john",Address:"washington"},
+        {id:"2",Name:"Biju",Address:"UAE"},
+    ];
+
+    const agents=[
+        {id:"1",Name:"Mathew",Address:"london"},
+        {id:"2",Name:"shahi",Address:"Delhi"},
+    ];
+
     return(
 
 
@@ -79,10 +89,14 @@ const searchConfigs =[
                 <SalesInvoice openWindow={setWindow} onClose={()=> setWindow([])} />
             </Popup>
              <Popup WindowsOpen={WindowsOpen} Window="SearchCustomer" >
-                <SearchAccount accountType={"Customer"} onClose={()=> setWindow(["SalesInvoice"])} />
+                <SearchAccount accountType={"Customer"} onClose={()=> setWindow(["SalesInvoice"])} 
+                    accounts={customers}
+                    />
             </Popup>
             <Popup WindowsOpen={WindowsOpen} Window="SearchAgent" >
-                <SearchAccount accountType={"Account"} onClose={()=> setWindow(["SalesInvoice"])} />
+                <SearchAccount accountType={"Agent"} onClose={()=> setWindow(["SalesInvoice"])} 
+                    accounts={agents}
+                    />
             </Popup>
               <Popup WindowsOpen={WindowsOpen} Window="SearchProduct" >
                 <SearchProduct onClose={()=> setWindow(["SalesInvoice"])} />
@@ -101,7 +115,7 @@ const searchConfigs =[
                 <ContentFilter buttons = {filterButtons} />
                 
                 <div className="resultSection">
-                <ResultTable invoices={result}/>
+                <ResultTable list={result}/>
                 </div>
             
             </div>

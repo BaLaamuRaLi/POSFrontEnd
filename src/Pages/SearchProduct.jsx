@@ -49,7 +49,7 @@ export default function({onClose}){
         ],[]);
     
     const footerconfigs= [
-        {id:"Add" ,Component:Button,text:"Add"}
+        {id:"Add" ,Component:Button,text:"Add",onClick:onClose}
     ];
 
     return(
@@ -57,14 +57,14 @@ export default function({onClose}){
         <div className="popup SearchProduct">
             <CloseButton onClick={onClose} />
             <div className="selectedProducts vertical">
-             <ResultTable invoices={selected}/>
+             <ResultTable list={selected}/>
 
             </div>
             <div className="filterProducts horizontal">
             <ComponentsExtractor components={filterConfigs} />
             </div>
             <div className="listProducts">
-               <ResultTable invoices={selected}/>
+               <ResultTable list={selected}/>
             </div>
             <div className="footerSearchProducts horizontal">
             <ComponentsExtractor components={footerconfigs}/>
