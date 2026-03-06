@@ -1,5 +1,5 @@
 import SearchBox from "../Components/SearchBox";
-import SearchComponents from "../Components/SearchComponents";
+import SearchComponents from "../Components/ComponentsExtractor";
 import ContentHeader from "../Components/ContentHeader";
 import AddButton from "../Components/AddButton";
 import PrintButton from "../Components/PrintButton";

@@ -4,7 +4,7 @@ import ResultTable from "../Components/ResultTable";
 import AddButton from "../Components/AddButton";
 import PrintButton from "../Components/PrintButton";
 import SearchBox from "../Components/SearchBox";
-import SearchComponents from "../Components/SearchComponents";
+import SearchComponents from "../Components/ComponentsExtractor";
 import DropBox from "../Components/DropBox";
 import Input from "../Components/Input";
 import Popup from "../Components/Popup";

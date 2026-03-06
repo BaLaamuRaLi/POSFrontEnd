@@ -4,8 +4,7 @@ import ContentHeader from "../Components/ContentHeader";
 import PrintButton from "../Components/PrintButton";
 import ResultTable from "../Components/ResultTable";
 import SearchBox from "../Components/SearchBox";
-import DropBox from "../Components/DropBox";
-import SearchComponents from "../Components/SearchComponents";
+import SearchComponents from "../Components/ComponentsExtractor";
 import Input from "../Components/Input";
 
 export default function(){
