@@ -96,10 +96,13 @@ const searchConfigs =[
             </div> 
             <div className="content">
             
-            <ContentHeader components={headerConfig} />
+                <ContentHeader components={headerConfig} />
 
-            <ContentFilter buttons = {filterButtons} />
-            <ResultTable invoices={result}/>
+                <ContentFilter buttons = {filterButtons} />
+                
+                <div className="resultSection">
+                <ResultTable invoices={result}/>
+                </div>
             
             </div>
             

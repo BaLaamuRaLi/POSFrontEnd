@@ -179,9 +179,7 @@ img{
 
 .resultSection{ /*for showing result table */
   grid-area: 4 / 1 / 5 / 2; 
-  padding-left: 10%;
-  padding-right: 10%;
-  
+   
 }
 
 .footerSection{ /*for showing Total amount */
@@ -239,9 +237,15 @@ select{
 
 /* table layout */
 
+.tableContainer{
+  height: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
 .tableWrapper{
  overflow: auto;
- height: 50vh;
+ height: 100%;
  /* background: beige; */
 }
 
@@ -305,6 +309,7 @@ tbody > tr:hover {background-color: #D6EEEE;}
   height: 80%;
   width: 80%;
   padding: 20px;
+  padding-right: 40px;
 
 
 }
@@ -313,9 +318,7 @@ tbody > tr:hover {background-color: #D6EEEE;}
   grid-area: 1 / 1 / 4 / 2;
 }
 
-.selectedProducts .tableWrapper{
-  height: 80vh;
-}
+
 
 .filterProducts{
    grid-area: 1 / 2 / 2 / 3; 
@@ -397,7 +400,7 @@ tbody > tr:hover {background-color: #D6EEEE;}
   /* grid */
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 20% 10% 1fr 10%;
+  grid-template-rows: 20% 1fr 60% 10%;
 
 }
 

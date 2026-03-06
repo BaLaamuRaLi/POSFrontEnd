@@ -76,7 +76,9 @@ const headerConfig =[
             <div className="content">
             <ContentHeader components={headerConfig} />
             <ContentFilter buttons = {filterButtons} />
-            <ResultTable invoices={result}/>
+               <div className="resultSection">
+                 <ResultTable invoices={result}/>
+                </div>
             </div>
         </div>
     );
