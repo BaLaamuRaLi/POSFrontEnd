@@ -9,7 +9,7 @@ import DropBox from "../Components/DropBox";
 import Input from "../Components/Input";
 import Popup from "../Components/Popup";
 import SalesInvoice from "./SalesInvoice";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import SearchAccount from "./SearchAccount";
 
 
@@ -30,7 +30,7 @@ export default function(){
    function fun4() { console.log("clicked Not paid");}
 //#endregion
     
-    const result = [
+    const result = useMemo(()=>[
     { id: 1, client: "Shibu", amount: 2000 },
     { id: 2, client: "Client B", amount: 3500 },
     { id: 3, client: "Client A", amount: 2000 },
@@ -50,7 +50,7 @@ export default function(){
     { id: 17, client: "Client B", amount: 3500 },
     { id: 18, client: "Client A", amount: 2000 },
     { id: 19, client: "Client B", amount: 3500 },
-    ];
+    ],[]);
     const items =["last week","last one month" ,"last one year" ,
         "last 5 years", "last 10 years" ,"custom"
     ];

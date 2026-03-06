@@ -6,12 +6,13 @@ import ResultTable from "../Components/ResultTable";
 import Input from "../Components/Input";
 import Button from "../Components/Button";
 import Display from "../Components/Display";
+import { useMemo } from "react";
 
 
 
 export default function({onClose ,openWindow}){
 
-       const result = [
+       const result = useMemo(()=>[
     { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
     { id: 2, Product: "orange", Qty: 3500 ,Profit:10},
     { id: 3, Product: "apple", Qty: 2000 ,Profit:10},
@@ -31,15 +32,15 @@ export default function({onClose ,openWindow}){
     { id: 17, Product: "apple", Qty: 3500 ,Profit:10},
     { id: 18, Product: "apple", Qty: 2000 ,Profit:10},
     { id: 19, Product: "apple", Qty: 3500 ,Profit:10},
-    ];
+    ],[]);
 
 //#region left pane Config
-    const lheaderConfig =[
+    const lheaderConfig =useMemo(()=>[
         {id:"sCustomer", Component:Button ,text:"Search Customer",onClick:()=>openWindow(["SalesInvoice","SearchCustomer"])},
         {id:"sAgent", Component:Button ,text:"Search Agent",onClick:()=>openWindow(["SalesInvoice","SearchAgent"])},
-        {id:"Add", Component:Button ,text:"Add Account"},
+        // {id:"Add", Component:Button ,text:"Add Account"},
 
-    ];
+    ],[]);
      const items =["Buy 1 get 1","3 for 100Rs" ,"No offer" ,
     ];
 
