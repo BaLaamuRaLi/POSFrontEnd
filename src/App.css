@@ -213,10 +213,10 @@ input[readonly]{
 /* print button  */
 button.Print{
   background-color: rgb(236, 222, 20);
-  border-radius: 10px;
+  border-radius: 5px;
   gap: 0.5rem;
-  border: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  border: 1px solid black;
+  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); */
 }
 .Print{
   aspect-ratio: 1/1;
@@ -291,13 +291,19 @@ tbody > tr:hover {background-color: #D6EEEE;}
 }
 
 
-.popupChild{
-  position: relative;
+.SearchAccount{
+  display: inline;
   height: 50%;
   width: 50%;
-  background-color: var(--popup-background-color);
-  border-radius: 10px;
-  overflow: hidden;
+ 
+}
+
+.SearchProduct{
+  display: inline;
+  height: 70%;
+  width: 70%;
+  
+
 }
 
 .modal{

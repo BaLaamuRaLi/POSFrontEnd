@@ -1,11 +1,11 @@
 import CloseButton from "../Components/CloseButton";
 
-export default function({accountType,onClose}){
+export default function({onClose}){
     return(
     <div className="modal center">
-        <div className="popup SearchAccount">
+        <div className="popup SearchProduct">
             <CloseButton onClick={onClose} />
-            <h1>{accountType}</h1>
+            <h1>Search Product</h1>
         </div>
     </div>
 

@@ -7,6 +7,7 @@ import Input from "../Components/Input";
 import Button from "../Components/Button";
 import Display from "../Components/Display";
 import { useMemo } from "react";
+import PrintButton from "../Components/PrintButton";
 
 
 
@@ -80,7 +81,7 @@ export default function({onClose ,openWindow}){
     ];
 
     const rbuttonsconfig=[
-        {id:"addProd", Component:Button ,text:"search product"},
+        {id:"addProd", Component:Button ,text:"Search Product",onClick:()=>openWindow(["SalesInvoice","SearchProduct"])},
         
     ];
 
@@ -92,6 +93,7 @@ export default function({onClose ,openWindow}){
     const rfooterConfig =[
         {id:"balance", Component:Display ,label:"Previous Balance",text:"100.0"},
         {id:"Total", Component:Display ,label:"Amount",text:"1000.0"},
+        {id: "print",Component:PrintButton},
     ];
 //#endregion 
     
@@ -100,7 +102,7 @@ export default function({onClose ,openWindow}){
     return (
         <div className="modal center">
             
-
+            
             <div className="popup">
                 
               <CloseButton onClick={onClose} />
