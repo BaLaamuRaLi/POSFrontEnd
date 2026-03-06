@@ -10,7 +10,7 @@ import Input from "../Components/Input";
 import Popup from "../Components/Popup";
 import SalesInvoice from "./SalesInvoice";
 import { useState } from "react";
-import SearchCustomer from "./SearchCustomer";
+import SearchAccount from "./SearchAccount";
 
 
 
@@ -78,7 +78,7 @@ const searchConfigs =[
                 <SalesInvoice openWindow={setWindow} onClose={()=> setWindow([])} />
             </Popup>
              <Popup WindowsOpen={WindowsOpen} Window="SearchCustomer" >
-                <SearchCustomer onClose={()=> setWindow(["SalesInvoice"])} />
+                <SearchAccount accountType={"Customer"} onClose={()=> setWindow(["SalesInvoice"])} />
             </Popup>
             
            <div className="searchBar vertical">
