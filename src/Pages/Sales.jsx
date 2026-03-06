@@ -92,7 +92,7 @@ const searchConfigs =[
            <div className="searchBar vertical">
          
             <SearchComponents components={searchConfigs} />
-               
+            
             </div> 
             <div className="content">
             
