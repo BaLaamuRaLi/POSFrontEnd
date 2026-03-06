@@ -1,11 +1,11 @@
 import { createPortal } from "react-dom";
 import CloseButton from "./CloseButton";
 
-export default function({isOpen,openWindow,children}){
+export default function({WindowsOpen,Window,children}){
     
     
     
-    if(isOpen!=openWindow) return null;
+    if(!WindowsOpen.includes(Window)) return null;
     return createPortal(
         <>
         

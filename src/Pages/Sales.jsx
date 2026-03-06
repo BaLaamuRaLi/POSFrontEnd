@@ -14,7 +14,7 @@ import { useState } from "react";
 
 
 export default function(){
-    const [isWindowOpen, setWindow] = useState(null);
+    const [WindowsOpen, setWindow] = useState([]);
 
      //#region callbacks
     const filterButtons = [{name:"unsaved",clickHandler: fun1}, 
@@ -73,8 +73,8 @@ const searchConfigs =[
 
         <div className="SearchBarLayout">
            
-            <Popup isOpen={isWindowOpen} openWindow={"SalesInvoice"} >
-                <SalesInvoice setWindow={()=> setWindow(false)} />
+            <Popup WindowsOpen={WindowsOpen} Window="SalesInvoice" >
+                <SalesInvoice setWindow={()=> setWindow([])} />
             </Popup>
            <div className="searchBar vertical">
          
