@@ -80,6 +80,9 @@ const searchConfigs =[
              <Popup WindowsOpen={WindowsOpen} Window="SearchCustomer" >
                 <SearchAccount accountType={"Customer"} onClose={()=> setWindow(["SalesInvoice"])} />
             </Popup>
+            <Popup WindowsOpen={WindowsOpen} Window="SearchAgent" >
+                <SearchAccount accountType={"Account"} onClose={()=> setWindow(["SalesInvoice"])} />
+            </Popup>
             
            <div className="searchBar vertical">
          

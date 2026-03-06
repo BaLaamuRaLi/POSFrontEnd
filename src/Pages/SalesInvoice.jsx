@@ -36,7 +36,7 @@ export default function({onClose ,openWindow}){
 //#region left pane Config
     const lheaderConfig =[
         {id:"sCustomer", Component:Button ,text:"Search Customer",onClick:()=>openWindow(["SalesInvoice","SearchCustomer"])},
-        {id:"sAgent", Component:Button ,text:"Search Agent"},
+        {id:"sAgent", Component:Button ,text:"Search Agent",onClick:()=>openWindow(["SalesInvoice","SearchAgent"])},
         {id:"Add", Component:Button ,text:"Add Account"},
 
     ];
