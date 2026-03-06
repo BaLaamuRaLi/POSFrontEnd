@@ -290,6 +290,16 @@ tbody > tr:hover {background-color: #D6EEEE;}
   overflow: hidden;
 }
 
+
+.popupChild{
+  position: relative;
+  height: 50%;
+  width: 50%;
+  background-color: var(--popup-background-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 .modal{
   position: fixed;
   inset: 0;

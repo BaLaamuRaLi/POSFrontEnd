@@ -9,7 +9,7 @@ import Display from "../Components/Display";
 
 
 
-export default function({setWindow}){
+export default function({onClose ,openWindow}){
 
        const result = [
     { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
@@ -35,7 +35,7 @@ export default function({setWindow}){
 
 //#region left pane Config
     const lheaderConfig =[
-        {id:"sCustomer", Component:Button ,text:"Search Customer"},
+        {id:"sCustomer", Component:Button ,text:"Search Customer",onClick:()=>openWindow(["SalesInvoice","SearchCustomer"])},
         {id:"sAgent", Component:Button ,text:"Search Agent"},
         {id:"Add", Component:Button ,text:"Add Account"},
 
@@ -102,7 +102,7 @@ export default function({setWindow}){
 
             <div className="popup">
                 
-              <CloseButton onClick={setWindow} />
+              <CloseButton onClick={onClose} />
                 
             <LeftPane lheadcomps={lheaderConfig} 
                 lproductcomps={lproductConfig}
