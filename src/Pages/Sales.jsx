@@ -17,6 +17,7 @@ import SearchProduct from "./SearchProduct";
 
 export default function(){
     const [WindowsOpen, setWindow] = useState([]);
+    const [editSales,setEditSales] =useState(null)
 
      //#region callbacks
     const filterButtons = [{name:"unsaved",clickHandler: fun1}, 
@@ -86,7 +87,7 @@ const searchConfigs =[
         <div className="SearchBarLayout">
            
             <Popup WindowsOpen={WindowsOpen} Window="SalesInvoice" >
-                <SalesInvoice openWindow={setWindow} onClose={()=> setWindow([])} />
+                <SalesInvoice openWindow={setWindow} onClose={()=> setWindow([])} invoice={editSales} />
             </Popup>
              <Popup WindowsOpen={WindowsOpen} Window="SearchCustomer" >
                 <SearchAccount accountType={"Customer"} onClose={()=> setWindow(["SalesInvoice"])} 
@@ -115,7 +116,7 @@ const searchConfigs =[
                 <ContentFilter buttons = {filterButtons} />
                 
                 <div className="resultSection">
-                <ResultTable list={result}/>
+                <ResultTable list={result} setClick={setEditSales} openWindow={()=>setWindow("SalesInvoice")}/>
                 </div>
             
             </div>

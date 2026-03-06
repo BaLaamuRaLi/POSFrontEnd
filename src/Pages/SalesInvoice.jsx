@@ -11,7 +11,7 @@ import PrintButton from "../Components/PrintButton";
 
 
 
-export default function({onClose ,openWindow}){
+export default function({onClose ,openWindow,invoice}){
 
        const result = useMemo(()=>[
     { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
@@ -67,12 +67,20 @@ export default function({onClose ,openWindow}){
     ];
 
 //#endregion
+    const customer ={name:"Shibu",amount:"1000.0"}
+   if(invoice)
+    {
+        customer.name=invoice.client;
+        customer.amount=invoice.amount;
+
+    }
+
 
 //#region rightpaneConfig
     const rheaderConfig =[
         {id:"Date", Component:Display ,label:"Date",text:"01/01/1000"},
         {id:"Draft", Component:Display ,label:"Draft No",text:"A1001"},
-        {id:"Name", Component:Display ,label:"Name",text:"Shibu"},
+        {id:"Name", Component:Display ,label:"Name",text:customer.name},
         {id:"GST", Component:Display ,label:"GSTIN",text:"GA23948324"},
         {id:"phone", Component:Display ,label:"phone",text:"98989238473"},
         {id:"Address", Component:Display ,label:"Address",text:"Pulikattil"},
@@ -92,7 +100,7 @@ export default function({onClose ,openWindow}){
 
     const rfooterConfig =[
         {id:"balance", Component:Display ,label:"Previous Balance",text:"100.0"},
-        {id:"Total", Component:Display ,label:"Amount",text:"1000.0"},
+        {id:"Total", Component:Display ,label:"Amount",text:customer.amount},
         {id:"save", Component:Button ,text:"Save As"},
         {id:"print", Component:Button ,text:"Print"},
       
