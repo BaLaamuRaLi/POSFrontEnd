@@ -93,7 +93,9 @@ export default function({onClose ,openWindow}){
     const rfooterConfig =[
         {id:"balance", Component:Display ,label:"Previous Balance",text:"100.0"},
         {id:"Total", Component:Display ,label:"Amount",text:"1000.0"},
-        {id: "print",Component:PrintButton},
+        {id:"save", Component:Button ,text:"Save As"},
+        {id:"print", Component:Button ,text:"Print"},
+      
     ];
 //#endregion 
     

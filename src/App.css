@@ -305,7 +305,7 @@ tbody > tr:hover {background-color: #D6EEEE;}
 .SearchProduct{
   display: grid;
   grid-template-columns: 30% 1fr;
-  grid-template-rows: 15% 1fr 10%;
+  grid-template-rows: 15% 75% 10%;
   height: 80%;
   width: 80%;
   padding: 20px;
@@ -333,6 +333,7 @@ tbody > tr:hover {background-color: #D6EEEE;}
 
 .footerSearchProducts{
   grid-area: 3 / 2 / 4 / 3;
+  justify-content: flex-end;
 }
 
 .modal{
@@ -420,7 +421,9 @@ grid-area: 3 / 1 / 4 / 2;
 
 .footerRightPane{
 grid-area: 4 / 1 / 5 / 2;
-gap: 10px;
+gap: 20px;
+padding-right: 30px;
+justify-content: flex-end;
 }
 
 /* right pane ends */
