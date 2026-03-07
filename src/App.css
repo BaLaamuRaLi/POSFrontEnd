@@ -321,7 +321,7 @@ tbody > tr:hover {background-color: #D6EEEE;}
   display: flex;
   flex-direction: horizontal;
   flex-wrap: wrap;
-  height: 50%;
+  height: 30%;
   width: 50%;
   padding: 30px;
   align-items: center;
@@ -472,4 +472,33 @@ justify-content: flex-end;
 /* ******Search bar layout ends here******** */
 
 
+/* listButton */
+.listButton{
+  position: relative;
+  display: inline-block;
+}
 
+.menu{
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  z-index: 1000;
+  cursor: pointer;
+  border:1px solid rgb(122, 122, 122);
+}
+
+.menu>li{
+  padding: 10px;
+}
+.menu>li:not(:last-child){
+  border-bottom: 1px solid rgb(122, 122, 122);
+}
+.menu>li:hover{
+  background-color: rgb(221, 221, 221);
+}
+
+/* **end listbutton*** */

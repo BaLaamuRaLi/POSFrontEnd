@@ -6,12 +6,15 @@ import ResultTable from "../Components/ResultTable";
 import Input from "../Components/Input";
 import Button from "../Components/Button";
 import Display from "../Components/Display";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import ListButton from "../Components/ListButton";
 
 
 
 
 export default function({onClose ,openWindow,invoice ,setaccount}){
+    const [isSaveAs,setSaveAs]=useState(false);
+    const [isPrint,setPrint]=useState(false);
 
        const result = useMemo(()=>[
     { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
@@ -98,11 +101,13 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
 
     ];
 
+const SaveAsmenu=["Bill","Estimate"];
+const Printmenu=["Bill","GST Bill","Estimate"];
     const rfooterConfig =[
         {id:"balance", Component:Display ,label:"Previous Balance",text:"100.0"},
         {id:"Total", Component:Display ,label:"Amount",text:customer.amount},
-        {id:"save", Component:Button ,text:"Save As"},
-        {id:"print", Component:Button ,text:"Print"},
+        {id:"save", Component:ListButton ,text:"Save As",items:SaveAsmenu,show:setSaveAs,isOpen:isSaveAs},
+        {id:"print", Component:ListButton ,text:"Print",items:Printmenu,show:setPrint,isOpen:isPrint},
       
     ];
 //#endregion 
