@@ -317,6 +317,11 @@ tbody > tr:hover {background-color: #D6EEEE;}
 
 
 }
+.addAccount{
+  display: inline;
+  height: 50%;
+  width: 50%;
+}
 
 .selectedProducts{
   grid-area: 1 / 1 / 4 / 2;

@@ -12,12 +12,14 @@ import SalesInvoice from "./SalesInvoice";
 import { useMemo, useState } from "react";
 import SearchAccount from "./SearchAccount";
 import SearchProduct from "./SearchProduct";
+import AddAccount from "./AddAccount";
 
 
 
 export default function(){
     const [WindowsOpen, setWindow] = useState([]);
-    const [editSales,setEditSales] =useState(null)
+    const [editSales,setEditSales] =useState(null);
+    const [accountType,setaccount] =useState(null);
 
      //#region callbacks
     const filterButtons = [{name:"unsaved",clickHandler: fun1}, 
@@ -87,20 +89,25 @@ const searchConfigs =[
         <div className="SearchBarLayout">
            
             <Popup WindowsOpen={WindowsOpen} Window="SalesInvoice" >
-                <SalesInvoice openWindow={setWindow} onClose={()=> setWindow([])} invoice={editSales} />
+                <SalesInvoice openWindow={setWindow} onClose={()=> setWindow([])} 
+                invoice={editSales} 
+                setaccount={setaccount}
+                />
             </Popup>
-             <Popup WindowsOpen={WindowsOpen} Window="SearchCustomer" >
-                <SearchAccount accountType={"Customer"} onClose={()=> setWindow(["SalesInvoice"])} 
+             <Popup WindowsOpen={WindowsOpen} Window={`Search${accountType}`} >
+                <SearchAccount accountType={accountType} onClose={()=> setWindow(["SalesInvoice"])} 
                     accounts={customers}
+                    newAccount={setWindow}
                     />
             </Popup>
-            <Popup WindowsOpen={WindowsOpen} Window="SearchAgent" >
-                <SearchAccount accountType={"Agent"} onClose={()=> setWindow(["SalesInvoice"])} 
-                    accounts={agents}
-                    />
-            </Popup>
-              <Popup WindowsOpen={WindowsOpen} Window="SearchProduct" >
+            
+            <Popup WindowsOpen={WindowsOpen} Window="SearchProduct" >
                 <SearchProduct onClose={()=> setWindow(["SalesInvoice"])} />
+            </Popup>
+
+            <Popup WindowsOpen={WindowsOpen} Window="AddAccount" >
+                <AddAccount onClose={()=> setWindow(["SalesInvoice",`Search${accountType}`])} 
+                accountType={accountType} />
             </Popup>
             
             

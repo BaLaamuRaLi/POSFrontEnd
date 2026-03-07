@@ -7,11 +7,11 @@ import Input from "../Components/Input";
 import Button from "../Components/Button";
 import Display from "../Components/Display";
 import { useMemo } from "react";
-import PrintButton from "../Components/PrintButton";
 
 
 
-export default function({onClose ,openWindow,invoice}){
+
+export default function({onClose ,openWindow,invoice ,setaccount}){
 
        const result = useMemo(()=>[
     { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
@@ -37,8 +37,8 @@ export default function({onClose ,openWindow,invoice}){
 
 //#region left pane Config
     const lheaderConfig =useMemo(()=>[
-        {id:"sCustomer", Component:Button ,text:"Search Customer",onClick:()=>openWindow(["SalesInvoice","SearchCustomer"])},
-        {id:"sAgent", Component:Button ,text:"Search Agent",onClick:()=>openWindow(["SalesInvoice","SearchAgent"])},
+        {id:"sCustomer", Component:Button ,text:"Search Customer",onClick:()=>{openWindow(["SalesInvoice","SearchCustomer"]);setaccount("Customer")}},
+        {id:"sAgent", Component:Button ,text:"Search Agent",onClick:()=>{openWindow(["SalesInvoice","SearchAgent"]);setaccount("Agent")}},
         // {id:"Add", Component:Button ,text:"Add Account"},
 
     ],[]);

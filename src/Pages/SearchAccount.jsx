@@ -2,7 +2,7 @@ import CloseButton from "../Components/CloseButton";
 import ResultTable from "../Components/ResultTable";
 import SearchBox from "../Components/SearchBox";
 
-export default function({accountType,onClose,accounts}){
+export default function({accountType,onClose,accounts,newAccount}){
     return(
     <div className="modal center">
         <div className="popup SearchAccount">
@@ -11,7 +11,7 @@ export default function({accountType,onClose,accounts}){
             style={{justifyContent:"space-between",paddingRight:"30px"}}
             >
                 <SearchBox placeholder={accountType+" "+"Name"}/>
-                <button>New {accountType}</button>
+                <button onClick={()=>newAccount(["SalesInvoice",`Search${accountType}`,"AddAccount"])}>New {accountType}</button>
                 
             </div>
             <ResultTable list={accounts}/>

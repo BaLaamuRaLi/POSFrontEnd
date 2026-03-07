@@ -24,7 +24,7 @@ export default function({list,setClick ,openWindow}){
                 onClick={()=>{
                 setClick&&setClick(item);
                 openWindow&&openWindow();
-                console.log(item[headers[1]])
+                 
               }} 
                 >
 
