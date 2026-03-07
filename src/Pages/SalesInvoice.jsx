@@ -127,7 +127,7 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
                 rcontentcomps={rcontentConfig} 
                 rfootcomps={rfooterConfig}
             />
-
+            
             </div>
             
         </div>

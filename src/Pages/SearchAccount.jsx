@@ -17,7 +17,7 @@ export default function({accountType,onClose,accounts,newAccount}){
             <ResultTable list={accounts}/>
             <div className="horizontal"
             style={{justifyContent:"flex-end"}}
-            ><button>Select</button></div>
+            ><button onClick={onClose}>Select</button></div>
         </div>
     </div>
 
