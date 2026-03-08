@@ -332,6 +332,10 @@ tbody > tr:hover {background-color: #D6EEEE;}
   align-items: center;
   gap:10px;
 }
+.productDetails{
+  height: 60%;
+  width: 60%;
+}
 
 .selectedProducts{
   grid-area: 1 / 1 / 4 / 2;
