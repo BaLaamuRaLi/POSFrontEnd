@@ -70,7 +70,7 @@ export default function({onClose,openWindow,invoice,setaccount}){
     ];
 
     const rcontentConfig=[
-        {id:"result", Component:ResultTable ,list:result,openWindow:()=>openWindow(["PurchaseInvoice","EditProduct"])},
+        {id:"result", Component:ResultTable ,list:result,openWindow:()=>openWindow(["PurchaseInvoice","EditPurchaseItems"])},
 
     ];
     const rfooterConfig =[

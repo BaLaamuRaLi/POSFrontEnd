@@ -12,7 +12,8 @@ import Popup from "../Components/Popup";
 import SearchProduct from "./SearchProduct";
 import SearchAccount from "./SearchAccount";
 import AddAccount from "./AddAccount";
-import ProductDetails from "./ProductDetails";
+import PurchaseItems from "./PurchaseItems";
+
 
 export default function(){
     const [WindowsOpen, setWindow] = useState([]);
@@ -95,8 +96,8 @@ const suppliers=[
                 <AddAccount onClose={()=> setWindow(["PurchaseInvoice",`Search${accountType}`])} 
                 accountType={accountType} />
             </Popup>
-            <Popup WindowsOpen={WindowsOpen} Window="EditProduct">
-                <ProductDetails onClose={()=> setWindow(["PurchaseInvoice"])}/>
+            <Popup WindowsOpen={WindowsOpen} Window="EditPurchaseItems">
+                <PurchaseItems onClose={()=> setWindow(["PurchaseInvoice"])}/>
             </Popup>
             
             

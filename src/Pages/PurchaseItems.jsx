@@ -1,0 +1,55 @@
+import CloseButton from "../Components/CloseButton";
+import ComponentsExtractor from "../Components/ComponentsExtractor";
+import Display from "../Components/Display";
+import DropBox from "../Components/DropBox";
+import LabelInput from "../Components/LabelInput";
+import DoubleInput from "../Components/DoubleInput"
+
+export default function({onClose}){
+
+    const lheadConfigs=[
+       {id:"ProductCode" ,Component:LabelInput,label:"Product Code",readOnly:true,value:"Product Code"},
+       {id:"Batch" ,Component:LabelInput,label:"Batch",readOnly:true,value:"Batch No"},
+       {id:"ProductName" ,Component:LabelInput,label:"Product Name",readOnly:true,value:"Product Name"},
+       {id:"tax" ,Component:DropBox,label:"Tax Category",items:["18%","5%","40%"],message:"tax category",value:"18%"},
+       {id:"IorSGST" ,Component:DropBox,label:"IGST/SGST",items:["SGST","IGST"],value:"SGST"},
+       {id:"Expiry" ,Component:LabelInput,label:"Expiry Date",type:"date"},
+    ]
+
+    const lfootConfigs=[
+       {id:"LC" ,Component:Display,label:"Landing Cost:",text:"234"},
+       {id:"sp" ,Component:Display,label:"Selling Price:",text:"566"},
+
+    ]
+
+    const rheadConfigs=[
+       {id:"qty" ,Component:LabelInput,label:"Quantity",type:"text"},
+       {id:"unit" ,Component:DropBox,label:"unit",items:["KG","BAG"],value:"KG"},
+       {id:"rate" ,Component:DoubleInput,label1:"Rate",label2:"Amount"},
+        
+    ]
+
+    return(
+    <div className="modal center">
+        <div className="popup purchaseItems">
+        <CloseButton onClick={onClose}/>
+
+        <div className="vertical" 
+        style={{gridArea:"1 / 1 / 2 / 2",padding:"20px",flexWrap:"wrap",gap:"10px",alignItems:"self-start"}}>
+        <ComponentsExtractor components={lheadConfigs}/>
+        </div>
+        <div className="vertical" 
+        style={{gridArea:"2 / 1 / 4 / 2",gap:"10px",padding:"20px",alignItems:"self-start"}}>
+        <ComponentsExtractor components={lfootConfigs}/>
+        </div>
+        <div className="vertical" style={{gridArea:"1 / 2 / 3 / 3",padding:"20px",flexWrap:"wrap",gap:"10px",alignItems:"self-start"}}>
+        <ComponentsExtractor components={rheadConfigs}/>
+        </div>
+        <div style={{gridArea:"3 / 2 / 4 / 3"}}>
+
+        </div>
+        
+        </div>
+    </div>
+    )
+}

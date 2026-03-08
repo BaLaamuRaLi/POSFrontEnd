@@ -296,7 +296,7 @@ tbody > tr:hover {background-color: #D6EEEE;}
   background-color: var(--popup-background-color);
   border-radius: 10px;
   overflow: hidden;
-  padding-right: 10px;
+  padding: 0 10px;
 }
 
 
@@ -332,9 +332,12 @@ tbody > tr:hover {background-color: #D6EEEE;}
   align-items: center;
   gap:10px;
 }
-.productDetails{
-  height: 60%;
+.purchaseItems{
+  height: 70%;
   width: 60%;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr 30% 10%;
+
 }
 
 .selectedProducts{

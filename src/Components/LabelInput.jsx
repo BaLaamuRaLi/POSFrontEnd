@@ -1,7 +1,8 @@
 export default function({label,...props}){
     return(
-        <div className="vertical">
-            <label>{label}
+        <div>
+            <label className="vertical">
+            {label}
             <input {...props}/>
             </label>
         </div>
