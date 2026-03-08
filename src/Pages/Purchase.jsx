@@ -15,7 +15,7 @@ import AddAccount from "./AddAccount";
 
 export default function(){
     const [WindowsOpen, setWindow] = useState([]);
-    const [editSales,setEditSales] =useState(null);
+    const [editPurchase,setEditPurchase] =useState(null);
     const [accountType,setaccount] =useState(null);
 
     const filterButtons = [
@@ -74,7 +74,7 @@ const suppliers=[
         <div className="SearchBarLayout">
             <Popup WindowsOpen={WindowsOpen} Window="PurchaseInvoice" >
                 <PurchaseInvoice openWindow={setWindow} onClose={()=> setWindow([])} 
-                invoice={editSales} 
+                invoice={editPurchase} 
                 setaccount={setaccount}
                 />
             </Popup>
@@ -106,7 +106,7 @@ const suppliers=[
                     <ContentHeader components={headerConfig} />
                     <ContentFilter buttons = {filterButtons} />
                       <div className="resultSection">
-                           <ResultTable list={result}/>
+                           <ResultTable list={result} setClick={setEditPurchase} openWindow={()=>setWindow("PurchaseInvoice")}/>
                         </div>
   
                 </div>

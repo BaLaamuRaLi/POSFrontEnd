@@ -1,12 +1,10 @@
 import { useMemo } from "react";
 import CloseButton from "../Components/CloseButton";
-import ComponentsExtractor from "../Components/ComponentsExtractor";
 import RightPane from "../Components/RightPane";
 import ResultTable from "../Components/ResultTable";
 import Button from "../Components/Button";
 import Display from "../Components/Display";
 import LeftPane from "../Components/LeftPane";
-import Input from "../Components/Input";
 import LabelInput from "../Components/LabelInput";
  
 
@@ -78,7 +76,7 @@ export default function({onClose,openWindow,invoice,setaccount}){
     const rfooterConfig =[
         {id:"balance", Component:Display ,label:"Previous Balance",text:"100.0"},
         {id:"Total", Component:Display ,label:"Amount",text:supplier.amount},
-        {id:"save", Component:Button ,text:"Save As"},
+        {id:"save", Component:Button ,text:"Save"},
       
         
     ];
