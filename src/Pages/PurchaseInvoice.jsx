@@ -7,6 +7,7 @@ import Button from "../Components/Button";
 import Display from "../Components/Display";
 import LeftPane from "../Components/LeftPane";
 import Input from "../Components/Input";
+import LabelInput from "../Components/LabelInput";
  
 
 export default function({onClose,openWindow,invoice,setaccount}){
@@ -41,20 +42,23 @@ export default function({onClose,openWindow,invoice,setaccount}){
     }
 
     const leftConfigs =useMemo(()=>[
-            {id:"sCustomer", Component:Button ,text:"Search Supplier",onClick:()=>{openWindow(["PurchaseInvoice","SearchSupplier"]);setaccount("Supplier")}},
-    
+            {id:"findSuppl", Component:Button ,text:"Search Supplier",onClick:()=>{openWindow(["PurchaseInvoice","SearchSupplier"]);setaccount("Supplier")}},
+            {id:"InvoiceNo", Component:LabelInput,label:"Invoice No:",type:"text"},
+            {id:"date", Component:LabelInput,label:"Date",type:"date"},
+
         ],[]);
     
     
     const billconfigs=[
-        {id:"Discount", Component:Input,type:"text",placeholder:"Total Discount:"},
-        {id:"Order No", Component:Input,type:"text",placeholder:"Order no:"},
+        {id:"Discount", Component:LabelInput,label:"Discount",type:"text"},
+        {id:"Order No", Component:LabelInput,label:"Order No",type:"text"},
+        {id:"payment", Component:LabelInput,label:"Payment",type:"text"},
                
     ]
     
     const rheaderConfig =[
         {id:"Date", Component:Display ,label:"Date",text:"01/01/1000"},
-        {id:"Draft", Component:Display ,label:"Draft No",text:"A1001"},
+        {id:"Purchaseno", Component:Display ,label:"Bill No",text:"A1001"},
         {id:"Name", Component:Display ,label:"Name",text:supplier.name},
         {id:"GST", Component:Display ,label:"GSTIN",text:"GA23948324"},
         {id:"phone", Component:Display ,label:"phone",text:"98989238473"},
