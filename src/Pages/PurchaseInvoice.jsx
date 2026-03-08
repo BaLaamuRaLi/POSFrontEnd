@@ -76,7 +76,7 @@ export default function({onClose,openWindow,invoice,setaccount}){
     const rfooterConfig =[
         {id:"balance", Component:Display ,label:"Previous Balance",text:"100.0"},
         {id:"Total", Component:Display ,label:"Amount",text:supplier.amount},
-        {id:"save", Component:Button ,text:"Save"},
+        {id:"save", Component:Button ,text:"Save",onClick:onClose},
       
         
     ];
