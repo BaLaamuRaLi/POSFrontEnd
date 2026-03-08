@@ -5,7 +5,7 @@ import Input from "../Components/Input";
 import ResultTable from "../Components/ResultTable";
 import Button from "../Components/Button";
 
-export default function({onClose}){
+export default function({onClose,isPurchase}){
     const filterConfigs=[
     {id:"Type", Component:Input,type:"text",placeholder:"Type: bulb, pipe"},
     {id:"Size", Component:Input,type:"text",placeholder:'Size: 9W, 1"'},
@@ -51,6 +51,8 @@ export default function({onClose}){
     const footerconfigs= [
         {id:"Add" ,Component:Button,text:"Add",onClick:onClose}
     ];
+    isPurchase&& footerconfigs.push({id:"sCustomer", Component:Button ,text:"New Product"},
+    )
 
     return(
     <div className="modal center">

@@ -62,7 +62,7 @@ export default function(){
  
 
     const headerConfig =[
-        {id: "add",component:AddButton ,onClick:()=>setWindow("SalesInvoice") },
+        {id: "add",component:AddButton ,onClick:()=>setWindow(["SalesInvoice"]) },
         {id: "search",component:SearchBox, placeholder:"Invoice number"},
         {id: "print",component:PrintButton}
     ];
@@ -78,16 +78,12 @@ const searchConfigs =[
         {id:"2",Name:"Biju",Address:"UAE"},
     ];
 
-    const agents=[
-        {id:"1",Name:"Mathew",Address:"london"},
-        {id:"2",Name:"shahi",Address:"Delhi"},
-    ];
 
     return(
 
 
         <div className="SearchBarLayout">
-           
+       
             <Popup WindowsOpen={WindowsOpen} Window="SalesInvoice" >
                 <SalesInvoice openWindow={setWindow} onClose={()=> setWindow([])} 
                 invoice={editSales} 
@@ -98,6 +94,7 @@ const searchConfigs =[
                 <SearchAccount accountType={accountType} onClose={()=> setWindow(["SalesInvoice"])} 
                     accounts={customers}
                     newAccount={setWindow}
+                    parent="SalesInvoice"
                     />
             </Popup>
             
@@ -107,9 +104,9 @@ const searchConfigs =[
 
             <Popup WindowsOpen={WindowsOpen} Window="AddAccount" >
                 <AddAccount onClose={()=> setWindow(["SalesInvoice",`Search${accountType}`])} 
-                accountType={accountType} />
+                accountType={accountType} 
+                />
             </Popup>
-            
             
            <div className="searchBar vertical">
          

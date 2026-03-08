@@ -243,6 +243,10 @@ select{
   padding-right: 10%;
 }
 
+.purchase .tableContainer{
+  padding: 0;
+}
+
 .tableWrapper{
  overflow: auto;
  height: 100%;
@@ -292,6 +296,7 @@ tbody > tr:hover {background-color: #D6EEEE;}
   background-color: var(--popup-background-color);
   border-radius: 10px;
   overflow: hidden;
+  padding-right: 10px;
 }
 
 
@@ -347,7 +352,8 @@ tbody > tr:hover {background-color: #D6EEEE;}
 
 .footerSearchProducts{
   grid-area: 3 / 2 / 4 / 3;
-  justify-content: flex-end;
+  flex-direction:row-reverse;
+  justify-content: space-between;
 }
 
 .modal{
@@ -386,6 +392,9 @@ tbody > tr:hover {background-color: #D6EEEE;}
   width: 10vw;
 }
 
+/* .purchase .leftPane{
+  display: flex;
+} */
 
 .headerleftPane{
   grid-area: 1 / 1 / 2 / 2;

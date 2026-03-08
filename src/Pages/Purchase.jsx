@@ -6,8 +6,17 @@ import ResultTable from "../Components/ResultTable";
 import SearchBox from "../Components/SearchBox";
 import SearchComponents from "../Components/ComponentsExtractor";
 import Input from "../Components/Input";
+import { useState } from "react";
+import PurchaseInvoice from "./PurchaseInvoice";
+import Popup from "../Components/Popup";
+import SearchProduct from "./SearchProduct";
+import SearchAccount from "./SearchAccount";
+import AddAccount from "./AddAccount";
 
 export default function(){
+    const [WindowsOpen, setWindow] = useState([]);
+    const [editSales,setEditSales] =useState(null);
+    const [accountType,setaccount] =useState(null);
 
     const filterButtons = [
         {name:"settled",clickHandler: fun1}, 
@@ -45,7 +54,7 @@ export default function(){
     ];
 
      const headerConfig =[
-            {id: "add",component:AddButton},
+            {id: "add",component:AddButton,onClick:()=>setWindow(["PurchaseInvoice"])},
             {id: "search",component:SearchBox, placeholder:"Invoice number"},
             {id: "print",component:PrintButton}
     ];
@@ -56,8 +65,39 @@ const searchConfigs =[
     {id: "Date",Component:Input,type:"date"} 
 ];
 
+const suppliers=[
+        {id:"1",Name:"JRK",Address:"washington"},
+        {id:"2",Name:"F&F",Address:"UAE"},
+    ];
+
     return(
         <div className="SearchBarLayout">
+            <Popup WindowsOpen={WindowsOpen} Window="PurchaseInvoice" >
+                <PurchaseInvoice openWindow={setWindow} onClose={()=> setWindow([])} 
+                invoice={editSales} 
+                setaccount={setaccount}
+                />
+            </Popup>
+            <Popup WindowsOpen={WindowsOpen} Window="SearchProduct" >
+                <SearchProduct onClose={()=> setWindow(["PurchaseInvoice"])} 
+                isPurchase={true}
+                />
+            </Popup>
+            <Popup WindowsOpen={WindowsOpen} Window={`Search${accountType}`} >
+                <SearchAccount accountType={accountType} onClose={()=> setWindow(["PurchaseInvoice"])} 
+                accounts={suppliers}
+                newAccount={setWindow}
+                parent="PurchaseInvoice"
+                />
+            </Popup>
+             <Popup WindowsOpen={WindowsOpen} Window="AddAccount" >
+                <AddAccount onClose={()=> setWindow(["PurchaseInvoice",`Search${accountType}`])} 
+                accountType={accountType} />
+            </Popup>
+            
+            
+            
+
                 <div className="searchBar vertical">
          
                 <SearchComponents components={searchConfigs} />

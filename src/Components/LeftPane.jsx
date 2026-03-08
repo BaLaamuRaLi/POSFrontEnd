@@ -3,7 +3,7 @@ export default function ({lheadcomps, lproductcomps ,lbillcomps}){
          <div className="leftPane">
             <div className="headerleftPane vertical">
                 {
-                    lheadcomps.map(({id,Component,...props})=>(
+                    lheadcomps?.map(({id,Component,...props})=>(
                         <Component key={id} {...props}/>
                     ))
                 }
@@ -11,14 +11,14 @@ export default function ({lheadcomps, lproductcomps ,lbillcomps}){
 
              <div className="productLeftPane vertical">
                     {
-                    lproductcomps.map(({id,Component,...props})=>(
+                    lproductcomps?.map(({id,Component,...props})=>(
                         <Component key={id} {...props}/>
                     ))
                 }
             </div>
             <div className="BillLeftPane vertical">
                 {
-                    lbillcomps.map(({id,Component,...props})=>(
+                    lbillcomps?.map(({id,Component,...props})=>(
                         <Component key={id} {...props}/>
                     ))
                 }
