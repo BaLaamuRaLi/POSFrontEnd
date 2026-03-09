@@ -7,13 +7,13 @@ import Button from "../Components/Button";
 
 export default function({onClose,isPurchase}){
     const filterConfigs=[
-    {id:"Type", Component:Input,type:"text",placeholder:"Type: bulb, pipe"},
-    {id:"Size", Component:Input,type:"text",placeholder:'Size: 9W, 1"'},
-    {id:"Company", Component:Input,type:"text",placeholder:'Company: Luker, Supreme'},
-    {id:"Batch", Component:Input,type:"text",placeholder:"Batch no:"},
-    {id:"Batch1", Component:Input,type:"text",placeholder:"Batch no:"},
-    {id:"Batch2", Component:Input,type:"text",placeholder:"Batch no:"},
-    {id:"Batch3", Component:Input,type:"text",placeholder:"Batch no:"},
+    {id:"name", Component:Input,type:"text",placeholder:"Product Name"},
+    {id:"type", Component:Input,type:"text",placeholder:"Type: bulb, pipe"},
+    {id:"size", Component:Input,type:"text",placeholder:'Size: 9W, 1"'},
+    {id:"company", Component:Input,type:"text",placeholder:'Company: Luker, Supreme'},
+    {id:"batch", Component:Input,type:"text",placeholder:"Batch no:"},
+    {id:"batch2", Component:Input,type:"text",placeholder:"Batch no:"},
+    {id:"batch3", Component:Input,type:"text",placeholder:"Batch no:"},
 
     ];
 

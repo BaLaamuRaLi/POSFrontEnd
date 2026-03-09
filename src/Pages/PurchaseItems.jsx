@@ -6,7 +6,7 @@ import DropBox from "../Components/DropBox";
 import LabelInput from "../Components/LabelInput";
 import SidebySide from "../Components/SidebySide";
 
-export default function({onClose}){
+export default function({onClose,openWindow}){
 
     const lheadConfigs=[
        {id:"ProductCode" ,Component:LabelInput,label:"Product Code",readOnly:true,value:"Product Code"},
@@ -14,6 +14,7 @@ export default function({onClose}){
        {id:"ProductName" ,Component:LabelInput,label:"Product Name",readOnly:true,value:"Product Name"},
        {id:"tax" ,Component:DropBox,label:"Tax Category",items:["18%","5%","40%"],message:"tax category",value:"18%"},
        {id:"Expiry" ,Component:LabelInput,label:"Expiry Date",type:"date"},
+       {id:"EditProfit" ,Component:Button,text:"Edit Profit",onClick:()=>openWindow(["PurchaseInvoice","EditPurchaseItems","EditProfit"])},
     ]
 
     const lfootConfigs=[
@@ -23,7 +24,7 @@ export default function({onClose}){
     ]
 
     const qty = {Component:LabelInput,label:"Quantity",type:"text"}
-    const unit ={Component:DropBox,label:"unit",items:["KG","BAG"],value:"KG",message:"--select--"}
+    const unit ={Component:DropBox,label:"unit",items:["KG","BAG","New Unit"],value:"KG",message:"--select--"}
     const rate ={Component:LabelInput,label:"Rate",type:"text"}
     const amount ={Component:LabelInput,label:"Amount",type:"text"}
     const discount1per={Component:LabelInput,label:"Discount %",type:"text"}
