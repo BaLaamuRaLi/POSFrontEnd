@@ -5,7 +5,7 @@ import Input from "../Components/Input";
 import ResultTable from "../Components/ResultTable";
 import Button from "../Components/Button";
 
-export default function({onClose,isPurchase}){
+export default function({onClose,isPurchase,openWindow}){
     const filterConfigs=[
     {id:"name", Component:Input,type:"text",placeholder:"Product Name"},
     {id:"type", Component:Input,type:"text",placeholder:"Type: bulb, pipe"},
@@ -51,7 +51,7 @@ export default function({onClose,isPurchase}){
     const footerconfigs= [
         {id:"Add" ,Component:Button,text:"Add",onClick:onClose}
     ];
-    isPurchase&& footerconfigs.push({id:"sCustomer", Component:Button ,text:"New Product"},
+    isPurchase&& footerconfigs.push({id:"sCustomer", Component:Button ,text:"New Product",onClick:()=>openWindow(["PurchaseInvoice","SearchProduct","AddProduct"])},
     )
 
     return(

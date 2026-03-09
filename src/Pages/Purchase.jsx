@@ -14,6 +14,7 @@ import SearchAccount from "./SearchAccount";
 import AddAccount from "./AddAccount";
 import PurchaseItems from "./PurchaseItems";
 import EditProfit from "./EditProfit";
+import AddProduct from "./AddProduct";
 
 
 export default function(){
@@ -82,7 +83,7 @@ const suppliers=[
                 />
             </Popup>
             <Popup WindowsOpen={WindowsOpen} Window="SearchProduct" >
-                <SearchProduct onClose={()=> setWindow(["PurchaseInvoice"])} 
+                <SearchProduct openWindow={setWindow} onClose={()=> setWindow(["PurchaseInvoice"])} 
                 isPurchase={true}
                 />
             </Popup>
@@ -104,6 +105,9 @@ const suppliers=[
             
             <Popup WindowsOpen={WindowsOpen} Window="EditProfit">
                 <EditProfit onClose={()=> setWindow(["PurchaseInvoice","EditPurchaseItems"])}/>
+            </Popup>
+            <Popup WindowsOpen={WindowsOpen} Window="AddProduct">
+                <AddProduct onClose={()=> setWindow(["PurchaseInvoice","SearchProduct"])}/>
             </Popup>
 
                 <div className="searchBar vertical">
