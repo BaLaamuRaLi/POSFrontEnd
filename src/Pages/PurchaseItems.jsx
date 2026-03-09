@@ -3,7 +3,7 @@ import ComponentsExtractor from "../Components/ComponentsExtractor";
 import Display from "../Components/Display";
 import DropBox from "../Components/DropBox";
 import LabelInput from "../Components/LabelInput";
-import DoubleInput from "../Components/DoubleInput"
+import SidebySide from "../Components/SidebySide";
 
 export default function({onClose}){
 
@@ -22,10 +22,14 @@ export default function({onClose}){
 
     ]
 
+    const qty = {Component:LabelInput,label:"Quantity",type:"text"}
+    const unit ={Component:DropBox,label:"unit",items:["KG","BAG"],value:"KG"}
+    const rate ={Component:LabelInput,label:"Rate",type:"text"}
+    const amount ={Component:LabelInput,label:"Amount",type:"text"}
+
     const rheadConfigs=[
-       {id:"qty" ,Component:LabelInput,label:"Quantity",type:"text"},
-       {id:"unit" ,Component:DropBox,label:"unit",items:["KG","BAG"],value:"KG"},
-       {id:"rate" ,Component:DoubleInput,label1:"Rate",label2:"Amount"},
+       {id:"qty-unit" ,Component:SidebySide,left:qty,right:unit},
+       {id:"rt-Amt" ,Component:SidebySide,left:rate,right:amount},
         
     ]
 
@@ -33,7 +37,7 @@ export default function({onClose}){
     <div className="modal center">
         <div className="popup purchaseItems">
         <CloseButton onClick={onClose}/>
-
+      
         <div className="vertical" 
         style={{gridArea:"1 / 1 / 2 / 2",padding:"20px",flexWrap:"wrap",gap:"10px",alignItems:"self-start"}}>
         <ComponentsExtractor components={lheadConfigs}/>
