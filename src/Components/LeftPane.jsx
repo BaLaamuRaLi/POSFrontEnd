@@ -1,4 +1,4 @@
-export default function ({lheadcomps, lproductcomps ,lbillcomps}){
+export default function ({lheadcomps,lbillcomps}){
     return(
          <div className="leftPane">
             <div className="headerleftPane vertical">
@@ -9,13 +9,13 @@ export default function ({lheadcomps, lproductcomps ,lbillcomps}){
                 }
             </div>
 
-             <div className="productLeftPane vertical">
+             {/* <div className="productLeftPane vertical">
                     {
                     lproductcomps?.map(({id,Component,...props})=>(
                         <Component key={id} {...props}/>
                     ))
                 }
-            </div>
+            </div> */}
             <div className="BillLeftPane vertical">
                 {
                     lbillcomps?.map(({id,Component,...props})=>(

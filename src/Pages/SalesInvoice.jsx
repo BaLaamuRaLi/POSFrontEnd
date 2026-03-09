@@ -38,20 +38,18 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
     { id: 19, Product: "apple", Qty: 3500 ,Profit:10},
     ],[]);
 
-//#region left pane Config
-    const lheaderConfig =useMemo(()=>[
-        {id:"sCustomer", Component:Button ,text:"Search Customer",onClick:()=>{openWindow(["SalesInvoice","SearchCustomer"]);setaccount("Customer")}},
-        {id:"sAgent", Component:Button ,text:"Search Agent",onClick:()=>{openWindow(["SalesInvoice","SearchAgent"]);setaccount("Agent")}},
-        // {id:"Add", Component:Button ,text:"Add Account"},
 
-    ],[]);
-     const items =["Buy 1 get 1","3 for 100Rs" ,"No offer" ,
+//#region left pane Config
+
+    const items =["Buy 1 get 1","3 for 100Rs" ,"No offer" ,
     ];
 
     const tax =["40%","18%" ,"5%" ,
     ];
-    
-    const lproductConfig =[
+
+    const lheaderConfig =useMemo(()=>[
+        {id:"sCustomer", Component:Button ,text:"Search Customer",onClick:()=>{openWindow(["SalesInvoice","SearchCustomer"]);setaccount("Customer")}},
+        {id:"sAgent", Component:Button ,text:"Search Agent",onClick:()=>{openWindow(["SalesInvoice","SearchAgent"]);setaccount("Agent")}},
         {id:"Batch", Component:Input,type:"text",placeholder:"Batch no:"},
         {id:"Discount", Component:Input,type:"text",placeholder:"Discount %:"},     
         {id:"Unit", Component:Input,type:"text",placeholder:"Unit:"},
@@ -59,7 +57,11 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
         {id:"offer", Component:DropBox,message:"select offer" ,items:items,name:"offer" ,id:"off"},
 
 
-    ];
+    ],[]);
+ 
+    
+    
+
     const lbillConfig =[
         {id:"Discount", Component:Input,type:"text",placeholder:"Total Discount:"},
         {id:"Commision", Component:Input,type:"text",placeholder:"Agent Commision:"},
@@ -123,7 +125,6 @@ const Printmenu=["Bill","GST Bill","Estimate"];
               <CloseButton onClick={onClose} />
                 
             <LeftPane lheadcomps={lheaderConfig} 
-                lproductcomps={lproductConfig}
                 lbillcomps={lbillConfig}
             />
 

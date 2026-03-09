@@ -6,6 +6,7 @@ import Button from "../Components/Button";
 import Display from "../Components/Display";
 import LeftPane from "../Components/LeftPane";
 import LabelInput from "../Components/LabelInput";
+import DropBox from "../Components/DropBox";
  
 
 export default function({onClose,openWindow,invoice,setaccount}){
@@ -39,12 +40,13 @@ export default function({onClose,openWindow,invoice,setaccount}){
 
     }
 
-    const leftConfigs =useMemo(()=>[
+    const leftConfigs =[
             {id:"findSuppl", Component:Button ,text:"Search Supplier",onClick:()=>{openWindow(["PurchaseInvoice","SearchSupplier"]);setaccount("Supplier")}},
             {id:"InvoiceNo", Component:LabelInput,label:"Invoice No:",type:"text"},
             {id:"date", Component:LabelInput,label:"Date",type:"date"},
+            {id:"IorSGST" ,Component:DropBox,label:"IGST/SGST",items:["SGST","IGST"],value:"SGST"},
 
-        ],[]);
+        ]
     
     
     const billconfigs=[
