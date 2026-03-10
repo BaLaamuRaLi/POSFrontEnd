@@ -14,12 +14,13 @@ export default function({onClose}){
     
 
  //#endregion
+
+
+ //#region right
     const filter1={Component:LabelInput,label:"Type",type:"text",placeholder:"pipe, bulb"}; 
     const filter2={Component:LabelInput,label:"Size",type:"text",placeholder:'9W, 1"'}; 
     const filter3={Component:LabelInput,label:"Company",type:"text",placeholder:'Goldmedal,Supreme'}; 
     const filter4={Component:LabelInput,label:"filter 4",type:"text"}; 
-
-//#region right
 
 //#endregion
     return(
