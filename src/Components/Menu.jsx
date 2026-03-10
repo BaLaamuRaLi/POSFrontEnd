@@ -1,7 +1,9 @@
+import menuImage from "../assets/menu.svg"
+
 export default function({onExpand}){
     return (
         <img
-          src="src\assets\menu.svg"
+          src={menuImage}
           alt="menu"
           className="logo"
           onClick={onExpand}
