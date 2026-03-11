@@ -1,7 +1,9 @@
 import axios from "axios"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../utils/UserContext";
 
 export default function ({onlogin}){
+  const {userRole,setUserRole}=useContext(UserContext)
   const[Name,setName] =useState("")
   const[Password,setPassword]=useState("")
   async function handleSubmit(e){
@@ -10,12 +12,14 @@ export default function ({onlogin}){
       const res = await axios.post("/server/login",{name:Name,password:Password})
       setName(null)
       setPassword(null)
-      console.log(res)
+      // console.log(res)
  
-      const {islogged,page} =res.data
+      const {islogged,role,page} =res.data
 
       if(res){
         onlogin(islogged,page)
+        setUserRole(role)
+
       }
 
     } catch (error) {

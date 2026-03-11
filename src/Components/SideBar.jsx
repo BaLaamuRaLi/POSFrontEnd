@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Menu from "./Menu";
 import AccountLogo from "./AccountLogo";
 import MenuItems from "./MenuItems";
+import { UserContext } from "../utils/UserContext";
 
 
-export default function SideBar ({setMenu, onlogout ,clickedMenu}) {    
-    const menuItems = ["Dashboard", 
+export default function SideBar ({setMenu, onlogout ,clickedMenu}) {
+  let menuItems;
+const {userRole} =useContext(UserContext)
+ const AdminPages=["Dashboard", 
                       "Sales", 
                       "Purchase",
                       "Inventory", 
@@ -14,6 +17,21 @@ export default function SideBar ({setMenu, onlogout ,clickedMenu}) {
                       "Returns" ,
                       "Reports" 
                     ];
+  const StaffPages=[ 
+                      "Sales", 
+                      "Purchase",                    
+                      "Payments" ,
+                      "Returns" ,
+                       
+                    ];
+
+    if(userRole==="Admin")                
+    { menuItems =AdminPages
+    }else{
+       menuItems=StaffPages
+    }
+
+
      const [isExpanded, setIsExpanded] = useState(false);
   const handleLogout = () => {
         const confirm = window.confirm("Are you sure you want to logout?");
