@@ -56,7 +56,6 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
         {id:"Tax", Component:DropBox,message:"select Tax" ,items:tax,name:"Tax" , value:"18%"},
         {id:"offer", Component:DropBox,message:"select offer" ,items:items,name:"offer" },
 
-
     ],[]);
 
     

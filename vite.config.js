@@ -6,5 +6,10 @@ export default defineConfig({
   plugins: [react()],
   build:{
     outDir:"../BackEnd/Front"
+  },
+  server:{
+    proxy:{
+      '/server':'http://localhost:3000/'
+    }
   }
 })
