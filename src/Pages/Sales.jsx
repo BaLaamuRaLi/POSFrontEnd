@@ -59,7 +59,7 @@ useMemo(async ()=>{
  
 
     const headerConfig =[
-        {id: "add",component:AddButton ,onClick:()=>setWindow(["SalesInvoice"]) },
+        {id: "add",component:AddButton ,onClick:()=>{setWindow(["SalesInvoice"]) ,setEditSales(null)} },
         {id: "search",component:SearchBox, placeholder:"Invoice number"},
         {id: "print",component:PrintButton}
     ];
@@ -70,10 +70,6 @@ const searchConfigs =[
     {id: "duration",Component:DropBox,message:"Duration", items:items ,name:"Duration"}
 ];
 
-    const customers=[
-        {id:"1",Name:"john",Address:"washington"},
-        {id:"2",Name:"Biju",Address:"UAE"},
-    ];
 
 
     return(
@@ -89,7 +85,6 @@ const searchConfigs =[
             </Popup>
              <Popup WindowsOpen={WindowsOpen} Window={`Search${accountType}`} >
                 <SearchAccount accountType={accountType} onClose={()=> setWindow(["SalesInvoice"])} 
-                    accounts={customers}
                     newAccount={setWindow}
                     parent="SalesInvoice"
                     />

@@ -53,6 +53,8 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
     const tax =["40%","18%" ,"5%" ,
     ];
 
+
+
     const lheaderConfig =useMemo(()=>[
         {id:"sCustomer", Component:Button ,text:"Search Customer",onClick:()=>{openWindow(["SalesInvoice","SearchCustomer"]);setaccount("Customer")}},
         {id:"sAgent", Component:Button ,text:"Search Agent",onClick:()=>{openWindow(["SalesInvoice","SearchAgent"]);setaccount("Agent")}},

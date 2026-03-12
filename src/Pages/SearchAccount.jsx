@@ -1,8 +1,23 @@
+import axios from "axios";
 import CloseButton from "../Components/CloseButton";
 import ResultTable from "../Components/ResultTable";
 import SearchBox from "../Components/SearchBox";
+import { useEffect, useState } from "react";
 
-export default function({accountType,onClose,accounts,newAccount,parent}){
+export default function({accountType,onClose,newAccount,parent}){
+    const [customerName,setCustomerName] = useState("")
+    const [accounts,setaccount] = useState(null)
+    
+    useEffect(()=>{
+    async function getCustomer(){
+    const res= await axios.get(`/server/party/customers/${customerName}`)
+    setaccount(res.data)
+    }
+    if(customerName)getCustomer()
+
+    },[customerName])
+
+
     return(
     <div className="modal center">
         <div className="popup SearchAccount">
@@ -10,7 +25,7 @@ export default function({accountType,onClose,accounts,newAccount,parent}){
             <div className="horizontal"
             style={{justifyContent:"space-between",paddingRight:"30px"}}
             >
-                <SearchBox placeholder={accountType+" "+"Name"}/>
+                <SearchBox placeholder={accountType+" "+"Name"} onChange={(e)=>setCustomerName(e.target.value)}  value={customerName}/>
                 <button onClick={()=>newAccount([parent,`Search${accountType}`,"AddAccount"])}>New {accountType}</button>
                 
             </div>
