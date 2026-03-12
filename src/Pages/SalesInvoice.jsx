@@ -71,11 +71,12 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
     ];
 
 //#endregion
-    const customer ={name:"Shibu",amount:"1000.0"}
+    const customer ={draftNo:"null", name:"null",amount:"null"}
    if(invoice)
     {
-        customer.name=invoice.client;
-        customer.amount=invoice.amount;
+        customer.name=invoice.Name;
+        customer.amount=invoice.Amount;
+        customer.draftNo=invoice.orderNO;
 
     }
 
@@ -83,7 +84,7 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
 //#region rightpaneConfig
     const rheaderConfig =[
         {id:"Date", Component:Display ,label:"Date",text:"01/01/1000"},
-        {id:"Draft", Component:Display ,label:"Draft No",text:"A1001"},
+        {id:"Draft", Component:Display ,label:"Draft No",text:customer.draftNo},
         {id:"Name", Component:Display ,label:"Name",text:customer.name},
         {id:"GST", Component:Display ,label:"GSTIN",text:"GA23948324"},
         {id:"phone", Component:Display ,label:"phone",text:"98989238473"},

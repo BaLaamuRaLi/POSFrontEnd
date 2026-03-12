@@ -9,7 +9,7 @@ export default defineConfig({
   },
   server:{
     proxy:{
-      '/server':'http://localhost:3000/'
+      '/server':'http://localhost:3000'
     }
   }
 })

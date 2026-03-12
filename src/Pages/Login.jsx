@@ -9,7 +9,7 @@ export default function ({onlogin}){
   async function handleSubmit(e){
     e.preventDefault();
     try {
-      const res = await axios.post("/server/login",{name:Name,password:Password})
+      const res = await axios.post("/server/login/",{name:Name,password:Password})
       setName(null)
       setPassword(null)
       // console.log(res)

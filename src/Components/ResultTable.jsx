@@ -2,7 +2,7 @@
 
 export default function({list,setClick ,openWindow}){
     
-    const headers = Object.keys(list[0]);
+   const headers = Object.keys(list[0]);
   
    
     

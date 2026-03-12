@@ -13,6 +13,8 @@ import { useMemo, useState } from "react";
 import SearchAccount from "./SearchAccount";
 import SearchProduct from "./SearchProduct";
 import AddAccount from "./AddAccount";
+import axios from "axios";
+
 
 
 
@@ -20,6 +22,7 @@ export default function(){
     const [WindowsOpen, setWindow] = useState([]);
     const [editSales,setEditSales] =useState(null);
     const [accountType,setaccount] =useState(null);
+    const [result,setResult] =useState(null)
 
      //#region callbacks
     const filterButtons = [{name:"unsaved",clickHandler: fun1}, 
@@ -33,28 +36,23 @@ export default function(){
    function fun3() { console.log("clicked Bills");}
    function fun4() { console.log("clicked Not paid");}
 //#endregion
+  
+useMemo(async ()=>{
+    try{
+   const res=await axios.get("/server/sales/pending")
+    setResult(res.data)
+    console.log('result inside await:',result)
+   
+    }
+    catch (error) {
+        console.log(error)
+    }
     
-    const result = useMemo(()=>[
-    { id: 1, client: "Shibu", amount: 2000 },
-    { id: 2, client: "Client B", amount: 3500 },
-    { id: 3, client: "Client A", amount: 2000 },
-    { id: 4, client: "Client B", amount: 3500 },
-    { id: 5, client: "Client B", amount: 3500 },
-    { id: 6, client: "Client A", amount: 2000 },
-    { id: 7, client: "Client B", amount: 3500 },
-    { id: 8, client: "Client B", amount: 3500 },
-    { id: 9, client: "Client A", amount: 2000 },
-    { id: 10, client: "Client B", amount: 3500 },
-    { id: 11, client: "Client B", amount: 3500 },
-    { id: 12, client: "Client A", amount: 2000 },
-    { id: 13, client: "Client B", amount: 3500 },
-    { id: 14, client: "Client B", amount: 3500 },
-    { id: 15, client: "Client A", amount: 2000 },
-    { id: 16, client: "Client B", amount: 3500 },
-    { id: 17, client: "Client B", amount: 3500 },
-    { id: 18, client: "Client A", amount: 2000 },
-    { id: 19, client: "Client B", amount: 3500 },
-    ],[]);
+    },[]);
+
+    console.log("result:", result)
+
+    
     const items =["last week","last one month" ,"last one year" ,
         "last 5 years", "last 10 years" ,"custom"
     ];
@@ -120,7 +118,7 @@ const searchConfigs =[
                 <ContentFilter buttons = {filterButtons} />
                 
                 <div className="resultSection">
-                <ResultTable list={result} setClick={setEditSales} openWindow={()=>setWindow("SalesInvoice")}/>
+                {result&&(<ResultTable list={result} setClick={setEditSales} openWindow={()=>setWindow("SalesInvoice")}/>)}
                 </div>
             
             </div>
