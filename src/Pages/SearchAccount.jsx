@@ -10,10 +10,10 @@ export default function({accountType,onClose,newAccount,parent}){
     
     useEffect(()=>{
     async function getCustomer(){
-    const res= await axios.get(`/server/party/customers/${customerName}`)
+    const res= await axios.get(`/server/party/${accountType}/${customerName}`)
     setaccount(res.data)
     }
-    if(customerName)getCustomer()
+    if(customerName) getCustomer();
 
     },[customerName])
 
