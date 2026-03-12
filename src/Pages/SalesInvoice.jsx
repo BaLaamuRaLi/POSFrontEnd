@@ -8,6 +8,7 @@ import Button from "../Components/Button";
 import Display from "../Components/Display";
 import { useMemo, useState } from "react";
 import ListButton from "../Components/ListButton";
+import axios from "axios";
 
 
 
@@ -15,6 +16,7 @@ import ListButton from "../Components/ListButton";
 export default function({onClose ,openWindow,invoice ,setaccount}){
     const [isSaveAs,setSaveAs]=useState(false);
     const [isPrint,setPrint]=useState(false);
+    const [orderDetails,setDetails]=useState(null)
 
        const result = useMemo(()=>[
     { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
@@ -38,6 +40,10 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
     { id: 19, Product: "apple", Qty: 3500 ,Profit:10},
     ],[]);
 
+    useMemo( async ()=>{
+   const res= await axios.get(`/server/sales/orders/${invoice.id}`)
+   setDetails(res.data)
+ },[]);
 
 //#region left pane Config
 
@@ -71,25 +77,18 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
     ];
 
 //#endregion
-    const customer ={draftNo:"null", name:"null",amount:"null"}
-   if(invoice)
-    {
-        customer.name=invoice.Name;
-        customer.amount=invoice.Amount;
-        customer.draftNo=invoice.orderNO;
-
-    }
+     
 
 
 //#region rightpaneConfig
     const rheaderConfig =[
-        {id:"Date", Component:Display ,label:"Date",text:"01/01/1000"},
-        {id:"Draft", Component:Display ,label:"Draft No",text:customer.draftNo},
-        {id:"Name", Component:Display ,label:"Name",text:customer.name},
-        {id:"GST", Component:Display ,label:"GSTIN",text:"GA23948324"},
-        {id:"phone", Component:Display ,label:"phone",text:"98989238473"},
-        {id:"Address", Component:Display ,label:"Address",text:"Pulikattil"},
-        {id:"Agent", Component:Display ,label:"Agent",text:"shashi"},
+        {id:"Date", Component:Display ,label:"Date",text:orderDetails?.orderDate},
+        {id:"Draft", Component:Display ,label:"Draft No",text:orderDetails?.orderNO},
+        {id:"Name", Component:Display ,label:"Name",text:orderDetails?.Name},
+        {id:"GST", Component:Display ,label:"GSTIN",text:orderDetails?.gst},
+        {id:"phone", Component:Display ,label:"phone",text:orderDetails?.phone},
+        {id:"Address", Component:Display ,label:"Address",text:orderDetails?.address},
+        {id:"Agent", Component:Display ,label:"Agent",text:orderDetails?.Agent},
        
     ];
 
@@ -106,8 +105,8 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
 const SaveAsmenu=["Bill","Estimate"];
 const Printmenu=["Bill","GST Bill","Estimate"];
     const rfooterConfig =[
-        {id:"balance", Component:Display ,label:"Previous Balance",text:"100.0"},
-        {id:"Total", Component:Display ,label:"Amount",text:customer.amount},
+        {id:"balance", Component:Display ,label:"Previous Balance",text:orderDetails?.prevBalance},
+        {id:"Total", Component:Display ,label:"Amount",text:orderDetails?.Amount},
         {id:"save", Component:ListButton ,text:"Save As",items:SaveAsmenu,show:setSaveAs,isOpen:isSaveAs},
         {id:"print", Component:ListButton ,text:"Print",items:Printmenu,show:setPrint,isOpen:isPrint},
       

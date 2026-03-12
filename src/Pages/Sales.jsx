@@ -41,8 +41,7 @@ useMemo(async ()=>{
     try{
    const res=await axios.get("/server/sales/pending")
     setResult(res.data)
-    console.log('result inside await:',result)
-   
+  
     }
     catch (error) {
         console.log(error)
@@ -50,7 +49,7 @@ useMemo(async ()=>{
     
     },[]);
 
-    console.log("result:", result)
+ 
 
     
     const items =["last week","last one month" ,"last one year" ,

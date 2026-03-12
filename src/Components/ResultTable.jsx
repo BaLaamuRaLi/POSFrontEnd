@@ -1,10 +1,10 @@
 
 
 export default function({list,setClick ,openWindow}){
-    
+  
+  if(!list){ return null;}
    const headers = Object.keys(list[0]);
   
-   
     
     return(
 
