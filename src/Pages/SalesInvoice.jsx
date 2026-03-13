@@ -56,6 +56,24 @@ useEffect(()=>{
         orderDate:today
     }
    ));
+   
+   async function getOrderNo(){
+    try{
+    const res=await axios.get('/server/sales/newOrder');
+    setOrderDetails(prev=>(
+        {
+            ...prev,
+            OrderNO:res.data
+        }
+    ));
+    }
+    catch (error) {
+        throw new Error(error);
+        
+    }
+   }
+   getOrderNo();
+
 },[])
 
 
