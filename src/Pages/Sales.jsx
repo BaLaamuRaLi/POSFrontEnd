@@ -9,11 +9,12 @@ import DropBox from "../Components/DropBox";
 import Input from "../Components/Input";
 import Popup from "../Components/Popup";
 import SalesInvoice from "./SalesInvoice";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SearchAccount from "./SearchAccount";
 import SearchProduct from "./SearchProduct";
 import AddAccount from "./AddAccount";
 import axios from "axios";
+import { SalesContext } from "../utils/SalesContext";
 
 
 
@@ -23,7 +24,10 @@ export default function(){
     const [editSales,setEditSales] =useState(null);
     const [accountType,setaccount] =useState(null);
     const [result,setResult] =useState(null)
+    const [orderDetails,setOrderDetails]=useState({})
+    const[orderItems,setOrderItems]=useState([])
 
+    
      //#region callbacks
     const filterButtons = [{name:"unsaved",clickHandler: fun1}, 
         {name:"Estimates",clickHandler:fun2}, 
@@ -50,7 +54,9 @@ useMemo(async ()=>{
     },[]);
 
  
-
+useEffect(()=>{
+    console.log("order Details:",orderDetails)
+},[orderDetails])
     
     const items =["last week","last one month" ,"last one year" ,
         "last 5 years", "last 10 years" ,"custom"
@@ -76,7 +82,7 @@ const searchConfigs =[
 
 
         <div className="SearchBarLayout">
-       
+            <SalesContext.Provider value={{orderDetails,setOrderDetails,orderItems,setOrderItems}}>
             <Popup WindowsOpen={WindowsOpen} Window="SalesInvoice" >
                 <SalesInvoice openWindow={setWindow} onClose={()=> setWindow([])} 
                 invoice={editSales} 
@@ -93,7 +99,7 @@ const searchConfigs =[
             <Popup WindowsOpen={WindowsOpen} Window="SearchProduct" >
                 <SearchProduct onClose={()=> setWindow(["SalesInvoice"])} />
             </Popup>
-
+            </SalesContext.Provider>
             <Popup WindowsOpen={WindowsOpen} Window="AddAccount" >
                 <AddAccount onClose={()=> setWindow(["SalesInvoice",`Search${accountType}`])} 
                 accountType={accountType} 

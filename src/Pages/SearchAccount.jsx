@@ -2,12 +2,16 @@ import axios from "axios";
 import CloseButton from "../Components/CloseButton";
 import ResultTable from "../Components/ResultTable";
 import SearchBox from "../Components/SearchBox";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { SalesContext } from "../utils/SalesContext";
 
 export default function({accountType,onClose,newAccount,parent}){
     const [Name,setName] = useState("")
     const [accounts,setaccount] = useState(null)
-    
+    const [selected,setselected]=useState(null)
+    const{setOrderDetails}=useContext(SalesContext)
+
+
     useEffect(()=>{
     async function getCustomer(){
     const res= await axios.get(`/server/party/${accountType}/${Name}`)
@@ -18,7 +22,18 @@ export default function({accountType,onClose,newAccount,parent}){
     },[Name])
 
     function selectHandle(){
-        
+        if(selected){
+            (accountType==="Customer")&& setOrderDetails(prev=>({
+                ...prev,
+                Name:selected.Name
+            }));
+            (accountType==="Agent")&&setOrderDetails(prev=>({
+                ...prev,
+                Agent:selected.Name
+            }));
+
+        }
+       
         onClose()
     }
 
@@ -34,11 +49,11 @@ export default function({accountType,onClose,newAccount,parent}){
                 
             </div>
          
-            <ResultTable list={accounts}/>
+            <ResultTable list={accounts} setClick={setselected}/>
       
             <div className="horizontal"
             style={{gridArea:"3 / 1 / 4 / 2", justifyContent:"flex-end"}}
-            ><button onClick={onClose}>Select</button></div>
+            ><button onClick={selectHandle}>Select</button></div>
         </div>
     </div>
 
