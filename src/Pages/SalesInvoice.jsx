@@ -39,12 +39,12 @@ export default function({onClose ,openWindow,invoice ,setaccount}){
     { id: 18, Product: "apple", Qty: 2000 ,Profit:10},
     { id: 19, Product: "apple", Qty: 3500 ,Profit:10},
     ],[]);
-
+if(invoice){
     useMemo( async ()=>{
    const res= await axios.get(`/server/sales/orders/${invoice.id}`)
    setDetails(res.data)
  },[]);
-
+}
 //#region left pane Config
 
     const items =["Buy 1 get 1","3 for 100Rs" ,"No offer" ,

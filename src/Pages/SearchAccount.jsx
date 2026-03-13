@@ -5,18 +5,22 @@ import SearchBox from "../Components/SearchBox";
 import { useEffect, useState } from "react";
 
 export default function({accountType,onClose,newAccount,parent}){
-    const [customerName,setCustomerName] = useState("")
+    const [Name,setName] = useState("")
     const [accounts,setaccount] = useState(null)
     
     useEffect(()=>{
     async function getCustomer(){
-    const res= await axios.get(`/server/party/${accountType}/${customerName}`)
+    const res= await axios.get(`/server/party/${accountType}/${Name}`)
     setaccount(res.data)
     }
-    if(customerName) getCustomer();
+    if(Name) getCustomer();
 
-    },[customerName])
+    },[Name])
 
+    function selectHandle(){
+        
+        onClose()
+    }
 
     return(
     <div className="modal center">
@@ -25,7 +29,7 @@ export default function({accountType,onClose,newAccount,parent}){
             <div className="horizontal"
             style={{justifyContent:"space-between",paddingRight:"30px",gridArea:"1 / 1 / 2 / 2"}}
             >
-                <SearchBox placeholder={accountType+" "+"Name"} onChange={(e)=>setCustomerName(e.target.value)}  value={customerName}/>
+                <SearchBox placeholder={accountType+" "+"Name"} onChange={(e)=>setName(e.target.value)}  value={Name}/>
                 <button onClick={()=>newAccount([parent,`Search${accountType}`,"AddAccount"])}>New {accountType}</button>
                 
             </div>
