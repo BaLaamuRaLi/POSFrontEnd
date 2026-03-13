@@ -325,13 +325,10 @@ tbody > tr:hover {background-color: #D6EEEE;}
 }
 .addAccount{
   display: flex;
-  flex-direction: horizontal;
-  flex-wrap: wrap;
   height: 30%;
   width: 50%;
   padding: 30px;
-  align-items: center;
-  gap:10px;
+ 
 }
 .purchaseItems{
   height: 70%;

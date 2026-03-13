@@ -23,15 +23,17 @@ export default function({accountType,onClose,newAccount,parent}){
         <div className="popup SearchAccount">
             <CloseButton onClick={onClose} />
             <div className="horizontal"
-            style={{justifyContent:"space-between",paddingRight:"30px"}}
+            style={{justifyContent:"space-between",paddingRight:"30px",gridArea:"1 / 1 / 2 / 2"}}
             >
                 <SearchBox placeholder={accountType+" "+"Name"} onChange={(e)=>setCustomerName(e.target.value)}  value={customerName}/>
                 <button onClick={()=>newAccount([parent,`Search${accountType}`,"AddAccount"])}>New {accountType}</button>
                 
             </div>
+         
             <ResultTable list={accounts}/>
+      
             <div className="horizontal"
-            style={{justifyContent:"flex-end"}}
+            style={{gridArea:"3 / 1 / 4 / 2", justifyContent:"flex-end"}}
             ><button onClick={onClose}>Select</button></div>
         </div>
     </div>
