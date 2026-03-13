@@ -14,7 +14,7 @@ import { SalesContext } from "../utils/SalesContext";
 
 
 
-export default function({onClose ,openWindow,invoice ,setaccount}){
+export default function({onClose ,openWindow,invoice=null,setaccount}){
     const [isSaveAs,setSaveAs]=useState(false);
     const [isPrint,setPrint]=useState(false);
     const [orderDetails,setDetails]=useState(null)
@@ -47,15 +47,10 @@ if(invoice){
    setDetails(res.data)
  },[]);
 }
-
-useEffect(()=>{
+if(!invoice)
+{
+    useEffect(()=>{
    const today= new Date().toLocaleDateString();
-   setOrderDetails(prev=>(
-    {
-        ...prev,
-        orderDate:today
-    }
-   ));
    
    async function getOrderNo(){
     try{
@@ -63,6 +58,7 @@ useEffect(()=>{
     setOrderDetails(prev=>(
         {
             ...prev,
+            orderDate:today,
             OrderNO:res.data
         }
     ));
@@ -75,6 +71,7 @@ useEffect(()=>{
    getOrderNo();
 
 },[])
+}
 
 
 
