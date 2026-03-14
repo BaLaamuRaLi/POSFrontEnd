@@ -228,10 +228,7 @@ button.Print{
 }
 
 
-select{
-  height: 2rem;
-  width: auto;
-}
+
 
 /*********** print button ends****** */
 
@@ -461,9 +458,7 @@ justify-content: flex-end;
   border: 1px solid #596acc;
 }
 
-select{
-  height: 1.3rem;
-}
+
 
 .dataContainer{
   gap:5px;
