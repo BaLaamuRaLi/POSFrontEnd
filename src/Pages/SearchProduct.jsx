@@ -1,20 +1,74 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CloseButton from "../Components/CloseButton";
 import ComponentsExtractor from "../Components/ComponentsExtractor";
 import Input from "../Components/Input";
 import ResultTable from "../Components/ResultTable";
 import Button from "../Components/Button";
+import axios from "axios";
+import DropBox from "../Components/DropBox";
 
 export default function({onClose,isPurchase,openWindow}){
+    const [productName,setProductName]=useState(null)
+    const [category,setCategory]=useState(null)
+    const [type,setType]=useState(null)
+    const [size,setSize]=useState(null)
+    const [company,setCompany]=useState(null)
+    const [batch,setBatch]=useState(null)
+
+    useEffect(()=>{
+        async function getTypesByCategory(){
+        const res = await axios.get(`/${category}`);
+        }
+        if(category) getTypesByCategory();
+    },[category]);
+   
+
+    useEffect(()=>{
+        async function getSizeCompanyByType(){
+        const res = await axios.get(`/${type}`);
+        const {rSize,rCompany}=res.data;
+        setSize(rSize);
+        setCompany(rCompany);
+        }
+     if(type) getSizeCompanyByType();
+
+    },[type]);
+
+    
+    // useEffect(()=>{
+    //     async function  getBatchByCode(){
+    //     const res = await axios.get(`/${code}`);
+    //      setBatch(res.data);
+    //     }
+    //  if(code) getBatchByCode();
+
+    // },[code]);
+
+
     const filterConfigs=[
     {id:"code", Component:Input,type:"text",placeholder:"Product Code"},
     {id:"name", Component:Input,type:"text",placeholder:"Product Name"},
-    {id:"type", Component:Input,type:"text",placeholder:"Type: bulb, pipe"},
-    {id:"size", Component:Input,type:"text",placeholder:'Size: 9W, 1"'},
-    {id:"company", Component:Input,type:"text",placeholder:'Company: Luker, Supreme'},
-    {id:"batch", Component:Input,type:"text",placeholder:"Batch no:"},
+    {id:"type", Component:DropBox,message:"Type",items:type},
+    {id:"size", Component:DropBox,message:"Size",items:size},
+    {id:"company", Component:DropBox,message:"Company",items:company},
+    {id:"batch", Component:DropBox,message:"Batch",items:batch},
 
-    ];
+    ]; 
+
+    useEffect(()=>{
+        async function getProduct(){
+         const res = await axios.get('',{
+            params:{
+                productName:productName,
+                type:type,
+                size:size,
+                company:company,
+                batch:batch,
+
+            }
+         })
+        }
+    },[productName,type,company,size,batch])
 
         const selected = useMemo(()=>[
         { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
