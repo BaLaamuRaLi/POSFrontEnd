@@ -8,31 +8,45 @@ import axios from "axios";
 import DropBox from "../Components/DropBox";
 
 export default function({onClose,isPurchase,openWindow}){
-    const [productName,setProductName]=useState(null)
-    const [category,setCategory]=useState(null)
-    const [type,setType]=useState(null)
-    const [size,setSize]=useState(null)
-    const [company,setCompany]=useState(null)
-    const [batch,setBatch]=useState(null)
+    const [productName,setProductName]=useState(null);
+    const [categorySelected,setcategorySel]=useState(null);
+    const [typeSelected,setTypeSel]=useState(null);
+    const [sizeSelected,setSizeSel]=useState(null);
+    const [companySelected,setCompanySel]=useState(null);
+    const [batch,setBatch]=useState(null);
+    const [categories,setCategories]=useState(null)
+    const [types,setTypes]=useState(null)
+    const [sizes,setSizes]=useState(null)
+    const [companies,setCompanies]=useState(null)
+
+      useEffect(()=>{
+        async function getCategories(){
+        const res = await axios.get('');
+        setCategories(res.data)
+        }
+        getCategories();
+    },[]);
+   
 
     useEffect(()=>{
         async function getTypesByCategory(){
-        const res = await axios.get(`/${category}`);
+        const res = await axios.get(`/${categorySelected}`);
+        setTypes(res.data);
         }
-        if(category) getTypesByCategory();
-    },[category]);
+        if(categorySelected) getTypesByCategory();
+    },[categorySelected]);
    
 
     useEffect(()=>{
         async function getSizeCompanyByType(){
         const res = await axios.get(`/${type}`);
         const {rSize,rCompany}=res.data;
-        setSize(rSize);
-        setCompany(rCompany);
+        setSizes(rSize);
+        setCompanies(rCompany);
         }
-     if(type) getSizeCompanyByType();
+     if(typeSelected) getSizeCompanyByType();
 
-    },[type]);
+    },[typeSelected]);
 
     
     // useEffect(()=>{
@@ -48,9 +62,9 @@ export default function({onClose,isPurchase,openWindow}){
     const filterConfigs=[
     {id:"code", Component:Input,type:"text",placeholder:"Product Code"},
     {id:"name", Component:Input,type:"text",placeholder:"Product Name"},
-    {id:"type", Component:DropBox,message:"Type",items:type},
-    {id:"size", Component:DropBox,message:"Size",items:size},
-    {id:"company", Component:DropBox,message:"Company",items:company},
+    {id:"type", Component:DropBox,message:"Type",items:types},
+    {id:"size", Component:DropBox,message:"Size",items:sizes},
+    {id:"company", Component:DropBox,message:"Company",items:companies},
     {id:"batch", Component:DropBox,message:"Batch",items:batch},
 
     ]; 
@@ -60,15 +74,15 @@ export default function({onClose,isPurchase,openWindow}){
          const res = await axios.get('',{
             params:{
                 productName:productName,
-                type:type,
-                size:size,
-                company:company,
+                type:typeSelected,
+                size:sizeSelected,
+                company:companySelected,
                 batch:batch,
 
             }
          })
         }
-    },[productName,type,company,size,batch])
+    },[productName,typeSelected,companySelected,sizeSelected,batch])
 
         const selected = useMemo(()=>[
         { id: 1, Product: "apple", Qty: 2000 ,Profit:10},

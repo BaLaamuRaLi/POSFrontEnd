@@ -41,7 +41,8 @@ export default function(){
    function fun4() { console.log("clicked Not paid");}
 //#endregion
   
-useMemo(async ()=>{
+useMemo(()=>{
+    async function getResult(){
     try{
    const res=await axios.get("/server/sales/pending")
     setResult(res.data)
@@ -51,6 +52,9 @@ useMemo(async ()=>{
         console.log(error)
     }
     
+    }
+    getResult();
+
     },[]);
 
  
