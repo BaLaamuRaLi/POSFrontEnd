@@ -21,7 +21,7 @@ export default function({onClose,isPurchase,openWindow}){
 
       useEffect(()=>{
         async function getCategories(){
-        const res = await axios.get('');
+        const res = await axios.get("/server/product/categories");
         setCategories(res.data)
         }
         getCategories();
@@ -30,19 +30,19 @@ export default function({onClose,isPurchase,openWindow}){
 
     useEffect(()=>{
         async function getTypesByCategory(){
-        const res = await axios.get(`/${categorySelected}`);
+        const res = await axios.get(`/server/product/types/${categorySelected}`);
         setTypes(res.data);
         }
-        if(categorySelected) getTypesByCategory();
+        if(categorySelected)getTypesByCategory();
     },[categorySelected]);
    
 
     useEffect(()=>{
         async function getSizeCompanyByType(){
-        const res = await axios.get(`/${type}`);
-        const {rSize,rCompany}=res.data;
-        setSizes(rSize);
-        setCompanies(rCompany);
+        // const res = await axios.get(`/${type}`);
+        // const {rSize,rCompany}=res.data;
+        // setSizes(rSize);
+        // setCompanies(rCompany);
         }
      if(typeSelected) getSizeCompanyByType();
 
@@ -62,6 +62,7 @@ export default function({onClose,isPurchase,openWindow}){
     const filterConfigs=[
     {id:"code", Component:Input,type:"text",placeholder:"Product Code"},
     {id:"name", Component:Input,type:"text",placeholder:"Product Name"},
+    {id:"category", Component:DropBox,message:"Category",items:categories,setClick:setcategorySel},
     {id:"type", Component:DropBox,message:"Type",items:types},
     {id:"size", Component:DropBox,message:"Size",items:sizes},
     {id:"company", Component:DropBox,message:"Company",items:companies},
