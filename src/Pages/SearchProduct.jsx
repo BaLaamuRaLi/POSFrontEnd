@@ -20,6 +20,7 @@ export default function({onClose,isPurchase,openWindow}){
     const [sizes,setSizes]=useState(null)
     const [companies,setCompanies]=useState(null)
     const [listProduct,setlistProd]=useState(null)
+    const [filters,setFilters]=useState({})
     
     const isFirstRender= useRef(true);
 
@@ -75,6 +76,7 @@ export default function({onClose,isPurchase,openWindow}){
     }
 
     function handleCategoryChange(value){
+        console.log("inside category chagne");
          setTypeSel("");
          setSizes(null);
         setCompanies(null);
@@ -119,9 +121,8 @@ export default function({onClose,isPurchase,openWindow}){
 
          const res = await axios.get('/server/product/getProduct',{
             params:filters
-         })
+         });
          setlistProd(res.data);
-      
         }
 
       if (Object.keys(filters).length===0) return;
