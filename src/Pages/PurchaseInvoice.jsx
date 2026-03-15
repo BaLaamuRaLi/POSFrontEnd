@@ -44,7 +44,7 @@ export default function({onClose,openWindow,invoice,setaccount}){
             {id:"findSuppl", Component:Button ,text:"Search Supplier",onClick:()=>{openWindow(["PurchaseInvoice","SearchSupplier"]);setaccount("Supplier")}},
             {id:"InvoiceNo", Component:LabelInput,label:"Invoice No:",type:"text"},
             {id:"date", Component:LabelInput,label:"Date",type:"date"},
-            {id:"IorSGST" ,Component:DropBox,label:"IGST/SGST",items:["SGST","IGST"],value:"SGST"},
+            {id:"IorSGST" ,Component:DropBox,label:"IGST/SGST",items:["SGST","IGST"],dvalue:"SGST"},
 
         ]
     

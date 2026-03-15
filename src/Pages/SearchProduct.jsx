@@ -20,7 +20,7 @@ export default function({onClose,isPurchase,openWindow}){
     const [companies,setCompanies]=useState(null)
     const [listProduct,setlistProd]=useState(null)
     const [filters,setFilters]=useState({ProductCode:"",ProductName:"",type:"",size:"",brand:""})
-    const debouncefilters=useDebounce(filters,400);
+    const debouncefilters=useDebounce(filters,600);
     const isFirstRender= useRef(true);
 
 
@@ -125,6 +125,8 @@ function handleFilterChange(e){
 
   });
 
+  
+  
 
 //#region  for handling type change
     if(name==="type"){
@@ -140,17 +142,23 @@ function handleFilterChange(e){
 //#endregion
 
 
+}
 
-
+function resetfilters(){
+    setcategorySel("");
+        setTypes(null);
+    setSizes(null);
+    setCompanies(null);
+  
 }
 
     const filterConfigs=[
-    {id:"code", Component:Input,type:"text",placeholder:"Product Code",name:"ProductCode",onChange:handleFilterChange,value:filters.ProductCode},
-    {id:"name", Component:Input,type:"text",placeholder:"Product Name",name:"ProductName",onChange:handleFilterChange,value:filters.ProductName},
-    {id:"category", Component:DropBox,message:"Category",items:categories,setClick:handleCategoryChange,value:categorySelected},
-    {id:"type", Component:DropBox,message:"Type",items:types,name:"type",setClick:handleFilterChange,value:filters.type},
-    {id:"size", Component:DropBox,message:"Size",items:sizes,name:"size",setClick:handleFilterChange,value:filters.size},
-    {id:"company", Component:DropBox,message:"Company",items:companies,name:"brand",setClick:handleFilterChange,value:filters.brand},
+    {id:"code", Component:Input,type:"text",placeholder:"Product Code",name:"ProductCode",onChange:handleFilterChange,value:filters.ProductCode,onClick:resetfilters},
+    {id:"name", Component:Input,type:"text",placeholder:"Product Name",name:"ProductName",onChange:handleFilterChange,value:filters.ProductName,onClick:resetfilters},
+    {id:"category", Component:DropBox,message:"Category",items:categories,setClick:handleCategoryChange,setValue:categorySelected},
+    {id:"type", Component:DropBox,message:"Type",items:types,name:"type",setClick:handleFilterChange,setValue:filters.type},
+    {id:"size", Component:DropBox,message:"Size",items:sizes,name:"size",setClick:handleFilterChange,setValue:filters.size},
+    {id:"company", Component:DropBox,message:"Company",items:companies,name:"brand",setClick:handleFilterChange,setValue:filters.brand},
     {id:"batch", Component:DropBox,message:"Batch"},
 
     ]; 
@@ -176,9 +184,11 @@ function handleFilterChange(e){
             params:debouncefilters
          });
          setlistProd(res.data);
-        }        console.log("inside category chagne");
+        }        
 
-      if (Object.keys(filters).length===0) return;
+      if (Object.keys(filters).length===0||Object.values(filters).every(
+        (item)=>!item
+      )) return;
 
        getProduct();
 
