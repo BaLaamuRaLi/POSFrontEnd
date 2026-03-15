@@ -145,7 +145,13 @@ const Printmenu=["Bill","GST Bill","Estimate"];
     ];
 //#endregion 
     
+ function handleClose(){
 
+    /* code for sending order details to backend */ 
+   
+    setOrderDetails({});
+    onClose();
+ }
 
     return (
         <div className="modal center">
@@ -153,7 +159,7 @@ const Printmenu=["Bill","GST Bill","Estimate"];
             
             <div className="popup">
                 
-              <CloseButton onClick={onClose} />
+              <CloseButton onClick={handleClose} />
                 
             <LeftPane lheadcomps={lheaderConfig} 
                 lbillcomps={lbillConfig}

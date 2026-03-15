@@ -20,7 +20,7 @@ export default function({list,setClick ,openWindow}){
             </thead>
             <tbody>
               {list.map((item) => (
-                <tr key={item.id} 
+                <tr key={Object.values(item)[0]} 
                 onClick={()=>{
                 setClick&&setClick(item);
                 openWindow&&openWindow();

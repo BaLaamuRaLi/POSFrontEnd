@@ -3,8 +3,8 @@ export default function({message,items,name,value,label,setClick}){
 
     <label className="vertical">
         {label}
-        <select name={name} defaultValue={value} onChange={(e)=>setClick&&setClick(e.target.value)}>
-           {message&&<option value="">{message}</option>}
+        <select name={name} defaultValue={value} onChange={(e)=>setClick&&setClick(e.target.value)} >
+           {message&&<option key="#firstOption" value="">{message}</option>}
             {items?.map((item)=>(
                 <option key={item} value={item} >{item}</option>
             ))

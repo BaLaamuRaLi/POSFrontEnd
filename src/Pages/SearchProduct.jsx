@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import CloseButton from "../Components/CloseButton";
 import ComponentsExtractor from "../Components/ComponentsExtractor";
 import Input from "../Components/Input";
@@ -8,16 +8,21 @@ import axios from "axios";
 import DropBox from "../Components/DropBox";
 
 export default function({onClose,isPurchase,openWindow}){
-    const [productName,setProductName]=useState(null);
-    const [categorySelected,setcategorySel]=useState(null);
-    const [typeSelected,setTypeSel]=useState(null);
-    const [sizeSelected,setSizeSel]=useState(null);
-    const [companySelected,setCompanySel]=useState(null);
+    const [productCode,setProductCode]=useState("");
+    const [productName,setProductName]=useState("");
+    const [categorySelected,setcategorySel]=useState("");
+    const [typeSelected,setTypeSel]=useState("");
+    const [sizeSelected,setSizeSel]=useState("");
+    const [companySelected,setCompanySel]=useState("");
     const [batch,setBatch]=useState(null);
     const [categories,setCategories]=useState(null)
     const [types,setTypes]=useState(null)
     const [sizes,setSizes]=useState(null)
     const [companies,setCompanies]=useState(null)
+    const [listProduct,setlistProd]=useState(null)
+    
+    const isFirstRender= useRef(true);
+
 
       useEffect(()=>{
         async function getCategories(){
@@ -39,10 +44,10 @@ export default function({onClose,isPurchase,openWindow}){
 
     useEffect(()=>{
         async function getSizeCompanyByType(){
-        // const res = await axios.get(`/${type}`);
-        // const {rSize,rCompany}=res.data;
-        // setSizes(rSize);
-        // setCompanies(rCompany);
+        const res = await axios.get(`/server/product/sizesandcompany/${typeSelected}`);
+        const {size:rSize,company:rCompany}=res.data;
+        setSizes(rSize);
+        setCompanies(rCompany);
         }
      if(typeSelected) getSizeCompanyByType();
 
@@ -58,32 +63,72 @@ export default function({onClose,isPurchase,openWindow}){
 
     // },[code]);
 
+    function handleTypeChange(value){
+        setSizeSel("");//for changing, already selected size and brand when typeslected changes not because of new types fetch
+        setCompanySel("");
+        setTypeSel(value);
+        if(value===""){
+            setSizes(null);
+            setCompanies(null);
+        }
+
+    }
+
+    function handleCategoryChange(value){
+         setTypeSel("");
+         setSizes(null);
+        setCompanies(null);
+        setSizeSel("");
+        setCompanySel("")
+        setlistProd(null);
+        setcategorySel(value)
+        if(value===""){
+            setTypes(null);
+            setSizes(null);
+            setCompanies(null);
+        }
+    }
 
     const filterConfigs=[
-    {id:"code", Component:Input,type:"text",placeholder:"Product Code"},
-    {id:"name", Component:Input,type:"text",placeholder:"Product Name"},
-    {id:"category", Component:DropBox,message:"Category",items:categories,setClick:setcategorySel},
-    {id:"type", Component:DropBox,message:"Type",items:types},
-    {id:"size", Component:DropBox,message:"Size",items:sizes},
-    {id:"company", Component:DropBox,message:"Company",items:companies},
+    {id:"code", Component:Input,type:"text",placeholder:"Product Code",onChange:(e)=>setProductCode(e.target.value),value:productCode},
+    {id:"name", Component:Input,type:"text",placeholder:"Product Name",onChange:(e)=>setProductName(e.target.value),value:productName},
+    {id:"category", Component:DropBox,message:"Category",items:categories,setClick:handleCategoryChange,},
+    {id:"type", Component:DropBox,message:"Type",items:types,setClick:handleTypeChange},
+    {id:"size", Component:DropBox,message:"Size",items:sizes,setClick:setSizeSel,},
+    {id:"company", Component:DropBox,message:"Company",items:companies,setClick:setCompanySel,},
     {id:"batch", Component:DropBox,message:"Batch",items:batch},
 
     ]; 
 
-    useEffect(()=>{
-        async function getProduct(){
-         const res = await axios.get('',{
-            params:{
-                productName:productName,
-                type:typeSelected,
-                size:sizeSelected,
-                company:companySelected,
-                batch:batch,
 
-            }
-         })
+    useEffect(()=>{
+         
+        if(isFirstRender.current){
+            isFirstRender.current=false;
+            return;
         }
-    },[productName,typeSelected,companySelected,sizeSelected,batch])
+
+        const filters = Object.fromEntries(
+        Object.entries({ ProductCode:productCode, ProductName:productName, type:typeSelected, size:sizeSelected, brand:companySelected })
+        .filter(([_, value]) => value)
+        )
+
+      
+        async function getProduct(){
+          
+
+         const res = await axios.get('/server/product/getProduct',{
+            params:filters
+         })
+         setlistProd(res.data);
+      
+        }
+
+      if (Object.keys(filters).length===0) return;
+
+       getProduct();
+
+    },[productCode,productName,typeSelected,companySelected,sizeSelected])
 
         const selected = useMemo(()=>[
         { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
@@ -134,7 +179,7 @@ export default function({onClose,isPurchase,openWindow}){
             <ComponentsExtractor components={filterConfigs} />
             </div>
             <div className="listProducts">
-               <ResultTable list={selected}/>
+               <ResultTable list={listProduct}/>
             </div>
             <div className="footerSearchProducts horizontal">
             <ComponentsExtractor components={footerconfigs}/>
