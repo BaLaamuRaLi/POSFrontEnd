@@ -6,22 +6,21 @@ import ResultTable from "../Components/ResultTable";
 import Button from "../Components/Button";
 import axios from "axios";
 import DropBox from "../Components/DropBox";
+import { useDebounce } from "../hooks/useDebounce";
 
 export default function({onClose,isPurchase,openWindow}){
-    const [productCode,setProductCode]=useState("");
-    const [productName,setProductName]=useState("");
+  
     const [categorySelected,setcategorySel]=useState("");
     const [typeSelected,setTypeSel]=useState("");
-    const [sizeSelected,setSizeSel]=useState("");
-    const [companySelected,setCompanySel]=useState("");
-    const [batch,setBatch]=useState(null);
+
+  
     const [categories,setCategories]=useState(null)
     const [types,setTypes]=useState(null)
     const [sizes,setSizes]=useState(null)
     const [companies,setCompanies]=useState(null)
     const [listProduct,setlistProd]=useState(null)
-    const [filters,setFilters]=useState({})
-    
+    const [filters,setFilters]=useState({ProductCode:"",ProductName:"",type:"",size:"",brand:""})
+    const debouncefilters=useDebounce(filters,400);
     const isFirstRender= useRef(true);
 
 
@@ -64,24 +63,18 @@ export default function({onClose,isPurchase,openWindow}){
 
     // },[code]);
 
-    function handleTypeChange(value){
-        setSizeSel("");//for changing, already selected size and brand when typeslected changes not because of new types fetch
-        setCompanySel("");
-        setTypeSel(value);
-        if(value===""){
-            setSizes(null);
-            setCompanies(null);
-        }
+   
 
-    }
-
-    function handleCategoryChange(value){
-        console.log("inside category chagne");
+    function handleCategoryChange(e){
+        const value = e.target.value;
+        setFilters(
+            {ProductCode:"",ProductName:"",type:"",size:"",brand:""}
+       );
          setTypeSel("");
          setSizes(null);
         setCompanies(null);
-        setSizeSel("");
-        setCompanySel("")
+        // setSizeSel("");
+        // setCompanySel("")
         setlistProd(null);
         setcategorySel(value)
         if(value===""){
@@ -91,14 +84,74 @@ export default function({onClose,isPurchase,openWindow}){
         }
     }
 
+function handleFilterChange(e){
+    const {name,value}=e.target
+    console.log("name is",name,"value is ",value);
+    setFilters(prev=>{
+
+    if(name === "type"){
+      return {
+        ...prev,
+        type:value,
+        size:"",
+        brand:""
+      }
+    }
+    if(name==="ProductName"){
+        return{
+            ...prev,
+            [name]:value,
+            type:"",
+            size:"",
+            brand:"",
+            ProductCode:""
+        }
+    }
+    if(name==="ProductCode"){
+        return{
+            ...prev,
+            [name]:value,
+            type:"",
+            size:"",
+            brand:"",
+            ProductName:""
+        }
+    }
+
+    return {
+      ...prev,
+      [name]:value
+    }
+
+  });
+
+
+//#region  for handling type change
+    if(name==="type"){
+        // setSizeSel("");//for changing, already selected size and brand when typeslected changes not because of new types fetch
+        // setCompanySel("");
+
+        setTypeSel(value);
+        if(value===""){
+            setSizes(null);
+            setCompanies(null);
+        }
+    }
+//#endregion
+
+
+
+
+}
+
     const filterConfigs=[
-    {id:"code", Component:Input,type:"text",placeholder:"Product Code",onChange:(e)=>setProductCode(e.target.value),value:productCode},
-    {id:"name", Component:Input,type:"text",placeholder:"Product Name",onChange:(e)=>setProductName(e.target.value),value:productName},
-    {id:"category", Component:DropBox,message:"Category",items:categories,setClick:handleCategoryChange,},
-    {id:"type", Component:DropBox,message:"Type",items:types,setClick:handleTypeChange},
-    {id:"size", Component:DropBox,message:"Size",items:sizes,setClick:setSizeSel,},
-    {id:"company", Component:DropBox,message:"Company",items:companies,setClick:setCompanySel,},
-    {id:"batch", Component:DropBox,message:"Batch",items:batch},
+    {id:"code", Component:Input,type:"text",placeholder:"Product Code",name:"ProductCode",onChange:handleFilterChange,value:filters.ProductCode},
+    {id:"name", Component:Input,type:"text",placeholder:"Product Name",name:"ProductName",onChange:handleFilterChange,value:filters.ProductName},
+    {id:"category", Component:DropBox,message:"Category",items:categories,setClick:handleCategoryChange,value:categorySelected},
+    {id:"type", Component:DropBox,message:"Type",items:types,name:"type",setClick:handleFilterChange,value:filters.type},
+    {id:"size", Component:DropBox,message:"Size",items:sizes,name:"size",setClick:handleFilterChange,value:filters.size},
+    {id:"company", Component:DropBox,message:"Company",items:companies,name:"brand",setClick:handleFilterChange,value:filters.brand},
+    {id:"batch", Component:DropBox,message:"Batch"},
 
     ]; 
 
@@ -110,26 +163,26 @@ export default function({onClose,isPurchase,openWindow}){
             return;
         }
 
-        const filters = Object.fromEntries(
-        Object.entries({ ProductCode:productCode, ProductName:productName, type:typeSelected, size:sizeSelected, brand:companySelected })
-        .filter(([_, value]) => value)
-        )
+        // const filters = Object.fromEntries(
+        // Object.entries({ ProductCode:productCode, ProductName:productName, type:typeSelected, size:sizeSelected, brand:companySelected })
+        // .filter(([_, value]) => value)
+        // )
 
       
         async function getProduct(){
-          
+          console.log("filter is ",filters);
 
          const res = await axios.get('/server/product/getProduct',{
-            params:filters
+            params:debouncefilters
          });
          setlistProd(res.data);
-        }
+        }        console.log("inside category chagne");
 
       if (Object.keys(filters).length===0) return;
 
        getProduct();
 
-    },[productCode,productName,typeSelected,companySelected,sizeSelected])
+    },[debouncefilters])
 
         const selected = useMemo(()=>[
         { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
