@@ -10,83 +10,39 @@ import { useDebounce } from "../hooks/useDebounce";
 
 export default function({onClose,isPurchase,openWindow}){
   
-    const [categorySelected,setcategorySel]=useState("");
-    const [typeSelected,setTypeSel]=useState("");
-
-  
+     
     const [categories,setCategories]=useState(null)
     const [types,setTypes]=useState(null)
     const [sizes,setSizes]=useState(null)
     const [companies,setCompanies]=useState(null)
     const [listProduct,setlistProd]=useState(null)
-    const [filters,setFilters]=useState({ProductCode:"",ProductName:"",type:"",size:"",brand:""})
+    const [filters,setFilters]=useState({ProductCode:"",ProductName:"",type:"",size:"",brand:"",category:""})
     const debouncefilters=useDebounce(filters,600);
     const isFirstRender= useRef(true);
-
+    const categoriesFetched=useRef(null);
 
       useEffect(()=>{
         async function getCategories(){
         const res = await axios.get("/server/product/categories");
-        setCategories(res.data)
+        setCategories(res.data);
+        categoriesFetched.current=res.data;
         }
         getCategories();
     },[]);
    
 
-    useEffect(()=>{
-        async function getTypesByCategory(){
-        const res = await axios.get(`/server/product/types/${categorySelected}`);
-        setTypes(res.data);
-        }
-        if(categorySelected)getTypesByCategory();
-    },[categorySelected]);
    
-
-    useEffect(()=>{
-        async function getSizeCompanyByType(){
-        const res = await axios.get(`/server/product/sizesandcompany/${typeSelected}`);
-        const {size:rSize,company:rCompany}=res.data;
-        setSizes(rSize);
-        setCompanies(rCompany);
-        }
-     if(typeSelected) getSizeCompanyByType();
-
-    },[typeSelected]);
-
-    
-    // useEffect(()=>{
-    //     async function  getBatchByCode(){
-    //     const res = await axios.get(`/${code}`);
-    //      setBatch(res.data);
-    //     }
-    //  if(code) getBatchByCode();
-
-    // },[code]);
+   
 
    
 
-    function handleCategoryChange(e){
-        const value = e.target.value;
-        setFilters(
-            {ProductCode:"",ProductName:"",type:"",size:"",brand:""}
-       );
-         setTypeSel("");
-         setSizes(null);
-        setCompanies(null);
-        // setSizeSel("");
-        // setCompanySel("")
-        setlistProd(null);
-        setcategorySel(value)
-        if(value===""){
-            setTypes(null);
-            setSizes(null);
-            setCompanies(null);
-        }
-    }
+
+
+   
 
 function handleFilterChange(e){
-    const {name,value}=e.target
-    console.log("name is",name,"value is ",value);
+    const {name,value}=e.target;
+
     setFilters(prev=>{
 
     if(name === "type"){
@@ -97,10 +53,22 @@ function handleFilterChange(e){
         brand:""
       }
     }
+    if(name === "category"){
+      return {
+        ...prev,
+        [name]:value,
+        type:"",
+        size:"",
+        brand:""
+      }
+    }
+
+
     if(name==="ProductName"){
         return{
             ...prev,
             [name]:value,
+            category:"",
             type:"",
             size:"",
             brand:"",
@@ -114,7 +82,8 @@ function handleFilterChange(e){
             type:"",
             size:"",
             brand:"",
-            ProductName:""
+            ProductName:"",
+            category:""
         }
     }
 
@@ -128,34 +97,16 @@ function handleFilterChange(e){
   
   
 
-//#region  for handling type change
-    if(name==="type"){
-        // setSizeSel("");//for changing, already selected size and brand when typeslected changes not because of new types fetch
-        // setCompanySel("");
 
-        setTypeSel(value);
-        if(value===""){
-            setSizes(null);
-            setCompanies(null);
-        }
-    }
-//#endregion
 
 
 }
 
-function resetfilters(){
-    setcategorySel("");
-        setTypes(null);
-    setSizes(null);
-    setCompanies(null);
-  
-}
 
     const filterConfigs=[
-    {id:"code", Component:Input,type:"text",placeholder:"Product Code",name:"ProductCode",onChange:handleFilterChange,value:filters.ProductCode,onClick:resetfilters},
-    {id:"name", Component:Input,type:"text",placeholder:"Product Name",name:"ProductName",onChange:handleFilterChange,value:filters.ProductName,onClick:resetfilters},
-    {id:"category", Component:DropBox,message:"Category",items:categories,setClick:handleCategoryChange,setValue:categorySelected},
+    {id:"code", Component:Input,type:"text",placeholder:"Product Code",name:"ProductCode",onChange:handleFilterChange,value:filters.ProductCode},
+    {id:"name", Component:Input,type:"text",placeholder:"Product Name",name:"ProductName",onChange:handleFilterChange,value:filters.ProductName,},
+    {id:"category", Component:DropBox,message:"Category",name:"category",items:categories,setClick:handleFilterChange,setValue:filters.category},
     {id:"type", Component:DropBox,message:"Type",items:types,name:"type",setClick:handleFilterChange,setValue:filters.type},
     {id:"size", Component:DropBox,message:"Size",items:sizes,name:"size",setClick:handleFilterChange,setValue:filters.size},
     {id:"company", Component:DropBox,message:"Company",items:companies,name:"brand",setClick:handleFilterChange,setValue:filters.brand},
@@ -171,11 +122,6 @@ function resetfilters(){
             return;
         }
 
-        // const filters = Object.fromEntries(
-        // Object.entries({ ProductCode:productCode, ProductName:productName, type:typeSelected, size:sizeSelected, brand:companySelected })
-        // .filter(([_, value]) => value)
-        // )
-
       
         async function getProduct(){
           console.log("filter is ",filters);
@@ -183,7 +129,11 @@ function resetfilters(){
          const res = await axios.get('/server/product/getProduct',{
             params:debouncefilters
          });
-         setlistProd(res.data);
+         const {products,filterItems} = res.data;
+         setlistProd(products);
+         setTypes(filterItems?.types);
+         setSizes(filterItems?.sizes);
+         setCompanies(filterItems?.brands);
         }        
 
       if (Object.keys(filters).length===0||Object.values(filters).every(
