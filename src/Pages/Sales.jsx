@@ -25,7 +25,8 @@ export default function(){
     const [accountType,setaccount] =useState(null);
     const [result,setResult] =useState(null)
     const [orderDetails,setOrderDetails]=useState({})
-    const[orderItems,setOrderItems]=useState([])
+    const[orderItems,setOrderItems]=useState([]);
+    
 
     
      //#region callbacks
@@ -59,8 +60,10 @@ useMemo(()=>{
 
  
 useEffect(()=>{
-    console.log("order Details:",orderDetails)
-},[orderDetails])
+    console.log("order Details:",orderDetails);
+    console.log("order items:",orderItems);
+
+},[orderDetails,orderItems])
     
     const items =["last week","last one month" ,"last one year" ,
         "last 5 years", "last 10 years" ,"custom"

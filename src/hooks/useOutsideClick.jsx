@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export default function useOutsideClick(ref,callback){
+export function useOutsideClick(ref,callback){
     useEffect(()=>{
         function handleClick(event){
             if(ref.current&&!ref.current.contains(event.target)){

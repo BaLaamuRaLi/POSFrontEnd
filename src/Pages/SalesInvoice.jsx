@@ -2,7 +2,6 @@ import CloseButton from "../Components/CloseButton";
 import LeftPane from "../Components/LeftPane";
 import RightPane from "../Components/RightPane";
 import DropBox from "../Components/DropBox";
-import ResultTable from "../Components/ResultTable";
 import Input from "../Components/Input";
 import Button from "../Components/Button";
 import Display from "../Components/Display";
@@ -10,6 +9,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import ListButton from "../Components/ListButton";
 import axios from "axios";
 import { SalesContext } from "../utils/SalesContext";
+import TableMui from "../Components/TableMui";
 
 
 
@@ -17,8 +17,10 @@ import { SalesContext } from "../utils/SalesContext";
 export default function({onClose ,openWindow,invoice=null,setaccount}){
     const [isSaveAs,setSaveAs]=useState(false);
     const [isPrint,setPrint]=useState(false);
-    const [orderDetails,setDetails]=useState(null)
-    const {setOrderDetails} =useContext(SalesContext)
+    const [orderDetails,setDetails]=useState(null);// for edit sales page
+    const [checked,setChecked]=useState(new Set());
+    const {setOrderDetails} =useContext(SalesContext);
+    
 
        const result = useMemo(()=>[
     { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
@@ -130,7 +132,7 @@ if(!invoice)
     ];
 
     const rcontentConfig=[
-        {id:"result", Component:ResultTable ,list:result},
+        {id:"result", Component:TableMui,list:result,selectedIds:checked, setSelectedIds:setChecked},
 
     ];
 

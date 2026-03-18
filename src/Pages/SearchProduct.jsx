@@ -1,12 +1,15 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import CloseButton from "../Components/CloseButton";
 import ComponentsExtractor from "../Components/ComponentsExtractor";
 import Input from "../Components/Input";
-import ResultTable from "../Components/ResultTable";
 import Button from "../Components/Button";
 import axios from "axios";
 import DropBox from "../Components/DropBox";
 import { useDebounce } from "../hooks/useDebounce";
+import TableMui from "../Components/TableMui";
+import { DataGrid } from "@mui/x-data-grid";
+import { Box } from "@mui/material";
+import { SalesContext } from "../utils/SalesContext";
 
 export default function({onClose,isPurchase,openWindow}){
   
@@ -15,11 +18,29 @@ export default function({onClose,isPurchase,openWindow}){
     const [types,setTypes]=useState(null)
     const [sizes,setSizes]=useState(null)
     const [companies,setCompanies]=useState(null)
-    const [listProduct,setlistProd]=useState(null)
+    const [listProduct,setlistProd]=useState([])
     const [filters,setFilters]=useState({ProductCode:"",ProductName:"",type:"",size:"",brand:"",category:""})
+    const [productSelected,setProductsel]=useState({
+        type: 'include',
+        ids: new Set()
+        });
+    const [cart,setCart]=useState([]);
+    const [productFetchedColumns,setFetchedCol]=useState([]);
+       const [checkedItems, setChecked] = useState(new Set());
+    
     const debouncefilters=useDebounce(filters,600);
     const isFirstRender= useRef(true);
     const categoriesFetched=useRef(null);
+    const {setOrderItems} = useContext(SalesContext);
+ 
+
+    const allProducts= useMemo(
+    ()=>listProduct?.map((p)=>({Code:p.ProductCode,Name:p.ProductName,Qty:""}))
+   
+   ,[listProduct])
+
+    const cartSet=useMemo(()=>new Set(cart?.map((p)=>p.Code)),[cart])
+
 
       useEffect(()=>{
         async function getCategories(){
@@ -29,14 +50,6 @@ export default function({onClose,isPurchase,openWindow}){
         }
         getCategories();
     },[]);
-   
-
-   
-   
-
-   
-
-
 
    
 
@@ -94,9 +107,6 @@ function handleFilterChange(e){
 
   });
 
-  
-  
-
 
 
 
@@ -124,7 +134,6 @@ function handleFilterChange(e){
 
       
         async function getProduct(){
-          console.log("filter is ",filters);
 
          const res = await axios.get('/server/product/getProduct',{
             params:debouncefilters
@@ -134,66 +143,181 @@ function handleFilterChange(e){
          setTypes(filterItems?.types);
          setSizes(filterItems?.sizes);
          setCompanies(filterItems?.brands);
+         setProductsel({        //for resetting datagrid selections on product fetched
+        type: 'include',
+        ids: new Set()
+        });
         }        
 
       if (Object.keys(filters).length===0||Object.values(filters).every(
         (item)=>!item
-      )) return;
+      )){
+        setlistProd(null)
+       return;
+    }
 
        getProduct();
 
     },[debouncefilters])
 
-        const selected = useMemo(()=>[
-        { id: 1, Product: "apple", Qty: 2000 ,Profit:10},
-        { id: 2, Product: "orange", Qty: 3500 ,Profit:10},
-        { id: 3, Product: "apple", Qty: 2000 ,Profit:10},
-        { id: 4, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 5, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 6, Product: "apple", Qty: 2000 ,Profit:10},
-        { id: 7, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 8, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 9, Product: "apple", Qty: 2000 ,Profit:10},
-        { id: 10, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 11, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 12, Product: "apple", Qty: 2000 ,Profit:10},
-        { id: 13, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 14, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 15, Product: "apple", Qty: 2000 ,Profit:10},
-        { id: 16, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 17, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 18, Product: "apple", Qty: 2000 ,Profit:10},
-        { id: 19, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 21, Product: "apple", Qty: 2000 ,Profit:10},
-        { id: 22, Product: "orange", Qty: 3500 ,Profit:10},
-        { id: 23, Product: "apple", Qty: 2000 ,Profit:10},
-        { id: 24, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 25, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 26, Product: "apple", Qty: 2000 ,Profit:10},
-        { id: 27, Product: "apple", Qty: 3500 ,Profit:10},
-        { id: 28, Product: "apple", Qty: 3500 ,Profit:10},
-        
-        ],[]);
+       
+
+function selectButtonHandler(){
     
+
+if(productSelected.type==="exclude"){
+   
+    setCart(prev=>{
+        const cartSet= new Set(prev.map((p)=>p.Code));
+        const updated=[...prev];
+        for (const p of allProducts){
+            if(!cartSet.has(p.Code)){
+                updated.push(p);
+            }
+        }
+       return updated;
+    });
+    return;
+}
+
+
+
+    const productSelectedIds = Array.from(productSelected.ids)
+
+
+    if(productSelectedIds?.length){
+
+    const productMap = new Map( //map for efficient searching
+    listProduct.map((p) => [p.ProductCode, {
+            Code:p.ProductCode,
+            Name:p.ProductName,
+            Qty:"",
+            
+    }])
+    );
+
+    setCart(prev=>{
+        const cartSet= new Set(prev.map((p)=>p.Code));
+        const updated=[...prev];
+        for (const p of productSelectedIds){
+            if(!cartSet.has(p)){
+                updated.push(productMap.get(p));
+            }
+        }
+       return updated;
+    });
+    
+    }
+}
+
+function RemoveButtonHandler(){
+ console.log(checkedItems)
+    if(cart?.length&&checkedItems){
+        
+
+
+
+    setCart(prev=> prev.filter((item) => !checkedItems.has(item.Code)));
+    setChecked(new Set());
+ 
+}
+}
+
+function addButtonHandler(){
+    if(!cart||!cart.length){
+       return;
+    }
+   
+    for (const p of cart){
+        if (!isFinite(p.Qty)||p.Qty===""){
+            window.alert("invalid quantity");
+            return;
+        }
+    }
+     const productMap = new Map( //map for efficient searching
+    cart.map((p) => [p.Code, p])
+    );
+    setOrderItems(prev=>{
+        const orderSet= new Set(prev.map((p)=>p.Code));
+        const updated=[...prev];
+        for (const p of cart){
+            if(!orderSet.has(p.Code)){
+                updated.push(productMap.get(p.Code));
+            }
+        }
+       return updated;
+    });
+    onClose();
+}
+
+
+//#region fetched products table
+  
+useEffect(()=>{ if(listProduct?.length) { 
+    setFetchedCol( Object.keys(listProduct[0]).map((key)=>({
+        field:key,
+        headerName:key,
+       minWidth: key === "ProductName" ? 150 : 0,
+        flex:0,
+    })))
+
+}else{
+    setFetchedCol([]);
+
+}
+
+},[listProduct])
+
+const EmptyRowMessage ="Search Products";
+//#endregion
+    
+    const selectedProductFootConfigs=[
+        {id:"remove" ,Component:Button,text:"Remove",onClick:RemoveButtonHandler,},
+        {id:"select" ,Component:Button,text:"Select",onClick:selectButtonHandler,},
+    ];
     const footerconfigs= [
-        {id:"Add" ,Component:Button,text:"Add",onClick:onClose}
+       
+        {id:"Add" ,Component:Button,text:"Add",onClick:addButtonHandler,}
     ];
     isPurchase&& footerconfigs.push({id:"sCustomer", Component:Button ,text:"New Product",onClick:()=>openWindow(["PurchaseInvoice","SearchProduct","AddProduct"])},
     )
+    
+function handleInputChange(e,item){
+  
+    item.Qty=parseFloat(e.target.value);
+    
+}
 
     return(
     <div className="modal center">
         <div className="popup SearchProduct">
             <CloseButton onClick={onClose} />
             <div className="selectedProducts vertical">
-             <ResultTable list={selected}/>
+             <TableMui list={cart}  selectedIds={checkedItems} setSelectedIds={setChecked} onInputchange={handleInputChange}/>
 
+            </div>
+            <div className="footerSeletedProducts horizontal">
+                <ComponentsExtractor components={selectedProductFootConfigs}/>
             </div>
             <div className="filterProducts horizontal">
             <ComponentsExtractor components={filterConfigs} />
             </div>
             <div className="listProducts">
-               <ResultTable list={listProduct}/>
+
+              
+        <Box sx={{height:'100%',width:'100%'}}>
+            <DataGrid
+                rows={listProduct}
+                columns={productFetchedColumns}
+                checkboxSelection
+                disableRowSelectionOnClick
+                rowSelectionModel={productSelected}
+                onRowSelectionModelChange={(rowSelections)=>{
+                setProductsel(rowSelections);
+                }}  
+                getRowId={(row) =>row.ProductCode}
+            />
+        </Box>
             </div>
             <div className="footerSearchProducts horizontal">
             <ComponentsExtractor components={footerconfigs}/>
