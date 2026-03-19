@@ -10,19 +10,25 @@ import {
   Checkbox,
 } from '@mui/material';
 
-export default function TableMui({list,selectedIds, setSelectedIds,onInputchange}) {
+export default function TableMui({list,selectedIds,columns, setSelectedIds,isSingleSelect=false}) {
       
 
     if(list===null||list.length===0){
         return null;
     }
 
-  
-
-  const columns =useMemo(()=> (list?.length ? Object.keys(list[0]) : []),[list])
-  
+    
 
   const handleSelect = (id) => {
+    if(isSingleSelect){
+      setSelectedIds(prev=>{
+        if(prev.has(id)){
+          return new Set();
+        }
+        return new Set().add(id);
+      })
+      return;
+    }
     setSelectedIds((prev) =>{
   
       const newSet = new Set(prev);
@@ -45,26 +51,27 @@ export default function TableMui({list,selectedIds, setSelectedIds,onInputchange
             <TableCell padding="checkbox">
               <Checkbox
                 checked={selectedIds?.size === list.length && list.length > 0}
-                indeterminate={selectedIds?.size > 0 && selectedIds?.size < list.length}
+                indeterminate={!isSingleSelect&&selectedIds?.size > 0 && selectedIds?.size < list.length}
                 onChange={(e) => {
-                  if (e.target.checked) {
-                    setSelectedIds(new Set (list.map((row) => row[columns[0]])));
+                  if (e.target.checked) { if(isSingleSelect)return;
+                    setSelectedIds(new Set (list.map((row) => row[columns[0].field])));
                   } else {
                     setSelectedIds(new Set());
                   }
                 }}
               />
             </TableCell>
-            {columns.map((key) => (
-                  <TableCell key={key}>{key}</TableCell>
+            <TableCell>SNo</TableCell>
+            {columns.map((col) => (
+                  <TableCell key={col.field}>{col.header}</TableCell>
                 ))}
           </TableRow>
         </TableHead>
 
         <TableBody>
           {list.map((row,index) => (
-            <Row key={row[columns[0]]} row={row} selected={selectedIds.has(row[columns[0]])} 
-              onSelect={handleSelect} columns={columns}  whenInputchange={onInputchange} />
+            <Row key={row[columns[0].field]} SNo={index+1} row={row} selected={selectedIds.has(row[columns[0].field])} 
+              onSelect={handleSelect} columns={columns}  />
           ))}
         </TableBody>
       </Table>
@@ -73,29 +80,30 @@ export default function TableMui({list,selectedIds, setSelectedIds,onInputchange
 }
 
 
-const Row=React.memo(({row,selected,onSelect,columns,whenInputchange})=>{
+const Row=React.memo(({SNo,row,selected,onSelect,columns})=>{
   return (
 
             <TableRow  selected={selected}>
               <TableCell padding="checkbox">
                 <Checkbox
                   checked={selected}
-                  onChange={() => onSelect(row[columns[0]])}
+                  onChange={() => onSelect(row[columns[0].field])}
                 />
               </TableCell>
+              <TableCell>{SNo}</TableCell>
              {
-                columns.map((key)=>(
-                  key==="Qty" || key==="Profit"
-                  ?
-                  <TableCell key={key}>
-                    <div style={{ display: "flex", alignItems: "center", height:"100%" }}>
-                      <input type="text" placeholder="0.00"
-                      style={{background:"none",width:"4rem"}}
-                      onChange={(e)=>whenInputchange(e,row)} />
-                    </div>
+                columns.map((col)=>(
+                  
+                  <TableCell key={col.field}>
+                    {col.render
+                    ?
+                    col.render(row)
+                    :
+                    row[col.field]
+                    }
                   </TableCell>
-                  :
-                    (<TableCell key={key}>{row[key]}</TableCell>)
+                  
+                    
                   
                 ))
              }
@@ -105,15 +113,3 @@ const Row=React.memo(({row,selected,onSelect,columns,whenInputchange})=>{
   
 })
 
-/* {headers.map((key) => (
-                   key==="Qty" || key==="Profit"
-                   ?
-                   (
-                   <td key={key} >
-                     <input type="text" placeholder="0.00"
-                     style={{background:"none",width:"4rem"}}/>                
-                   </td>
-                  )
-                   :
-                   (<td key={key}>{item[key]}</td>)
-                  ))} */

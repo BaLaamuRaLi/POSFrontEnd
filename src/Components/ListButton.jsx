@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function({text,items ,show,isOpen}){
+export default function({text,items ,show,isOpen,onSelect}){
     const ref=useRef();
     useEffect(()=>{
         function handleClick(e){
@@ -16,6 +16,12 @@ export default function({text,items ,show,isOpen}){
         }
 
     },[])
+
+
+    function handleSelect(item){
+        onSelect(item);
+        show(!isOpen);
+    }
     return(
 <div className="listButton" ref={ref}>
     <button onClick={()=>show(!isOpen)} >{text}</button>
@@ -23,7 +29,7 @@ export default function({text,items ,show,isOpen}){
     {isOpen&&(<ul className="menu"> 
 
             {items.map((item)=>(
-                <li key={item}>{item}</li>
+                <li key={item} onClick={()=>handleSelect(item)}>{item}</li>
             ))
             }
         </ul>)}

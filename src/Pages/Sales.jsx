@@ -62,6 +62,7 @@ useMemo(()=>{
 useEffect(()=>{
     console.log("order Details:",orderDetails);
     console.log("order items:",orderItems);
+    
 
 },[orderDetails,orderItems])
     
@@ -89,7 +90,7 @@ const searchConfigs =[
 
 
         <div className="SearchBarLayout">
-            <SalesContext.Provider value={{orderDetails,setOrderDetails,orderItems,setOrderItems}}>
+            <SalesContext.Provider value={{bill: orderDetails,setBill: setOrderDetails,billTtems: orderItems,setBillItems: setOrderItems}}>
             <Popup WindowsOpen={WindowsOpen} Window="SalesInvoice" >
                 <SalesInvoice openWindow={setWindow} onClose={()=> setWindow([])} 
                 invoice={editSales} 
@@ -100,11 +101,12 @@ const searchConfigs =[
                 <SearchAccount accountType={accountType} onClose={()=> setWindow(["SalesInvoice"])} 
                     newAccount={setWindow}
                     parent="SalesInvoice"
+                    context={SalesContext}
                     />
             </Popup>
             
             <Popup WindowsOpen={WindowsOpen} Window="SearchProduct" >
-                <SearchProduct onClose={()=> setWindow(["SalesInvoice"])} />
+                <SearchProduct onClose={()=> setWindow(["SalesInvoice"])} context={SalesContext} />
             </Popup>
             </SalesContext.Provider>
             <Popup WindowsOpen={WindowsOpen} Window="AddAccount" >

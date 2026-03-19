@@ -9,9 +9,10 @@ import { useDebounce } from "../hooks/useDebounce";
 import TableMui from "../Components/TableMui";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
-import { SalesContext } from "../utils/SalesContext";
+import TableInput from "../Components/TableInput";
 
-export default function({onClose,isPurchase,openWindow}){
+
+export default function({onClose,isPurchase,context ,openWindow}){
   
      
     const [categories,setCategories]=useState(null)
@@ -31,17 +32,22 @@ export default function({onClose,isPurchase,openWindow}){
     const debouncefilters=useDebounce(filters,600);
     const isFirstRender= useRef(true);
     const categoriesFetched=useRef(null);
-    const {setOrderItems} = useContext(SalesContext);
+    const {setBillItems} = useContext(context);
  
 
-    const allProducts= useMemo(
-    ()=>listProduct?.map((p)=>({Code:p.ProductCode,Name:p.ProductName,Qty:""}))
+   const columns =[
+    {field:"ProductCode",header:"Code"},
+    {field:"ProductName",header:"Product"},
+    {field:"quantity",header:"Quantity",
+        render:(row)=>
+            (<TableInput onInputChange={handleInputChange} row={row} field={"quantity"} defaultValue=""/> )
+        },
+    {field:"unit",header:"Unit"},
+    {field:"rate",header:"Rate"},
    
-   ,[listProduct])
+   ];
 
-    const cartSet=useMemo(()=>new Set(cart?.map((p)=>p.Code)),[cart])
-
-
+  
       useEffect(()=>{
         async function getCategories(){
         const res = await axios.get("/server/product/categories");
@@ -72,7 +78,8 @@ function handleFilterChange(e){
         [name]:value,
         type:"",
         size:"",
-        brand:""
+        brand:"",
+        ProductCode:""
       }
     }
 
@@ -107,9 +114,6 @@ function handleFilterChange(e){
 
   });
 
-
-
-
 }
 
 
@@ -143,7 +147,7 @@ function handleFilterChange(e){
          setTypes(filterItems?.types);
          setSizes(filterItems?.sizes);
          setCompanies(filterItems?.brands);
-         setProductsel({        //for resetting datagrid selections on product fetched
+         setProductsel({ //for resetting datagrid selections on product fetched
         type: 'include',
         ids: new Set()
         });
@@ -168,10 +172,10 @@ function selectButtonHandler(){
 if(productSelected.type==="exclude"){
    
     setCart(prev=>{
-        const cartSet= new Set(prev.map((p)=>p.Code));
+        const cartSet= new Set(prev.map((p)=>p.ProductCode));
         const updated=[...prev];
-        for (const p of allProducts){
-            if(!cartSet.has(p.Code)){
+        for (const p of listProduct){
+            if(!cartSet.has(p.ProductCode)){
                 updated.push(p);
             }
         }
@@ -188,16 +192,16 @@ if(productSelected.type==="exclude"){
     if(productSelectedIds?.length){
 
     const productMap = new Map( //map for efficient searching
-    listProduct.map((p) => [p.ProductCode, {
-            Code:p.ProductCode,
-            Name:p.ProductName,
-            Qty:"",
-            
-    }])
+    listProduct.map((p) => {
+       return [p.ProductCode, {
+            ...p,
+            quantity:"",           
+    }]
+})
     );
 
     setCart(prev=>{
-        const cartSet= new Set(prev.map((p)=>p.Code));
+        const cartSet= new Set(prev.map((p)=>p.ProductCode));
         const updated=[...prev];
         for (const p of productSelectedIds){
             if(!cartSet.has(p)){
@@ -212,10 +216,7 @@ if(productSelected.type==="exclude"){
 
 function RemoveButtonHandler(){
  console.log(checkedItems)
-    if(cart?.length&&checkedItems){
-        
-
-
+    if(cart?.length&&checkedItems){      
 
     setCart(prev=> prev.filter((item) => !checkedItems.has(item.Code)));
     setChecked(new Set());
@@ -227,22 +228,23 @@ function addButtonHandler(){
     if(!cart||!cart.length){
        return;
     }
+ 
    
     for (const p of cart){
-        if (!isFinite(p.Qty)||p.Qty===""){
+        if (!isFinite(p.quantity)||p.quantity===""){
             window.alert("invalid quantity");
             return;
         }
     }
      const productMap = new Map( //map for efficient searching
-    cart.map((p) => [p.Code, p])
+    cart.map((p) => [p.ProductCode, p])
     );
-    setOrderItems(prev=>{
-        const orderSet= new Set(prev.map((p)=>p.Code));
+    setBillItems(prev=>{
+        const orderSet= new Set(prev.map((p)=>p.ProductCode));
         const updated=[...prev];
         for (const p of cart){
-            if(!orderSet.has(p.Code)){
-                updated.push(productMap.get(p.Code));
+            if(!orderSet.has(p.ProductCode)){
+                updated.push({...productMap.get(p.ProductCode),discountPercent:"",discountAmt:"",taxable:"",taxAmt:"",total:""});
             }
         }
        return updated;
@@ -284,8 +286,17 @@ const EmptyRowMessage ="Search Products";
     
 function handleInputChange(e,item){
   
-    item.Qty=parseFloat(e.target.value);
+const value = e.target.value;
+
+  setCart(prev =>
+    prev.map(p =>
+      p.ProductCode === item.ProductCode
+        ? { ...p, quantity: value } 
+        : p
+    )
+  );   
     
+
 }
 
     return(
@@ -293,7 +304,7 @@ function handleInputChange(e,item){
         <div className="popup SearchProduct">
             <CloseButton onClick={onClose} />
             <div className="selectedProducts vertical">
-             <TableMui list={cart}  selectedIds={checkedItems} setSelectedIds={setChecked} onInputchange={handleInputChange}/>
+             <TableMui list={cart} columns={columns} selectedIds={checkedItems} setSelectedIds={setChecked} />
 
             </div>
             <div className="footerSeletedProducts horizontal">

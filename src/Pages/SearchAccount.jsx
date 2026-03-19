@@ -1,16 +1,32 @@
 import axios from "axios";
 import CloseButton from "../Components/CloseButton";
-import ResultTable from "../Components/ResultTable";
 import SearchBox from "../Components/SearchBox";
-import { useContext, useEffect, useState } from "react";
-import { SalesContext } from "../utils/SalesContext";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import { Box } from "@mui/material";
+ 
 
-export default function({accountType,onClose,newAccount,parent}){
+export default function({accountType,onClose,context ,newAccount,parent}){
     const [Name,setName] = useState("")
     const [accounts,setaccount] = useState(null)
-    const [selected,setselected]=useState(null)
-    const{setOrderDetails}=useContext(SalesContext)
+    const [selected,setselected]=useState({type: 'include', ids:new Set()})
+    const{setBill}=useContext(context)
+     const [accountColumns,setColumns]=useState([]);
+     
+    useEffect(()=>{ if(accounts?.length) { 
+        setColumns( Object.keys(accounts[0]).map((key)=>({
+            field:key,
+            headerName:key,
+        minWidth: key === "Name" ? 150 : 100,
+            flex:0,
+        })))
 
+    }else{
+        setColumns([]);
+
+    }
+
+    },[accounts])
 
     useEffect(()=>{
     async function getCustomer(){
@@ -22,20 +38,28 @@ export default function({accountType,onClose,newAccount,parent}){
     },[Name])
 
     function selectHandle(){
+        const accountMap = new Map(
+            accounts.map((a)=>[a.partyCode,a])    
+         );
+    
         if(selected){
-            (accountType==="Customer")&& setOrderDetails(prev=>({
+            const pCode =selected.ids.values().next().value;
+            (accountType==="Customer")&& setBill(prev=>({
                 ...prev,
-                Name:selected.Name
+                Customer:accountMap.get(pCode)
             }));
-            (accountType==="Agent")&&setOrderDetails(prev=>({
+            (accountType==="Agent")&&setBill(prev=>({
                 ...prev,
-                Agent:selected.Name
+                Agent:accountMap.get(pCode)
             }));
 
         }
        
         onClose()
     }
+    useEffect(()=>{
+        console.log("account selected is ",selected);
+    },[selected]);
 
     return(
     <div className="modal center">
@@ -49,7 +73,19 @@ export default function({accountType,onClose,newAccount,parent}){
                 
             </div>
          
-            <ResultTable list={accounts} setClick={setselected}/>
+            <Box sx={{height:'100%',width:'100%'}}>
+            <DataGrid
+                rows={accounts}
+                columns={accountColumns}
+                checkboxSelection
+                disableMultipleRowSelection
+                rowSelectionModel={selected}
+                onRowSelectionModelChange={(rowSelection)=>{
+                setselected(rowSelection);
+                }}  
+                getRowId={(row) =>row.partyCode}
+            />
+             </Box>
       
             <div className="horizontal"
             style={{gridArea:"3 / 1 / 4 / 2", justifyContent:"flex-end"}}
