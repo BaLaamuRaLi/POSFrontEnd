@@ -42,7 +42,7 @@ export default function({accountType,onClose,context ,newAccount,parent}){
             accounts.map((a)=>[a.partyCode,a])    
          );
     
-        if(selected){
+        if(selected.ids.size){
             const pCode =selected.ids.values().next().value;
             (accountType==="Customer")&& setBill(prev=>({
                 ...prev,
@@ -52,10 +52,12 @@ export default function({accountType,onClose,context ,newAccount,parent}){
                 ...prev,
                 Agent:accountMap.get(pCode)
             }));
-
+     
+            onClose()
+            
         }
        
-        onClose()
+        
     }
     useEffect(()=>{
         console.log("account selected is ",selected);
@@ -78,6 +80,7 @@ export default function({accountType,onClose,context ,newAccount,parent}){
                 rows={accounts}
                 columns={accountColumns}
                 checkboxSelection
+                disableRowSelectionOnClick
                 disableMultipleRowSelection
                 rowSelectionModel={selected}
                 onRowSelectionModelChange={(rowSelection)=>{

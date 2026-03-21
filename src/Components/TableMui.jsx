@@ -45,7 +45,7 @@ export default function TableMui({list,selectedIds,columns, setSelectedIds,isSin
 
   return (
     <TableContainer component={Paper} sx={{maxHeight:'100%'}}>
-      <Table stickyHeader>
+      <Table stickyHeader > 
         <TableHead>
           <TableRow>
             <TableCell padding="checkbox">
@@ -90,11 +90,11 @@ const Row=React.memo(({SNo,row,selected,onSelect,columns})=>{
                   onChange={() => onSelect(row[columns[0].field])}
                 />
               </TableCell>
-              <TableCell>{SNo}</TableCell>
+              <TableCell sx={{fontWeight:"500"}}>{SNo}</TableCell>
              {
                 columns.map((col)=>(
                   
-                  <TableCell key={col.field}>
+                  <TableCell key={col.field} sx={{fontWeight:"500"}}>
                     {col.render
                     ?
                     col.render(row)

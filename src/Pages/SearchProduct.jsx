@@ -215,10 +215,10 @@ if(productSelected.type==="exclude"){
 }
 
 function RemoveButtonHandler(){
- console.log(checkedItems)
+ 
     if(cart?.length&&checkedItems){      
 
-    setCart(prev=> prev.filter((item) => !checkedItems.has(item.Code)));
+    setCart(prev=> prev.filter((item) => !checkedItems.has(item.ProductCode)));
     setChecked(new Set());
  
 }
@@ -244,7 +244,7 @@ function addButtonHandler(){
         const updated=[...prev];
         for (const p of cart){
             if(!orderSet.has(p.ProductCode)){
-                updated.push({...productMap.get(p.ProductCode),discountPercent:"",discountAmt:"",taxable:"",taxAmt:"",total:""});
+                updated.push({...productMap.get(p.ProductCode),discountPercent:""});
             }
         }
        return updated;
@@ -327,6 +327,11 @@ const value = e.target.value;
                 setProductsel(rowSelections);
                 }}  
                 getRowId={(row) =>row.ProductCode}
+                sx={{
+                    '& .MuiDataGrid-cell': {
+                    fontWeight:'500'
+                    },
+                }}
             />
         </Box>
             </div>
