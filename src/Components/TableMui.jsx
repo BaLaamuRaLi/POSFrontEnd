@@ -10,14 +10,10 @@ import {
   Checkbox,
 } from '@mui/material';
 
-export default function TableMui({list,selectedIds,columns, setSelectedIds,isSingleSelect=false}) {
-      
-
-    if(list===null||list.length===0){
+export default function TableMui({list,selectedIds,columns, setSelectedIds,isSingleSelect=false,onClick=null}) { 
+    if(!list||list?.length===0){
         return null;
     }
-
-    
 
   const handleSelect = (id) => {
     if(isSingleSelect){
@@ -71,7 +67,7 @@ export default function TableMui({list,selectedIds,columns, setSelectedIds,isSin
         <TableBody>
           {list.map((row,index) => (
             <Row key={row[columns[0].field]} SNo={index+1} row={row} selected={selectedIds.has(row[columns[0].field])} 
-              onSelect={handleSelect} columns={columns}  />
+              onSelect={handleSelect} columns={columns}  onClick={onClick}/>
           ))}
         </TableBody>
       </Table>
@@ -80,21 +76,21 @@ export default function TableMui({list,selectedIds,columns, setSelectedIds,isSin
 }
 
 
-const Row=React.memo(({SNo,row,selected,onSelect,columns})=>{
+const Row=React.memo(({SNo,row,selected,onSelect,columns,onClick})=>{
   return (
 
-            <TableRow  selected={selected}>
+            <TableRow  selected={selected} hover>
               <TableCell padding="checkbox">
                 <Checkbox
                   checked={selected}
                   onChange={() => onSelect(row[columns[0].field])}
                 />
               </TableCell>
-              <TableCell sx={{fontWeight:"500"}}>{SNo}</TableCell>
+              <TableCell sx={{fontWeight:"500"}} onClick={()=>onClick&&onClick(row)}>{SNo}</TableCell>
              {
                 columns.map((col)=>(
                   
-                  <TableCell key={col.field} sx={{fontWeight:"500"}}>
+                  <TableCell key={col.field} sx={{fontWeight:"500"}} onClick={()=>onClick&&onClick(row)}>
                     {col.render
                     ?
                     col.render(row)

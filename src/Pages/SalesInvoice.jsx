@@ -14,7 +14,7 @@ import TableInput from "../Components/TableInput"
 import  {roundoff} from "../utils/utils.js"
 import LabelInput from "../Components/LabelInput.jsx";
 import { Backdrop, CircularProgress } from "@mui/material";
-
+import CircularBackdrop from "../Components/CircularBackdrop.jsx"
 
 
 export default function({onClose ,openWindow,invoice=null,setaccount}){
@@ -22,8 +22,11 @@ export default function({onClose ,openWindow,invoice=null,setaccount}){
     const [isPrint,setPrint]=useState(false);
     const [orderDetails,setDetails]=useState(null);// for edit sales page
     const [checked,setChecked]=useState(new Set());
-    const {bill,setBill,billTtems,setBillItems} =useContext(SalesContext);
+    const {bill,setBill,billItems,setBillItems} =useContext(SalesContext);
     const [open,setOpen]=useState(false);
+    const {orderDate,orderNO,Customer,Agent}=bill;
+    const{Name,gst,phone ,address,prevBalance}=Customer||{};
+
 
     
 useEffect(()=> {
@@ -37,17 +40,16 @@ if(!invoice)return;
 
 
 useEffect(()=>{
-    if(invoice)return;
-   const today= new Date().toLocaleDateString();
-   
+    if(invoice)return;   
    async function getOrderNo(){
     try{
     const res=await axios.get('/server/sales/newOrder');
+    const {billNo,date}=res.data;
     setBill(prev=>(
         {
             ...prev,
-            orderDate:today,
-            orderNO:res.data
+            orderDate:date,
+            orderNO:billNo
         }
     ));
     }
@@ -63,7 +65,7 @@ useEffect(()=>{
 
 
 function handleRemove(){
-    if(billTtems?.length&&checked){      
+    if(billItems?.length&&checked){      
 
     setBillItems(prev=> prev.filter((item) => !checked.has(item.ProductCode)));
     setChecked(new Set());
@@ -114,13 +116,13 @@ function handleDiscount(e){
 
 //#region rightpaneConfig
     const rheaderConfig =[
-        {id:"Date", Component:Display ,label:"Date",text:bill?.orderDate},
-        {id:"Draft", Component:Display ,label:"Draft No",text:bill?.orderNO},
-        {id:"Name", Component:Display ,label:"Name",text:bill?.Customer?.Name},
-        {id:"GST", Component:Display ,label:"GSTIN",text:bill?.Customer?.gst},
-        {id:"phone", Component:Display ,label:"phone",text:bill?.Customer?.phone},
-        {id:"Address", Component:Display ,label:"Address",text:bill?.Customer?.address},
-        {id:"Agent", Component:Display ,label:"Agent",text:bill?.Agent?.Name},
+        {id:"Date", Component:Display ,label:"Date",text:new Date(orderDate).toLocaleDateString()},
+        {id:"Draft", Component:Display ,label:"Draft No",text:orderNO},
+        {id:"Name", Component:Display ,label:"Name",text:Name},
+        {id:"GST", Component:Display ,label:"GSTIN",text:gst},
+        {id:"phone", Component:Display ,label:"phone",text:phone},
+        {id:"Address", Component:Display ,label:"Address",text:address},
+        {id:"Agent", Component:Display ,label:"Agent",text:Agent?.Name},
        
     ];
 
@@ -207,7 +209,7 @@ const value = e.target.value;
 }
 
     const rcontentConfig=[
-        {id:"result", Component:TableMui,list:billTtems,selectedIds:checked, setSelectedIds:setChecked,columns:columns},
+        {id:"result", Component:TableMui,list:billItems,selectedIds:checked, setSelectedIds:setChecked,columns:columns},
 
     ];
 
@@ -219,7 +221,7 @@ function handleSave(status){
         window.alert("add Customer");
         return;
     }
-    if(!billTtems?.length&&status!=="pending"){
+    if(!billItems?.length&&status!=="pending"){
         window.alert("add products");
         return;
     }
@@ -229,7 +231,7 @@ function handleSave(status){
 
 async function submitSalesOrder(){
       const {Customer,Agent}=bill;
-      const salesItems=billTtems.map((b)=>({
+      const salesItems=billItems.map((b)=>({
        ProductCode: b.ProductCode,  
         quantity: b.quantity,
         discountPercent: b.discountPercent
@@ -244,7 +246,7 @@ async function submitSalesOrder(){
         Agent:Agent?.partyCode||"self",
         status:status
         }, 
-        billTtems :salesItems
+        billItems :salesItems
 
     }); 
   
@@ -269,8 +271,8 @@ function handlePrint(selected){
 }
 
 function calculateAmount(){
-    const billDiscount=bill?.totalDiscount||0;
-    const amount=billTtems?.reduce((sum,p)=>{
+    const billDiscount=parseFloat(bill?.totalDiscount)||0;
+    const amount=billItems?.reduce((sum,p)=>{
         const quantity=p?.quantity||0;
         const rate=p?.rate||0;
         const discountPercent=p?.discountPercent||0;
@@ -285,7 +287,7 @@ function calculateAmount(){
 }
 
     const rfooterConfig =[
-        {id:"balance", Component:Display ,label:"Previous Balance",text:bill?.Customer?.prevBalance},
+        {id:"balance", Component:Display ,label:"Previous Balance",text:prevBalance},
         {id:"Total", Component:Display ,label:"Amount",text:calculateAmount()},
         {id:"save", Component:ListButton ,text:"Save As",items:SaveAsmenu,show:setSaveAs,isOpen:isSaveAs,onSelect:handleSave},
         {id:"print", Component:ListButton ,text:"Print",items:Printmenu,show:setPrint,isOpen:isPrint,onSelect:handlePrint},
@@ -310,11 +312,7 @@ function calculateAmount(){
             
             
             <div className="popup">
-            <Backdrop
-             sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
-            open={open}>
-                <CircularProgress color="inherit"/>    
-            </Backdrop> 
+            <CircularBackdrop open={open}/>
               <CloseButton onClick={handleClose} />
                 
             <LeftPane lheadcomps={lheaderConfig} 

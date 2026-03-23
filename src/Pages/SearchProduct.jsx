@@ -244,7 +244,11 @@ function addButtonHandler(){
         const updated=[...prev];
         for (const p of cart){
             if(!orderSet.has(p.ProductCode)){
-                updated.push({...productMap.get(p.ProductCode),discountPercent:""});
+                updated.push({
+                    ...productMap.get(p.ProductCode),
+                   ...isPurchase?{rate:""}:{},
+                    discountPercent:""
+                });
             }
         }
        return updated;

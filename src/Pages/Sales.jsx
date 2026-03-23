@@ -90,7 +90,7 @@ const searchConfigs =[
 
 
         <div className="SearchBarLayout">
-            <SalesContext.Provider value={{bill: orderDetails,setBill: setOrderDetails,billTtems: orderItems,setBillItems: setOrderItems}}>
+            <SalesContext.Provider value={{bill: orderDetails,setBill: setOrderDetails,billItems: orderItems,setBillItems: setOrderItems}}>
             <Popup WindowsOpen={WindowsOpen} Window="SalesInvoice" >
                 <SalesInvoice openWindow={setWindow} onClose={()=> setWindow([])} 
                 invoice={editSales} 

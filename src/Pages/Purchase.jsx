@@ -6,7 +6,7 @@ import ResultTable from "../Components/ResultTable";
 import SearchBox from "../Components/SearchBox";
 import SearchComponents from "../Components/ComponentsExtractor";
 import Input from "../Components/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PurchaseInvoice from "./PurchaseInvoice";
 import Popup from "../Components/Popup";
 import SearchProduct from "./SearchProduct";
@@ -15,12 +15,20 @@ import AddAccount from "./AddAccount";
 import PurchaseItems from "./PurchaseItems";
 import EditProfit from "./EditProfit";
 import AddProduct from "./AddProduct";
-
+import {PurchaseContext} from "../utils/PurchaseContext"
 
 export default function(){
     const [WindowsOpen, setWindow] = useState([]);
     const [editPurchase,setEditPurchase] =useState(null);
     const [accountType,setaccount] =useState(null);
+    const[purchaseBill,setPurchaseBill]=useState({
+        gstType:"SGST",
+        Supplier: '',
+        invoiceNo: '',
+        invoiceDate: '',
+    });
+    const [purchaseItems,setPurchaseItems]=useState([]);
+    const [selectedItem,setSelectedItem]=useState({});
 
     const filterButtons = [
         {name:"settled",clickHandler: fun1}, 
@@ -29,7 +37,13 @@ export default function(){
 
     function fun1() {console.log("clicked settled");}
    function fun2() { console.log("clicked pending");}
- 
+
+ useEffect(()=>{
+    console.log("Purchase Bill:",purchaseBill);
+    console.log("Purchase items:",purchaseItems);
+    
+
+},[purchaseBill,purchaseItems]);
 
     const result = [
     { id: 1, client: "JRK", amount: 2000 },
@@ -76,6 +90,7 @@ const suppliers=[
 
     return(
         <div className="SearchBarLayout">
+        <PurchaseContext.Provider value={{bill: purchaseBill,setBill: setPurchaseBill,billItems: purchaseItems,setBillItems: setPurchaseItems,selectedItem,setSelectedItem}}>
             <Popup WindowsOpen={WindowsOpen} Window="PurchaseInvoice" >
                 <PurchaseInvoice openWindow={setWindow} onClose={()=> setWindow([])} 
                 invoice={editPurchase} 
@@ -84,7 +99,7 @@ const suppliers=[
             </Popup>
             <Popup WindowsOpen={WindowsOpen} Window="SearchProduct" >
                 <SearchProduct openWindow={setWindow} onClose={()=> setWindow(["PurchaseInvoice"])} 
-                isPurchase={true}
+                isPurchase={true} context={PurchaseContext}
                 />
             </Popup>
             <Popup WindowsOpen={WindowsOpen} Window={`Search${accountType}`} >
@@ -92,12 +107,10 @@ const suppliers=[
                 accounts={suppliers}
                 newAccount={setWindow}
                 parent="PurchaseInvoice"
+                context={PurchaseContext}
                 />
             </Popup>
-             <Popup WindowsOpen={WindowsOpen} Window="AddAccount" >
-                <AddAccount onClose={()=> setWindow(["PurchaseInvoice",`Search${accountType}`])} 
-                accountType={accountType} />
-            </Popup>
+            
             <Popup WindowsOpen={WindowsOpen} Window="EditPurchaseItems">
                 <PurchaseItems onClose={()=> setWindow(["PurchaseInvoice"])}
                     openWindow={setWindow}/>
@@ -106,8 +119,13 @@ const suppliers=[
             <Popup WindowsOpen={WindowsOpen} Window="EditProfit">
                 <EditProfit onClose={()=> setWindow(["PurchaseInvoice","EditPurchaseItems"])}/>
             </Popup>
+        </PurchaseContext.Provider>
             <Popup WindowsOpen={WindowsOpen} Window="AddProduct">
                 <AddProduct onClose={()=> setWindow(["PurchaseInvoice","SearchProduct"])}/>
+            </Popup>
+            <Popup WindowsOpen={WindowsOpen} Window="AddAccount" >
+                <AddAccount onClose={()=> setWindow(["PurchaseInvoice",`Search${accountType}`])} 
+                accountType={accountType} />
             </Popup>
 
                 <div className="searchBar vertical">

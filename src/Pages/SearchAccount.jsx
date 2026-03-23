@@ -44,14 +44,18 @@ export default function({accountType,onClose,context ,newAccount,parent}){
     
         if(selected.ids.size){
             const pCode =selected.ids.values().next().value;
-            (accountType==="Customer")&& setBill(prev=>({
-                ...prev,
-                Customer:accountMap.get(pCode)
-            }));
-            (accountType==="Agent")&&setBill(prev=>({
-                ...prev,
-                Agent:accountMap.get(pCode)
-            }));
+            setBill(prev=>{
+                switch (accountType) {
+                    case "Customer":
+                    return {...prev,Customer:accountMap.get(pCode)}
+                    case "Agent":
+                    return {...prev,Agent:accountMap.get(pCode)}
+                    case "Supplier":
+                    return {...prev,Supplier:accountMap.get(pCode)}
+                    default:
+                    return {...prev}
+                }
+            })
      
             onClose()
             
@@ -59,9 +63,7 @@ export default function({accountType,onClose,context ,newAccount,parent}){
        
         
     }
-    useEffect(()=>{
-        console.log("account selected is ",selected);
-    },[selected]);
+    
 
     return(
     <div className="modal center">
