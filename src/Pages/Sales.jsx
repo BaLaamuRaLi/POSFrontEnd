@@ -1,6 +1,5 @@
 import ContentFilter from "../Components/ContentFilter";
 import ContentHeader from "../Components/ContentHeader";
-import ResultTable from "../Components/ResultTable";
 import AddButton from "../Components/AddButton";
 import PrintButton from "../Components/PrintButton";
 import SearchBox from "../Components/SearchBox";
@@ -15,6 +14,7 @@ import SearchProduct from "./SearchProduct";
 import AddAccount from "./AddAccount";
 import axios from "axios";
 import { SalesContext } from "../utils/SalesContext";
+import TableMui from "../Components/TableMui";
 
 
 
@@ -26,7 +26,7 @@ export default function(){
     const [result,setResult] =useState(null)
     const [orderDetails,setOrderDetails]=useState({})
     const[orderItems,setOrderItems]=useState([]);
-    
+    const [checked,setChecked]=useState(new Set());
 
     
      //#region callbacks
@@ -84,7 +84,18 @@ const searchConfigs =[
     {id: "duration",Component:DropBox,message:"Duration", items:items ,name:"Duration"}
 ];
 
+// function handleTableClick(row){
+//     openWindow(["PurchaseInvoice","EditPurchaseItems"])
+    
+// }
 
+const columns=[
+    {field:"orderNO",header:"Bill No"},
+    {field:"orderDate",header:"Date"},
+    {field:"Name",header:"Customer"},
+    {field:"Agent",header:"Agent"},
+    {field:"Amount",header:"Amount"},
+];
 
     return(
 
@@ -127,7 +138,8 @@ const searchConfigs =[
                 <ContentFilter buttons = {filterButtons} />
                 
                 <div className="resultSection">
-                {result&&(<ResultTable list={result} setClick={setEditSales} openWindow={()=>setWindow("SalesInvoice")}/>)}
+               
+                <TableMui list={result} columns={columns} selectedIds={checked} setSelectedIds={setChecked} />
                 </div>
             
             </div>

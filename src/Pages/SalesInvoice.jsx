@@ -13,7 +13,6 @@ import TableMui from "../Components/TableMui";
 import TableInput from "../Components/TableInput"
 import  {roundoff} from "../utils/utils.js"
 import LabelInput from "../Components/LabelInput.jsx";
-import { Backdrop, CircularProgress } from "@mui/material";
 import CircularBackdrop from "../Components/CircularBackdrop.jsx"
 
 
@@ -131,54 +130,7 @@ function handleDiscount(e){
         {id:"remProd", Component:Button ,text:"Remove",onClick:handleRemove},
         
     ];
-    const columns =[
-    {field:"ProductCode",header:"Code"},
-    {field:"ProductName",header:"Product"},
-    {field:"quantity",header:"Quantity",
-        render:(row)=>
-            (<TableInput onInputChange={handleInputChange} row={row} field={"quantity"} defaultValue=""/> )
-        
-    },
-    {field:"unit",header:"Unit"},
-    {field:"rate",header:"Rate"},
-    {field:"gross",header:"Gross",
-        render:(row)=>(row.rate*parseFloat(row.quantity||0))
-    },
-    {field:"discountPercent",header:"Discount (%)",
-         render:(row)=>
-            (<TableInput onInputChange={handleInputChange} row={row} field={"discountPercent"} defaultValue=""/> )
-        
-    },
-    {field:"discountAmt",header:"Discount Amount",
-         render:(row)=>
-            (parseFloat(row.discountPercent||0)*(row.rate*parseFloat(row.quantity||0))/100)
-        
-    },
-    {field:"taxable",header:"Taxable Amount",
-        render:(row)=>{
-        const discount=parseFloat(row.discountPercent||0)*(row.rate*parseFloat(row.quantity||0))/100;
-        return (row.rate*parseFloat(row.quantity||0)-discount)
-    }
-    },
-    {field:"gstRate",header:"GST (%)"},
-    {field:"taxAmt",header:"Tax Amount",
-        render:(row)=> {
-            const discount=parseFloat(row.discountPercent||0)*(row.rate*parseFloat(row.quantity||0))/100;
-            const taxable=row.rate*parseFloat(row.quantity||0)-discount;
-            return (taxable*row.gstRate/100);
-        }
-    },
-    {field:"total",header:"Total",
-        render:(row)=>{
-            const discount=parseFloat(row.discountPercent||0)*(row.rate*parseFloat(row.quantity||0))/100;
-            const taxable=row.rate*parseFloat(row.quantity||0)-discount;
-            const taxAmt=taxable*row.gstRate/100;
-            return (roundoff((taxable+taxAmt),2));
-        }
-    },
 
-   
-   ];
 function handleInputChange(e,item,field){
   
 const value = e.target.value;
@@ -208,8 +160,65 @@ const value = e.target.value;
 
 }
 
+function calculateRowValues(row){
+    const discount = parseFloat(row.discountPercent) || 0;
+    const rate = parseFloat(row.rate) || 0;
+    const quantity = parseFloat(row.quantity) || 0;
+    const gst = parseFloat(row.gstRate) || 0;
+    const gross = rate * quantity; 
+    const discountAmt=discount *gross/100;
+    const taxable = gross -discountAmt;
+    const taxAmt = taxable * gst / 100;
+    const total = taxable + taxAmt;
+
+    return {
+        gross,
+        discountAmt,
+        taxable,
+        taxAmt,
+        total
+    };
+}
+
+const calculatedItems=billItems.map((item)=>{
+    const {gross,discountAmt,taxable,taxAmt,total}=calculateRowValues(item);
+    const derivedItem= {
+        ...item,
+        gross:gross,
+        discountAmt:discountAmt,
+        taxable:taxable,
+        taxAmt:taxAmt,
+        total:total
+    }
+    return derivedItem;
+});
+
+    const columns =[
+    {field:"ProductCode",header:"Code"},
+    {field:"ProductName",header:"Product"},
+    {field:"quantity",header:"Quantity",
+        render:(row)=>
+            (<TableInput onInputChange={handleInputChange} row={row} field={"quantity"} defaultValue=""/> )
+        
+    },
+    {field:"unit",header:"Unit"},
+    {field:"rate",header:"Rate"},
+    {field:"gross",header:"Gross"},
+    {field:"discountPercent",header:"Discount (%)",
+         render:(row)=>
+            (<TableInput onInputChange={handleInputChange} row={row} field={"discountPercent"} defaultValue=""/> )
+        
+    },
+    {field:"discountAmt",header:"Discount Amount",},
+    {field:"taxable",header:"Taxable Amount", },
+    {field:"gstRate",header:"GST (%)"},
+    {field:"taxAmt",header:"Tax Amount",},
+    {field:"total",header:"Total",},
+   
+   ];
+
     const rcontentConfig=[
-        {id:"result", Component:TableMui,list:billItems,selectedIds:checked, setSelectedIds:setChecked,columns:columns},
+        {id:"result", Component:TableMui,list:calculatedItems,selectedIds:checked, setSelectedIds:setChecked,columns:columns},
 
     ];
 

@@ -16,6 +16,7 @@ import PurchaseItems from "./PurchaseItems";
 import EditProfit from "./EditProfit";
 import AddProduct from "./AddProduct";
 import {PurchaseContext} from "../utils/PurchaseContext"
+import TableMui from "../Components/TableMui";
 
 export default function(){
     const [WindowsOpen, setWindow] = useState([]);
@@ -29,6 +30,7 @@ export default function(){
     });
     const [purchaseItems,setPurchaseItems]=useState([]);
     const [selectedItem,setSelectedItem]=useState({});
+    const [checked,setChecked]=useState(new Set());
 
     const filterButtons = [
         {name:"settled",clickHandler: fun1}, 
@@ -45,27 +47,18 @@ export default function(){
 
 },[purchaseBill,purchaseItems]);
 
-    const result = [
-    { id: 1, client: "JRK", amount: 2000 },
-    { id: 2, client: "Client B", amount: 3500 },
-    { id: 3, client: "Client A", amount: 2000 },
-    { id: 4, client: "Client B", amount: 3500 },
-    { id: 5, client: "Client B", amount: 3500 },
-    { id: 6, client: "Client A", amount: 2000 },
-    { id: 7, client: "Client B", amount: 3500 },
-    { id: 8, client: "Client B", amount: 3500 },
-    { id: 9, client: "Client A", amount: 2000 },
-    { id: 10, client: "Client B", amount: 3500 },
-    { id: 11, client: "Client B", amount: 3500 },
-    { id: 12, client: "Client A", amount: 2000 },
-    { id: 13, client: "Client B", amount: 3500 },
-    { id: 14, client: "Client B", amount: 3500 },
-    { id: 15, client: "Client A", amount: 2000 },
-    { id: 16, client: "Client B", amount: 3500 },
-    { id: 17, client: "Client B", amount: 3500 },
-    { id: 18, client: "Client A", amount: 2000 },
-    { id: 19, client: "Client B", amount: 3500 },
-    ];
+   const result = [
+  { id: 1, client: "ClientC", amount: 2000, amount2: 2000, amount3: 2000, amount4: 2000, amount5: 2000, amount6: 2000, amount7: 2000, amount8: 2000, amount9: 2000, amount10: 2000, amount11: 2000, amount12: 2000, amount13: 2000, amount14: 2000, amount15: 2000, amount16: 2000, amount17: 2000, amount18: 2000, amount19: 2000, amount20: 2000 },
+  { id: 2, client: "Client B", amount: 3500, amount2: 2000, amount3: 2000, amount4: 2000, amount5: 2000, amount6: 2000, amount7: 2000, amount8: 2000, amount9: 2000, amount10: 2000, amount11: 2000, amount12: 2000, amount13: 2000, amount14: 2000, amount15: 2000, amount16: 2000, amount17: 2000, amount18: 2000, amount19: 2000, amount20: 2000 },
+  { id: 3, client: "Client A", amount: 2000, amount2: 2000, amount3: 2000, amount4: 2000, amount5: 2000, amount6: 2000, amount7: 2000, amount8: 2000, amount9: 2000, amount10: 2000, amount11: 2000, amount12: 2000, amount13: 2000, amount14: 2000, amount15: 2000, amount16: 2000, amount17: 2000, amount18: 2000, amount19: 2000, amount20: 2000 },
+  { id: 4, client: "Client B", amount: 3500, amount2: 2000, amount3: 2000, amount4: 2000, amount5: 2000, amount6: 2000, amount7: 2000, amount8: 2000, amount9: 2000, amount10: 2000, amount11: 2000, amount12: 2000, amount13: 2000, amount14: 2000, amount15: 2000, amount16: 2000, amount17: 2000, amount18: 2000, amount19: 2000, amount20: 2000 },
+  { id: 5, client: "Client B", amount: 3500, amount2: 2000, amount3: 2000, amount4: 2000, amount5: 2000, amount6: 2000, amount7: 2000, amount8: 2000, amount9: 2000, amount10: 2000, amount11: 2000, amount12: 2000, amount13: 2000, amount14: 2000, amount15: 2000, amount16: 2000, amount17: 2000, amount18: 2000, amount19: 2000, amount20: 2000 },
+  { id: 6, client: "Client A", amount: 2000, amount2: 2000, amount3: 2000, amount4: 2000, amount5: 2000, amount6: 2000, amount7: 2000, amount8: 2000, amount9: 2000, amount10: 2000, amount11: 2000, amount12: 2000, amount13: 2000, amount14: 2000, amount15: 2000, amount16: 2000, amount17: 2000, amount18: 2000, amount19: 2000, amount20: 2000 },
+  { id: 7, client: "Client B", amount: 3500, amount2: 2000, amount3: 2000, amount4: 2000, amount5: 2000, amount6: 2000, amount7: 2000, amount8: 2000, amount9: 2000, amount10: 2000, amount11: 2000, amount12: 2000, amount13: 2000, amount14: 2000, amount15: 2000, amount16: 2000, amount17: 2000, amount18: 2000, amount19: 2000, amount20: 2000 },
+  { id: 8, client: "Client B", amount: 3500, amount2: 2000, amount3: 2000, amount4: 2000, amount5: 2000, amount6: 2000, amount7: 2000, amount8: 2000, amount9: 2000, amount10: 2000, amount11: 2000, amount12: 2000, amount13: 2000, amount14: 2000, amount15: 2000, amount16: 2000, amount17: 2000, amount18: 2000, amount19: 2000, amount20: 2000 },
+  { id: 9, client: "Client A", amount: 2000, amount2: 2000, amount3: 2000, amount4: 2000, amount5: 2000, amount6: 2000, amount7: 2000, amount8: 2000, amount9: 2000, amount10: 2000, amount11: 2000, amount12: 2000, amount13: 2000, amount14: 2000, amount15: 2000, amount16: 2000, amount17: 2000, amount18: 2000, amount19: 2000, amount20: 2000 },
+  { id: 10, client: "Client B", amount: 3500, amount2: 2000, amount3: 2000, amount4: 2000, amount5: 2000, amount6: 2000, amount7: 2000, amount8: 2000, amount9: 2000, amount10: 2000, amount11: 2000, amount12: 2000, amount13: 2000, amount14: 2000, amount15: 2000, amount16: 2000, amount17: 2000, amount18: 2000, amount19: 2000, amount20: 2000 }
+];
 
     const items =["last week","last one month" ,"last one year" ,
         "last 5 years", "last 10 years" ,"custom"
@@ -87,6 +80,31 @@ const suppliers=[
         {id:"1",Name:"JRK",Address:"washington"},
         {id:"2",Name:"F&F",Address:"UAE"},
     ];
+
+const columns=[
+    {field:"id",header:"Bill No"},
+    {field:"client",header:"Supplier"},
+    {field:"amount",header:"Amount"},
+    {field:"amount2",header:"Amount"},
+    {field:"amount3",header:"Amount"},
+    {field:"amount4",header:"Amount"},
+    {field:"amount5",header:"Amount"},
+    {field:"amount6",header:"Amount"},
+    {field:"amount7",header:"Amount"},
+    {field:"amount8",header:"Amount"},
+    {field:"amount9",header:"Amount"},
+    {field:"amount10",header:"Amount"},
+    {field:"amount11",header:"Amount"},
+    {field:"amount12",header:"Amount"},
+    {field:"amount13",header:"Amount"},
+    {field:"amount14",header:"Amount"},
+    {field:"amount15",header:"Amount"},
+    {field:"amount16",header:"Amount"},
+    {field:"amount17",header:"Amount"},
+    {field:"amount18",header:"Amount"},
+    {field:"amount19",header:"Amount"},
+    {field:"amount20",header:"Amount"},
+];
 
     return(
         <div className="SearchBarLayout">
@@ -135,9 +153,9 @@ const suppliers=[
                 <div className="content">
                     <ContentHeader components={headerConfig} />
                     <ContentFilter buttons = {filterButtons} />
-                      <div className="resultSection">
-                           <ResultTable list={result} setClick={setEditPurchase} openWindow={()=>setWindow("PurchaseInvoice")}/>
-                        </div>
+                    <div className="resultSection">
+                        <TableMui list={result} columns={columns} selectedIds={checked} setSelectedIds={setChecked} />       
+                    </div>
   
                 </div>
                     

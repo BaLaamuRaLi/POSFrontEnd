@@ -133,53 +133,41 @@ function calculateRowValues(row){
     };
 }
 
+const calculatedItems=billItems.map((item)=>{
+    const {amount,taxable,taxAmt,total}=calculateRowValues(item);
+    const derivedItem= {
+        ...item,
+        amount:roundoff(amount,2),
+        taxable:roundoff(taxable,2),
+        taxAmt:roundoff(taxAmt,2),
+        total:roundoff(total,2)
+    }
+    return derivedItem;
+});
+
     const columns =[
     {field:"ProductCode",header:"Code"},
     {field:"ProductName",header:"Product"},
     {field:"HSN",header:"HSN"},
     {field:"quantity",header:"Quantity"},
     {field:"rate",header:"Rate"},
-    {field:"amount",header:"Amount",
-        render:(row)=>{
-            const {amount} =calculateRowValues(row);
-            return amount;    
-        }
-    },
+    {field:"amount",header:"Amount",},
     {field:"discountPercent",header:"Discount 1 (%)"},
     {field:"discount2percent",header:"Discount 2 (%)",},
     {field:"discount3percent",header:"Discount 3 (%)",},
     {field:"discount4percent",header:"Discount 4 (%)",},
-    {field:"taxable",header:"Taxable",
-        render:(row)=>{
-            const {taxable}=calculateRowValues(row);
-            return roundoff(taxable,2)
-
-        }
-    },
+    {field:"taxable",header:"Taxable",},
     {field:"gstRate",header:"Tax (%)"},
-    {field:"taxAmt",header:"Tax (Rs)",
-        render:(row)=>{
-            const {taxAmt}=calculateRowValues(row);
-            return roundoff(taxAmt,2);
-            
-        }
-    },
-     {field:"total",header:"Total",
-        render:(row)=>{
-            const {total}=calculateRowValues(row);
-            return roundoff(total,2);
-        }
-     },
-   
-
-    ];
+    {field:"taxAmt",header:"Tax (Rs)",},
+     {field:"total",header:"Total",},
+     ];
 
 function handleTableClick(row){
     openWindow(["PurchaseInvoice","EditPurchaseItems"])
     setSelectedItem(row);
 }
     const rcontentConfig=[
-        {id:"result", Component:TableMui ,list:billItems,columns:columns, selectedIds:checked, setSelectedIds:setChecked,onClick:handleTableClick},
+        {id:"result", Component:TableMui ,list:calculatedItems,columns:columns, selectedIds:checked, setSelectedIds:setChecked,onClick:handleTableClick},
 
     ];
 
