@@ -1,7 +1,6 @@
-import axios from "axios";
 import CloseButton from "../Components/CloseButton";
 import SearchBox from "../Components/SearchBox";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect,  useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
  
@@ -29,11 +28,11 @@ export default function({accountType,onClose,context ,newAccount,parent}){
     },[accounts])
 
     useEffect(()=>{
-    async function getCustomer(){
-    const res= await axios.get(`/server/party/${accountType}/${Name}`)
-    setaccount(res.data)
+    async function getParty(){
+    const res= await window.partyApi.search(Name,accountType)
+    setaccount(res)
     }
-    if(Name) getCustomer();
+    if(Name) getParty();
 
     },[Name])
 

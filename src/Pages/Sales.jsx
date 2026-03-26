@@ -12,7 +12,6 @@ import { useEffect, useMemo, useState } from "react";
 import SearchAccount from "./SearchAccount";
 import SearchProduct from "./SearchProduct";
 import AddAccount from "./AddAccount";
-import axios from "axios";
 import { SalesContext } from "../utils/SalesContext";
 import TableMui from "../Components/TableMui";
 
@@ -44,14 +43,16 @@ export default function(){
   
 useMemo(()=>{
     async function getResult(){
-    try{
-   const res=await axios.get("/server/sales/pending")
-    setResult(res.data)
+        const res=await window.salesApi.pending();
+        setResult(res);
+//     try{
+//    const res=await get("/server/sales/pending")
+//     setResult(res.data)
   
-    }
-    catch (error) {
-        console.log(error)
-    }
+//     }
+//     catch (error) {
+//         console.log(error)
+//     }
     
     }
     getResult();

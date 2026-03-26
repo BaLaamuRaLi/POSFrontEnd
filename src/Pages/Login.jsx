@@ -1,4 +1,3 @@
-import axios from "axios"
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../utils/UserContext";
 
@@ -8,23 +7,32 @@ export default function ({onlogin}){
   const[Password,setPassword]=useState("")
   async function handleSubmit(e){
     e.preventDefault();
-    try {
-      const res = await axios.post("/server/login/",{name:Name,password:Password})
+    const res=await window.loginApi.login({name:Name,password:Password});
       setName(null)
-      setPassword(null)
-      // console.log(res)
- 
-      const {islogged,role,page} =res.data
+      setPassword(null);
+        const {islogged,role,page} =res;
 
       if(res){
-        onlogin(islogged,page)
-        setUserRole(role)
-
+        onlogin(islogged,page);
+        setUserRole(role);
       }
+    // try {
+    //   const res = await post("/server/login/",{name:Name,password:Password})
+    //   setName(null)
+    //   setPassword(null)
+    //   // console.log(res)
+ 
+    //   const {islogged,role,page} =res.data
 
-    } catch (error) {
-      console.log(error)
-    }
+    //   if(res){
+    //     onlogin(islogged,page)
+    //     setUserRole(role)
+
+    //   }
+
+    // } catch (error) {
+    //   console.log(error)
+    // }
   }
     return(
     <div className="center fullscreen">

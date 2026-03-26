@@ -7,7 +7,6 @@ import Button from "../Components/Button";
 import Display from "../Components/Display";
 import { useContext, useEffect, useMemo, useState } from "react";
 import ListButton from "../Components/ListButton";
-import axios from "axios";
 import { SalesContext } from "../utils/SalesContext";
 import TableMui from "../Components/TableMui";
 import TableInput from "../Components/TableInput"
@@ -31,7 +30,8 @@ export default function({onClose ,openWindow,invoice=null,setaccount}){
 useEffect(()=> {
 if(!invoice)return;    
     async function getSalesDetails (){
-   const res= await axios.get(`/server/sales/orders/${invoice.id}`)
+
+//    const res= await get(`/server/sales/orders/${invoice.id}`)
    setBill(res.data);
  }
  getSalesDetails();
@@ -41,9 +41,8 @@ if(!invoice)return;
 useEffect(()=>{
     if(invoice)return;   
    async function getOrderNo(){
-    try{
-    const res=await axios.get('/server/sales/newOrder');
-    const {billNo,date}=res.data;
+    const res = await window.salesApi.newOrder();
+    const {billNo,date}=res;
     setBill(prev=>(
         {
             ...prev,
@@ -51,11 +50,8 @@ useEffect(()=>{
             orderNO:billNo
         }
     ));
-    }
-    catch (error) {
-        throw new Error(error);
-        
-    }
+
+    
    }
    getOrderNo();
 
@@ -227,11 +223,11 @@ const Printmenu=["Bill","GST Bill","Estimate"];
 function handleSave(status){
 
     if(!bill?.Customer&&status!=="pending"){
-        window.alert("add Customer");
+      window.popupApi.dialogBox("add Customer");
         return;
     }
     if(!billItems?.length&&status!=="pending"){
-        window.alert("add products");
+        window.popupApi.dialogBox("add products");
         return;
     }
 
@@ -246,7 +242,7 @@ async function submitSalesOrder(){
         discountPercent: b.discountPercent
 
       }));
-    const res= await axios.post("/server/sales/orderSubmit", { 
+    const res= await window.salesApi.submitOrder( { 
         
        
         bill:{
@@ -258,8 +254,9 @@ async function submitSalesOrder(){
         billItems :salesItems
 
     }); 
+    
   
-   if(res.data==="success"){
+   if(res==="success"){
    setTimeout(()=>{
     setBill({});
     setBillItems([]);
@@ -267,7 +264,7 @@ async function submitSalesOrder(){
     onClose();
    },500);
 }else { 
-    window.alert("Error occured during saving");
+   window.popupApi.dialogBox("Error occured during saving");
      setOpen(false);
     }
 }

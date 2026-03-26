@@ -9,7 +9,6 @@ import DropBox from "../Components/DropBox";
 import { PurchaseContext } from "../utils/PurchaseContext";
 import TableMui from "../Components/TableMui";
 import { roundoff } from "../utils/utils";
-import axios from "axios";
 import CircularBackdrop from "../Components/CircularBackdrop";
  
 
@@ -23,8 +22,8 @@ export default function({onClose,openWindow,invoice,setaccount}){
     
     useEffect(()=>{
         async function createNewPurchase(){
-        const res=await axios.get('/server/purchase/new');
-        const {billNo,date}=res.data
+        const res=await window.purchaseApi.new();
+        const {billNo,date}=res;
         setBill(prev=>({
             ...prev,
             billNo:billNo,
@@ -190,13 +189,13 @@ function handleSave(isPending="Bill"){
         }
         });
         if(invalidKey){
-            window.alert(`Add ${invalidKey}`);
+           window.popupApi.dialogBox(`Add ${invalidKey}`);
             setOpen(false);
             return ;
             
         }
         if(billItems?.length===0){
-            window.alert("add products");
+           window.popupApi.dialogBox("add products");
             setOpen(false);
             return ;  
         }
@@ -211,7 +210,7 @@ function handleSave(isPending="Bill"){
       });
  
     
-        const res=await axios.post('/server/purchase/add',{
+        const res=await window.purchaseApi.save({
             bill:{
                 ...bill,
                 Supplier:Supplier?.partyCode||"pending",
@@ -219,7 +218,7 @@ function handleSave(isPending="Bill"){
             },
             billItems:purchaseItems,
         });
-        if(res.data==="success"){
+        if(res==="success"){
             setTimeout(()=>{
             setBill({
             gstType:"SGST",
@@ -232,7 +231,7 @@ function handleSave(isPending="Bill"){
             onClose();
             },500);
         }else { 
-        window.alert("Error occured during saving");
+       window.popupApi.dialogBox("Error occured during saving");
         setOpen(false);
         }
     }

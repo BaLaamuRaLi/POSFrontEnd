@@ -3,7 +3,7 @@ import { useState } from "react";
 import CloseButton from "../Components/CloseButton";
 import DropBox from "../Components/DropBox";
 import SearchBox from "../Components/SearchBox";
-import axios from "axios";
+ 
 
 export default function({accountType ,onClose}){
     const[partyCode,setPartyCode]=useState("")
@@ -15,24 +15,46 @@ export default function({accountType ,onClose}){
   function  handleClick(){
     async function addParty () {
         
-     try{const res= await axios.post('/server/party/add',{
+          try{
+            const res= await window.partyApi.add({
             type:accountType,
-            party:{partyCode:partyCode,
-            Name:partyName,
-            gst:gst,
-            address:address,
-            phone:phone}
+            party:{
+                partyCode:partyCode,
+                Name:partyName,
+                gst:gst,
+                address:address,
+                phone:phone
+            }
         })
-        if(res?.data?.sucess){
+        if(res?.sucess){
         onClose()
-        alert(res.data.message)
+        window.popupApi.dialogBox(res.message)
         }else{
-        alert(res?.data?.message)
+        window.popupApi.dialogBox(res.message)
         }
     }
     catch (error) {
      console.log(error)   
     }
+
+    //  try{const res= await post('/server/party/add',{
+    //         type:accountType,
+    //         party:{partyCode:partyCode,
+    //         Name:partyName,
+    //         gst:gst,
+    //         address:address,
+    //         phone:phone}
+    //     })
+    //     if(res?.data?.sucess){
+    //     onClose()
+    //     alert(res.data.message)
+    //     }else{
+    //     alert(res?.data?.message)
+    //     }
+    // }
+    // catch (error) {
+    //  console.log(error)   
+    // }
 
 
     }

@@ -3,7 +3,6 @@ import CloseButton from "../Components/CloseButton";
 import ComponentsExtractor from "../Components/ComponentsExtractor";
 import Input from "../Components/Input";
 import Button from "../Components/Button";
-import axios from "axios";
 import DropBox from "../Components/DropBox";
 import { useDebounce } from "../hooks/useDebounce";
 import TableMui from "../Components/TableMui";
@@ -50,9 +49,9 @@ export default function({onClose,isPurchase,context ,openWindow}){
   
       useEffect(()=>{
         async function getCategories(){
-        const res = await axios.get("/server/product/categories");
-        setCategories(res.data);
-        categoriesFetched.current=res.data;
+        const res = await window.productApi.categories();
+        setCategories(res);
+        categoriesFetched.current=res;
         }
         getCategories();
     },[]);
@@ -139,10 +138,8 @@ function handleFilterChange(e){
       
         async function getProduct(){
 
-         const res = await axios.get('/server/product/getProduct',{
-            params:debouncefilters
-         });
-         const {products,filterItems} = res.data;
+         const res = await window.productApi.products(debouncefilters);
+         const {products,filterItems} = res;
          setlistProd(products);
          setTypes(filterItems?.types);
          setSizes(filterItems?.sizes);
@@ -232,7 +229,7 @@ function addButtonHandler(){
    
     for (const p of cart){
         if (!isFinite(p.quantity)||p.quantity===""){
-            window.alert("invalid quantity");
+           window.popupApi.dialogBox("invalid quantity");
             return;
         }
     }

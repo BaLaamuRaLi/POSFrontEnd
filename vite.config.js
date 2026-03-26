@@ -7,9 +7,9 @@ export default defineConfig({
   build:{
     outDir:"../BackEnd/Front"
   },
-  server:{
-    proxy:{
-      '/server':'http://localhost:3000'
-    }
-  }
+  // server:{
+  //   proxy:{
+  //     '/server':'http://localhost:3000'
+  //   }
+  // }
 })
