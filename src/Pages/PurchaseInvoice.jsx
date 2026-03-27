@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CloseButton from "../Components/CloseButton";
 import RightPane from "../Components/RightPane";
 import Button from "../Components/Button";
@@ -10,6 +10,7 @@ import { PurchaseContext } from "../utils/PurchaseContext";
 import TableMui from "../Components/TableMui";
 import { roundoff } from "../utils/utils";
 import CircularBackdrop from "../Components/CircularBackdrop";
+import { api } from "../services/api";
  
 
 export default function({onClose,openWindow,invoice,setaccount}){
@@ -22,7 +23,7 @@ export default function({onClose,openWindow,invoice,setaccount}){
     
     useEffect(()=>{
         async function createNewPurchase(){
-        const res=await window.purchaseApi.new();
+        const res=await api.createPurchase();
         const {billNo,date}=res;
         setBill(prev=>({
             ...prev,
@@ -210,7 +211,7 @@ function handleSave(isPending="Bill"){
       });
  
     
-        const res=await window.purchaseApi.save({
+        const res=await api.submitPurchase({
             bill:{
                 ...bill,
                 Supplier:Supplier?.partyCode||"pending",

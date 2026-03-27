@@ -3,6 +3,7 @@ import { useState } from "react";
 import CloseButton from "../Components/CloseButton";
 import DropBox from "../Components/DropBox";
 import SearchBox from "../Components/SearchBox";
+import { api } from "../services/api";
  
 
 export default function({accountType ,onClose}){
@@ -16,7 +17,7 @@ export default function({accountType ,onClose}){
     async function addParty () {
         
           try{
-            const res= await window.partyApi.add({
+            const res= await api.addProduct({
             type:accountType,
             party:{
                 partyCode:partyCode,

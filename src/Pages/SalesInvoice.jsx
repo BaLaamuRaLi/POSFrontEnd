@@ -13,6 +13,7 @@ import TableInput from "../Components/TableInput"
 import  {roundoff} from "../utils/utils.js"
 import LabelInput from "../Components/LabelInput.jsx";
 import CircularBackdrop from "../Components/CircularBackdrop.jsx"
+import { api } from "../services/api.js";
 
 
 export default function({onClose ,openWindow,invoice=null,setaccount}){
@@ -41,7 +42,7 @@ if(!invoice)return;
 useEffect(()=>{
     if(invoice)return;   
    async function getOrderNo(){
-    const res = await window.salesApi.newOrder();
+    const res = await api.createOrder();
     const {billNo,date}=res;
     setBill(prev=>(
         {
@@ -242,7 +243,7 @@ async function submitSalesOrder(){
         discountPercent: b.discountPercent
 
       }));
-    const res= await window.salesApi.submitOrder( { 
+    const res= await api.submitSales( { 
         
        
         bill:{

@@ -3,6 +3,7 @@ import SearchBox from "../Components/SearchBox";
 import { useContext, useEffect,  useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
+import { api } from "../services/api";
  
 
 export default function({accountType,onClose,context ,newAccount,parent}){
@@ -29,7 +30,7 @@ export default function({accountType,onClose,context ,newAccount,parent}){
 
     useEffect(()=>{
     async function getParty(){
-    const res= await window.partyApi.search(Name,accountType)
+    const res= await api.searchParty (Name,accountType)
     setaccount(res)
     }
     if(Name) getParty();

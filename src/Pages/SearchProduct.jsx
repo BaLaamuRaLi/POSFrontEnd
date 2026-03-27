@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import CloseButton from "../Components/CloseButton";
 import ComponentsExtractor from "../Components/ComponentsExtractor";
 import Input from "../Components/Input";
@@ -9,6 +9,7 @@ import TableMui from "../Components/TableMui";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import TableInput from "../Components/TableInput";
+import { api } from "../services/api";
 
 
 export default function({onClose,isPurchase,context ,openWindow}){
@@ -49,7 +50,7 @@ export default function({onClose,isPurchase,context ,openWindow}){
   
       useEffect(()=>{
         async function getCategories(){
-        const res = await window.productApi.categories();
+        const res = await api.getCategories();
         setCategories(res);
         categoriesFetched.current=res;
         }
@@ -138,7 +139,7 @@ function handleFilterChange(e){
       
         async function getProduct(){
 
-         const res = await window.productApi.products(debouncefilters);
+         const res = await api.getProducts(debouncefilters);
          const {products,filterItems} = res;
          setlistProd(products);
          setTypes(filterItems?.types);

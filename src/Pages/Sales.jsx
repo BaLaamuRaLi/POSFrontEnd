@@ -14,6 +14,7 @@ import SearchProduct from "./SearchProduct";
 import AddAccount from "./AddAccount";
 import { SalesContext } from "../utils/SalesContext";
 import TableMui from "../Components/TableMui";
+import { api } from "../services/api";
 
 
 
@@ -43,7 +44,7 @@ export default function(){
   
 useMemo(()=>{
     async function getResult(){
-        const res=await window.salesApi.pending();
+        const res=await api.getPending();
         setResult(res);
 //     try{
 //    const res=await get("/server/sales/pending")

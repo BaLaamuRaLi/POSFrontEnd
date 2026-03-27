@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../utils/UserContext";
+import { api } from "../services/api";
 
 export default function ({onlogin}){
   const {userRole,setUserRole}=useContext(UserContext)
@@ -7,7 +8,7 @@ export default function ({onlogin}){
   const[Password,setPassword]=useState("")
   async function handleSubmit(e){
     e.preventDefault();
-    const res=await window.loginApi.login({name:Name,password:Password});
+    const res=await api.verifyUser({name:Name,password:Password});
       setName(null)
       setPassword(null);
         const {islogged,role,page} =res;
