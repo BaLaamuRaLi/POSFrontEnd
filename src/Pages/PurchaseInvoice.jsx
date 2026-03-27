@@ -190,13 +190,13 @@ function handleSave(isPending="Bill"){
         }
         });
         if(invalidKey){
-           window.popupApi.dialogBox(`Add ${invalidKey}`);
+           api.showDialogBox(`Add ${invalidKey}`);
             setOpen(false);
             return ;
             
         }
         if(billItems?.length===0){
-           window.popupApi.dialogBox("add products");
+           api.showDialogBox("add products");
             setOpen(false);
             return ;  
         }
@@ -232,7 +232,7 @@ function handleSave(isPending="Bill"){
             onClose();
             },500);
         }else { 
-       window.popupApi.dialogBox("Error occured during saving");
+       api.showDialogBox("Error occured during saving");
         setOpen(false);
         }
     }

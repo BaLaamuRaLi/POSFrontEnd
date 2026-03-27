@@ -17,7 +17,7 @@ export default function({accountType ,onClose}){
     async function addParty () {
         
           try{
-            const res= await api.addProduct({
+            const res= await api.addParty({
             type:accountType,
             party:{
                 partyCode:partyCode,
@@ -28,10 +28,10 @@ export default function({accountType ,onClose}){
             }
         })
         if(res?.sucess){
-        onClose()
-        window.popupApi.dialogBox(res.message)
+        api.showDialogBox(res.message);
+        onClose();
         }else{
-        window.popupApi.dialogBox(res.message)
+        api.showDialogBox(res.message)
         }
     }
     catch (error) {

@@ -224,11 +224,11 @@ const Printmenu=["Bill","GST Bill","Estimate"];
 function handleSave(status){
 
     if(!bill?.Customer&&status!=="pending"){
-      window.popupApi.dialogBox("add Customer");
+      api.showDialogBox("add Customer");
         return;
     }
     if(!billItems?.length&&status!=="pending"){
-        window.popupApi.dialogBox("add products");
+        api.showDialogBox("add products");
         return;
     }
 
@@ -265,7 +265,7 @@ async function submitSalesOrder(){
     onClose();
    },500);
 }else { 
-   window.popupApi.dialogBox("Error occured during saving");
+   api.showDialogBox("Error occured during saving");
      setOpen(false);
     }
 }

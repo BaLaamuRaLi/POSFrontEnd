@@ -230,7 +230,7 @@ function addButtonHandler(){
    
     for (const p of cart){
         if (!isFinite(p.quantity)||p.quantity===""){
-           window.popupApi.dialogBox("invalid quantity");
+           api.showDialogBox("invalid quantity");
             return;
         }
     }
