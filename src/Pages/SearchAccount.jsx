@@ -30,7 +30,7 @@ export default function({accountType,onClose,context ,newAccount,parent}){
 
     useEffect(()=>{
     async function getParty(){
-    const res= await api.searchParty (Name,accountType)
+    const res= await api.searchParty ({Name:Name,type:accountType})
     setaccount(res)
     }
     if(Name) getParty();

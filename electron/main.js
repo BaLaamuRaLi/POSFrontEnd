@@ -111,8 +111,8 @@ const parties = [
     {type:"Supplier",accounts:suppliers}
 ]
 
-ipcMain.handle('searchParty',(event ,Name,type)=>{
-
+ipcMain.handle('searchParty',(event ,party)=>{
+    const {Name,type}=party;
     const {accounts:custAccounts}= parties.find((item)=>item.type===type);
     return custAccounts.filter((item)=>item.Name.toLowerCase().startsWith(Name.toLowerCase()))
  

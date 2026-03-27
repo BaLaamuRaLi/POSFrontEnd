@@ -12,7 +12,7 @@ contextBridge.exposeInMainWorld('salesApi',{
 });
 
 contextBridge.exposeInMainWorld('partyApi',{
-    search:(name,type)=>ipcRenderer.invoke('searchParty',name,type),
+    search:(party)=>ipcRenderer.invoke('searchParty',party),
     add:(party)=>ipcRenderer.invoke('addParty',party),
 })
 
