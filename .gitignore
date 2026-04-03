@@ -6,6 +6,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+*.sqlite3
+*.sqlite-shm
+*.sqlite-wal
+*.db-shm
+*.db-wal
 
 node_modules
 dist
@@ -166,3 +171,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+electron/db/dev.sqlite3
+electron/db/dev.sqlite3
+electron/db/dev.sqlite3

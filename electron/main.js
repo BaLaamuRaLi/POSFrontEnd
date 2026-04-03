@@ -4,7 +4,11 @@ import { fileURLToPath } from "node:url";
 import { dialog } from "electron";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
+import db from "./db/index.js"
+import { createAuthService } from "./services/authService.js";
+import { registerAuthHandlers } from "./ipc/authIPC.js";
+import { createPartyService } from "./services/partyService.js";
+import { registerPartyHandlers } from "./ipc/partyIPC.js";
 
 const createWindow=()=>{
     const win= new BrowserWindow({
@@ -25,9 +29,21 @@ const createWindow=()=>{
 })
 }
 
-app.whenReady().then(()=>{
+app.whenReady().then(async ()=>{
+    try {
+    await db.migrate.latest();
+        
+    } catch (error) {
+        app.quit();
+        throw new Error("cannot migrate" ,error);
+    
+        
+    }
+    const authService= createAuthService(db);
+    const partyService=createPartyService(db);
+    registerAuthHandlers(authService);
+    registerPartyHandlers(partyService);
     createWindow();
-
     app.on('activate',()=>{
         if(BrowserWindow.getAllWindows().length===0)createWindow()
     })
@@ -37,24 +53,29 @@ app.on('window-all-closed',()=>{
     if(process.platform!=='darwin')app.quit()
 })
 
-ipcMain.handle('authentication',(event,data)=>{
-    const {name,password}=data;
-    const users = {
-    Admin:["Shibu"],
-    Staff:["Mathew"]
-}
+app.on('before-quit',async()=>{
+    console.log('inside before quit')
+    await db.destroy();
+})
 
-  if((name==="Shibu"||name==="Mathew") && password==="1"){
+// ipcMain.handle('authentication',(event,data)=>{
+//     const {name,password}=data;
+//     const users = {
+//     Admin:["Shibu"],
+//     Staff:["Mathew"]
+// }
+
+//   if((name==="Shibu"||name==="Mathew") && password==="1"){
     
-  if(users.Staff.includes(name))
-  {
-  return {islogged:true,role:"Staff",page:"Sales"};
-    }
-    else{
-    return({islogged:true,role:"Admin",page:"Dashboard"});
-    }
-  }
-});
+//   if(users.Staff.includes(name))
+//   {
+//   return {islogged:true,role:"Staff",page:"Sales"};
+//     }
+//     else{
+//     return({islogged:true,role:"Admin",page:"Dashboard"});
+//     }
+//   }
+// });
 
 ipcMain.handle('sales-pending',()=>{
     const pendingOrders =[
@@ -111,34 +132,42 @@ const parties = [
     {type:"Supplier",accounts:suppliers}
 ]
 
-ipcMain.handle('searchParty',(event ,party)=>{
-    const {Name,type}=party;
-    const {accounts:custAccounts}= parties.find((item)=>item.type===type);
-    return custAccounts.filter((item)=>item.Name.toLowerCase().startsWith(Name.toLowerCase()))
+// ipcMain.handle('searchParty',(event ,party)=>{
+//     const {Name,type}=party;
+//     const {accounts:custAccounts}= parties.find((item)=>item.type===type);
+//     return custAccounts.filter((item)=>item.Name.toLowerCase().startsWith(Name.toLowerCase()))
  
-});
+// });
 
 
-ipcMain.handle('addParty',(event ,partyData)=>{
+// ipcMain.handle('addParty',(event ,partyData)=>{
 
-    const {type,party}=partyData;
-     if(!Object.values(party).every(item =>item!==null && item!=="")){
-        res.json({sucess:false,message:"invalid input"})
-        throw new Error("invalid party");
-    }
-    const partyAccounts= parties.find((item)=>item.type===type);
-  if(!partyAccounts){
-    throw new Error("type not found");
+//     const {type,party}=partyData;
+//      if(!Object.values(party).every(item =>item!==null && item!=="")){
+//         res.json({sucess:false,message:"invalid input"})
+//         throw new Error("invalid party");
+//     }
+//     const partyAccounts= parties.find((item)=>item.type===type);
+//   if(!partyAccounts){
+//     throw new Error("type not found");
     
-  }
-  party.id=partyAccounts.accounts.length+1
-  party.prevBalance=0
-  partyAccounts.accounts.push(party);
-  return {sucess:true,message:`${type} added successfully`};
-});
+//   }
+//   party.id=partyAccounts.accounts.length+1
+//   party.prevBalance=0
+//   partyAccounts.accounts.push(party);
+//   return {sucess:true,message:`${type} added successfully`};
+// });
 
-ipcMain.handle('show-dialog', async (event,msg)=>{
-  await dialog.showMessageBox({message:msg})
+ipcMain.handle('show-dialog', async (event,msg,buttons)=>{
+if(buttons){
+    return await dialog.showMessageBox({
+        type:"question",
+        message:msg,
+        title:"confirm",
+        buttons:buttons,
+    })
+}
+ return  await dialog.showMessageBox({message:msg})
 })
 
 ipcMain.handle('fetch-categories',()=>{

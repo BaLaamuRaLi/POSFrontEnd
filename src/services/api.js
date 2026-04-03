@@ -9,5 +9,5 @@ export const api={
    searchParty:(name,type)=>window.api.party.search(name,type),
    getCategories:()=>window.api.product.categories(),
    getProducts:(filter)=>window.api.product.products(filter),
-   showDialogBox:(message)=>window.api.popup.dialogBox(message),
+   showDialogBox:(message,buttons)=>window.api.popup.dialogBox(message,buttons),
 }

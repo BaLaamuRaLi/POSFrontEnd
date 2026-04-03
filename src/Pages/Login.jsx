@@ -11,11 +11,14 @@ export default function ({onlogin}){
     const res=await api.verifyUser({name:Name,password:Password});
       setName(null)
       setPassword(null);
-        const {islogged,role,page} =res;
+        
 
       if(res){
+        const {islogged,role,page} =res;
         onlogin(islogged,page);
         setUserRole(role);
+      }else{
+       await api.showDialogBox("invalid username or password");
       }
     // try {
     //   const res = await post("/server/login/",{name:Name,password:Password})
@@ -51,8 +54,8 @@ export default function ({onlogin}){
          >
               <h1 style={{color:'white'}}>LOGIN</h1>
 
-              <input type="username" placeholder="User Name" required value={Name} onChange={(e)=>setName(e.target.value)} name="username"/>
-              <input type="password" placeholder="Password" required value={Password} onChange={(e)=>setPassword(e.target.value)} name="key"/>
+              <input type="username" placeholder="User Name" required value={Name||""} onChange={(e)=>setName(e.target.value)} name="username"/>
+              <input type="password" placeholder="Password" required value={Password||""} onChange={(e)=>setPassword(e.target.value)} name="key"/>
               <button >login</button>
           </form>
        </div>

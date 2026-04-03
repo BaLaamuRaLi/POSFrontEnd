@@ -9,7 +9,14 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-      "start": "electron ."
+    "start": "electron .",
+    "migrate": "knex --knexfile knexfile.cjs migrate:latest",
+    "make": "knex --knexfile knexfile.cjs migrate:make",
+    "seed-run": "knex --knexfile knexfile.cjs seed:run",
+    "list-migrations": "knex --knexfile knexfile.cjs migrate:list",
+    "migration-current": "knex --knexfile knexfile.cjs migrate:currentVersion",
+    "rollback": "knex --knexfile knexfile.cjs migrate:rollback",
+    "rollback-all": "knex --knexfile knexfile.cjs migrate:rollback --all"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -18,9 +25,13 @@
     "@mui/material": "^7.3.9",
     "@mui/x-data-grid": "^8.27.5",
     "axios": "^1.13.6",
+    "bcrypt": "^6.0.0",
+    "better-sqlite3": "^12.8.0",
+    "knex": "^3.2.7",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.13.1"
+    "react-router-dom": "^7.13.1",
+    "sqlite3": "^6.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
@@ -28,6 +39,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "electron": "^41.0.4",
+    "electron-rebuild": "^3.2.9",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",

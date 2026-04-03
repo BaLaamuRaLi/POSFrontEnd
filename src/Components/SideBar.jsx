@@ -3,7 +3,7 @@ import Menu from "./Menu";
 import AccountLogo from "./AccountLogo";
 import MenuItems from "./MenuItems";
 import { UserContext } from "../utils/UserContext";
-
+import { api } from "../services/api";
 
 export default function SideBar ({setMenu, onlogout ,clickedMenu}) {
   let menuItems;
@@ -33,9 +33,10 @@ const {userRole} =useContext(UserContext)
 
 
      const [isExpanded, setIsExpanded] = useState(false);
-  const handleLogout = () => {
-        const confirm = window.confirm("Are you sure you want to logout?");
-        if (confirm) {
+  const handleLogout =  async() => {
+        const confirm = await api.showDialogBox("Are you sure you want to logout?",['yes','no']);
+        console.log('confirm is ',confirm)
+        if (confirm.response===0) {
           onlogout();
         }
         };

@@ -13,7 +13,8 @@ export default function({accountType,onClose,context ,newAccount,parent}){
     const{setBill}=useContext(context)
      const [accountColumns,setColumns]=useState([]);
      
-    useEffect(()=>{ if(accounts?.length) { 
+    useEffect(()=>{ 
+        if(accounts?.length) { 
         setColumns( Object.keys(accounts[0]).map((key)=>({
             field:key,
             headerName:key,
@@ -39,7 +40,7 @@ export default function({accountType,onClose,context ,newAccount,parent}){
 
     function selectHandle(){
         const accountMap = new Map(
-            accounts.map((a)=>[a.partyCode,a])    
+            accounts.map((a)=>[a.party_id,a])    
          );
     
         if(selected.ids.size){
@@ -88,7 +89,7 @@ export default function({accountType,onClose,context ,newAccount,parent}){
                 onRowSelectionModelChange={(rowSelection)=>{
                 setselected(rowSelection);
                 }}  
-                getRowId={(row) =>row.partyCode}
+                getRowId={(row) =>row.party_id}
             />
              </Box>
       

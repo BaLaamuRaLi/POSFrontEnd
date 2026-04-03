@@ -23,7 +23,7 @@ contextBridge.exposeInMainWorld('api',{
         products:(filter)=>ipcRenderer.invoke('getProduct',filter),
     },
     popup:{
-        dialogBox:(message)=>ipcRenderer.invoke('show-dialog',message)
+        dialogBox:(message,buttons)=>ipcRenderer.invoke('show-dialog',message,buttons)
     }
 
 });
