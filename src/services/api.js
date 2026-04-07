@@ -8,6 +8,12 @@ export const api={
    submitSales:(billData)=>window.api.sales.submitOrder(billData),
    searchParty:(name,type)=>window.api.party.search(name,type),
    getCategories:()=>window.api.product.categories(),
+   getTypes:()=>window.api.product.types(),
+   getSizes:()=>window.api.product.sizes(),
+   getBrands:()=>window.api.product.brands(),
+   getTaxes:()=>window.api.product.taxes(),
+   getUnits:()=>window.api.product.units(),
    getProducts:(filter)=>window.api.product.products(filter),
+   newProduct:(product)=>window.api.product.addProduct(product),
    showDialogBox:(message,buttons)=>window.api.popup.dialogBox(message,buttons),
 }

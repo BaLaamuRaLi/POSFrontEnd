@@ -9,6 +9,10 @@ import { createAuthService } from "./services/authService.js";
 import { registerAuthHandlers } from "./ipc/authIPC.js";
 import { createPartyService } from "./services/partyService.js";
 import { registerPartyHandlers } from "./ipc/partyIPC.js";
+import registerPurchaseHandler from "./ipc/purchaseIPC.js";
+import { createPurchaseService } from "./services/purchaseService.js";
+import { createProductService } from "./services/productService.js";
+import registerProductHandler from "./ipc/productIPC.js";
 
 const createWindow=()=>{
     const win= new BrowserWindow({
@@ -30,19 +34,23 @@ const createWindow=()=>{
 }
 
 app.whenReady().then(async ()=>{
-    try {
-    await db.migrate.latest();
+    // try {
+    // await db.migrate.latest();
         
-    } catch (error) {
-        app.quit();
-        throw new Error("cannot migrate" ,error);
+    // } catch (error) {
+    //     app.quit();
+    //     throw error;
     
         
-    }
+    // }
     const authService= createAuthService(db);
     const partyService=createPartyService(db);
+    const purchaseService=createPurchaseService(db);
+    const productService=createProductService(db);
     registerAuthHandlers(authService);
     registerPartyHandlers(partyService);
+    registerPurchaseHandler(purchaseService);
+    registerProductHandler(productService);
     createWindow();
     app.on('activate',()=>{
         if(BrowserWindow.getAllWindows().length===0)createWindow()
@@ -170,103 +178,103 @@ if(buttons){
  return  await dialog.showMessageBox({message:msg})
 })
 
-ipcMain.handle('fetch-categories',()=>{
-    const categories =[
-    "grocery","stationary","electrical"
-];
-    return categories;
-});
+// ipcMain.handle('fetch-categories',()=>{
+//     const categories =[
+//     "grocery","stationary","electrical"
+// ];
+//     return categories;
+// });
 
-ipcMain.handle('getProduct',(event,filter)=>{
+// ipcMain.handle('get-product',(event,filter)=>{
 
-    console.log('inside getproduct',filter)
-    const inventory =[
-        {ProductCode:"PD21",HSN:"80001",ProductName:"Milk 1L Milma",unit:"no",rate:25,gstRate:18,Expirable:true,type:"milk",size:"1L",brand:"Milma",category:"grocery"}
-    ,
-        {ProductCode:"PD31",HSN:"80001",ProductName:"Milk 2L Milma",unit:"no",rate:25,gstRate:18,Expirable:true,type:"milk",size:"2L",brand:"Milma",category:"grocery"}
-    ,
-         {ProductCode:"PD23",HSN:"80001",ProductName:"Milk 1L Amul",unit:"no",rate:25,gstRate:18,Expirable:true,type:"milk",size:"1L",brand:"Amul",category:"grocery"}
-    ,
-        {ProductCode:"PD32",HSN:"80001",ProductName:"Milk 1L Amul",unit:"no",rate:25,gstRate:18,Expirable:true,type:"milk",size:"1L",brand:"Amul",category:"grocery"}
-    ,
-        {ProductCode:"PD56",HSN:"80001",ProductName:"Cheese small Amul",unit:"no",rate:25,gstRate:18,Expirable:true,type:"cheese",size:"small",brand:"Amul",category:"grocery"}
-    ,
-        {ProductCode:"PD58",HSN:"80001",ProductName:"Cheese small Milma",unit:"no",rate:25,gstRate:18,Expirable:true,type:"cheese",size:"small",brand:"Milma",category:"grocery"}
-    ,
-       {ProductCode:"PD39",HSN:"80001",ProductName:"Apple small kashmiri",unit:"no",rate:25,gstRate:18,Expirable:true,type:"apple",size:"small",brand:"kashmiri",category:"grocery"}
-    ,
-       {ProductCode:"PD33",HSN:"80001",ProductName:"Apple small kashmiri",unit:"no",rate:25,gstRate:18,Expirable:true,type:"apple",size:"large",brand:"kashmiri",category:"grocery"}
-    ,
-        {ProductCode:"PD41",HSN:"80001",ProductName:"Apple small italian",unit:"no",rate:25,gstRate:18,Expirable:true,type:"apple",size:"small",brand:"italian",category:"grocery"}
-    ,
-        {ProductCode:"PD22",HSN:"80021",ProductName:"1B pencil Apsara",unit:"no",rate:20,gstRate:18,Expirable:false,type:"pencil",size:"1B",brand:"Apsara",category:"stationary"}
-    ,
-         {ProductCode:"PD10",HSN:"80022",ProductName:"1HB pencil Apsara",unit:"no",rate:22,gstRate:18,Expirable:false,type:"pencil",size:"1HB",brand:"Apsara",category:"stationary"}
-    ,
-        {ProductCode:"PD18",HSN:"80021",ProductName:"3B pencil Apsara",unit:"no",rate:20,gstRate:18,Expirable:false,type:"pencil",size:"3B",brand:"Apsara",category:"stationary"}
-    ,
-         {ProductCode:"PD20",HSN:"80022",ProductName:"1HB pencil Nataraj",unit:"no",rate:22,gstRate:18,Expirable:false,type:"pencil",size:"1HB",brand:"Nataraj",category:"stationary"}
-    ,
-         {ProductCode:"PD35",HSN:"80022",ProductName:"1B pencil H&G",unit:"no",rate:22,gstRate:18,Expirable:false,type:"pencil",size:"1B",brand:"H&G",category:"stationary"}
-    ,
-        {ProductCode:"PD14",HSN:"80032",ProductName:"Parker pen",unit:"no",rate:30,gstRate:10,Expirable:false,type:"pen",size:"fountain",brand:"Parker",category:"stationary"}
-    ,
-        {ProductCode:"PD24",HSN:"80032",ProductName:"Cello pen",unit:"no",rate:30,gstRate:10,Expirable:false,type:"pen",size:"ball",brand:"Cello",category:"stationary"}
-    ,
-        {ProductCode:"PD74",HSN:"80032",ProductName:"Totenum pen",unit:"no",rate:30,gstRate:10,Expirable:false,type:"pen",size:"ball",brand:"Totenum",category:"stationary"}
-    ,
+//     console.log('inside getproduct',filter)
+//     const inventory =[
+//         {ProductCode:"PD21",HSN:"80001",ProductName:"Milk 1L Milma",unit:"no",rate:25,gstRate:18,Expirable:true,type:"milk",size:"1L",brand:"Milma",category:"grocery"}
+//     ,
+//         {ProductCode:"PD31",HSN:"80001",ProductName:"Milk 2L Milma",unit:"no",rate:25,gstRate:18,Expirable:true,type:"milk",size:"2L",brand:"Milma",category:"grocery"}
+//     ,
+//          {ProductCode:"PD23",HSN:"80001",ProductName:"Milk 1L Amul",unit:"no",rate:25,gstRate:18,Expirable:true,type:"milk",size:"1L",brand:"Amul",category:"grocery"}
+//     ,
+//         {ProductCode:"PD32",HSN:"80001",ProductName:"Milk 1L Amul",unit:"no",rate:25,gstRate:18,Expirable:true,type:"milk",size:"1L",brand:"Amul",category:"grocery"}
+//     ,
+//         {ProductCode:"PD56",HSN:"80001",ProductName:"Cheese small Amul",unit:"no",rate:25,gstRate:18,Expirable:true,type:"cheese",size:"small",brand:"Amul",category:"grocery"}
+//     ,
+//         {ProductCode:"PD58",HSN:"80001",ProductName:"Cheese small Milma",unit:"no",rate:25,gstRate:18,Expirable:true,type:"cheese",size:"small",brand:"Milma",category:"grocery"}
+//     ,
+//        {ProductCode:"PD39",HSN:"80001",ProductName:"Apple small kashmiri",unit:"no",rate:25,gstRate:18,Expirable:true,type:"apple",size:"small",brand:"kashmiri",category:"grocery"}
+//     ,
+//        {ProductCode:"PD33",HSN:"80001",ProductName:"Apple small kashmiri",unit:"no",rate:25,gstRate:18,Expirable:true,type:"apple",size:"large",brand:"kashmiri",category:"grocery"}
+//     ,
+//         {ProductCode:"PD41",HSN:"80001",ProductName:"Apple small italian",unit:"no",rate:25,gstRate:18,Expirable:true,type:"apple",size:"small",brand:"italian",category:"grocery"}
+//     ,
+//         {ProductCode:"PD22",HSN:"80021",ProductName:"1B pencil Apsara",unit:"no",rate:20,gstRate:18,Expirable:false,type:"pencil",size:"1B",brand:"Apsara",category:"stationary"}
+//     ,
+//          {ProductCode:"PD10",HSN:"80022",ProductName:"1HB pencil Apsara",unit:"no",rate:22,gstRate:18,Expirable:false,type:"pencil",size:"1HB",brand:"Apsara",category:"stationary"}
+//     ,
+//         {ProductCode:"PD18",HSN:"80021",ProductName:"3B pencil Apsara",unit:"no",rate:20,gstRate:18,Expirable:false,type:"pencil",size:"3B",brand:"Apsara",category:"stationary"}
+//     ,
+//          {ProductCode:"PD20",HSN:"80022",ProductName:"1HB pencil Nataraj",unit:"no",rate:22,gstRate:18,Expirable:false,type:"pencil",size:"1HB",brand:"Nataraj",category:"stationary"}
+//     ,
+//          {ProductCode:"PD35",HSN:"80022",ProductName:"1B pencil H&G",unit:"no",rate:22,gstRate:18,Expirable:false,type:"pencil",size:"1B",brand:"H&G",category:"stationary"}
+//     ,
+//         {ProductCode:"PD14",HSN:"80032",ProductName:"Parker pen",unit:"no",rate:30,gstRate:10,Expirable:false,type:"pen",size:"fountain",brand:"Parker",category:"stationary"}
+//     ,
+//         {ProductCode:"PD24",HSN:"80032",ProductName:"Cello pen",unit:"no",rate:30,gstRate:10,Expirable:false,type:"pen",size:"ball",brand:"Cello",category:"stationary"}
+//     ,
+//         {ProductCode:"PD74",HSN:"80032",ProductName:"Totenum pen",unit:"no",rate:30,gstRate:10,Expirable:false,type:"pen",size:"ball",brand:"Totenum",category:"stationary"}
+//     ,
 
-        {ProductCode:"PD25",HSN:"8002",ProductName:"bulb 9w Luker",unit:"no",rate:30,gstRate:10,Expirable:false,type:"bulb",size:"9W",brand:"Luker",category:"electrical"}
-    ,
-        {ProductCode:"PD26",HSN:"8002",ProductName:"bulb 18w Luker",unit:"no",rate:30,gstRate:10,Expirable:false,type:"bulb",size:"18W",brand:"Luker",category:"electrical"}
-    ,
-        {ProductCode:"PD27",HSN:"8002",ProductName:"bulb 9w Goldmedal",unit:"no",rate:30,gstRate:10,Expirable:false,type:"bulb",size:"9W",brand:"Goldmedal",category:"electrical"}
-    ,
-        {ProductCode:"PD28",HSN:"8002",ProductName:"bulb 27w Luker",unit:"no",rate:30,gstRate:10,Expirable:false,type:"bulb",size:"27W",brand:"Luker",category:"electrical"}
-    ,
-        {ProductCode:"PD78",HSN:"8002",ProductName:"1way Switch Harison",unit:"no",rate:30,gstRate:10,Expirable:false,type:"switch",size:"1way",brand:"Harison",category:"electrical"}
-    ,
-        {ProductCode:"PD60",HSN:"8002",ProductName:"2way Switch Harison",unit:"no",rate:30,gstRate:10,Expirable:false,type:"switch",size:"2way",brand:"Harison",category:"electrical"}
-    ,
-        {ProductCode:"PD61",HSN:"8002",ProductName:"2way Switch Goldmedal",unit:"no",rate:30,gstRate:10,Expirable:false,type:"switch",size:"2way",brand:"Goldemdal",category:"electrical"}
-    ,
-        {ProductCode:"PD62",HSN:"8002",ProductName:"2way Switch Luker",unit:"no",rate:30,gstRate:10,Expirable:false,type:"switch",size:"2way",brand:"Luker",category:"electrical"}
-    ,
+//         {ProductCode:"PD25",HSN:"8002",ProductName:"bulb 9w Luker",unit:"no",rate:30,gstRate:10,Expirable:false,type:"bulb",size:"9W",brand:"Luker",category:"electrical"}
+//     ,
+//         {ProductCode:"PD26",HSN:"8002",ProductName:"bulb 18w Luker",unit:"no",rate:30,gstRate:10,Expirable:false,type:"bulb",size:"18W",brand:"Luker",category:"electrical"}
+//     ,
+//         {ProductCode:"PD27",HSN:"8002",ProductName:"bulb 9w Goldmedal",unit:"no",rate:30,gstRate:10,Expirable:false,type:"bulb",size:"9W",brand:"Goldmedal",category:"electrical"}
+//     ,
+//         {ProductCode:"PD28",HSN:"8002",ProductName:"bulb 27w Luker",unit:"no",rate:30,gstRate:10,Expirable:false,type:"bulb",size:"27W",brand:"Luker",category:"electrical"}
+//     ,
+//         {ProductCode:"PD78",HSN:"8002",ProductName:"1way Switch Harison",unit:"no",rate:30,gstRate:10,Expirable:false,type:"switch",size:"1way",brand:"Harison",category:"electrical"}
+//     ,
+//         {ProductCode:"PD60",HSN:"8002",ProductName:"2way Switch Harison",unit:"no",rate:30,gstRate:10,Expirable:false,type:"switch",size:"2way",brand:"Harison",category:"electrical"}
+//     ,
+//         {ProductCode:"PD61",HSN:"8002",ProductName:"2way Switch Goldmedal",unit:"no",rate:30,gstRate:10,Expirable:false,type:"switch",size:"2way",brand:"Goldemdal",category:"electrical"}
+//     ,
+//         {ProductCode:"PD62",HSN:"8002",ProductName:"2way Switch Luker",unit:"no",rate:30,gstRate:10,Expirable:false,type:"switch",size:"2way",brand:"Luker",category:"electrical"}
+//     ,
     
-];
- if(filter.ProductCode){
+// ];
+//  if(filter.ProductCode){
       
-    return  {products: inventory.filter((item)=>item.ProductCode.toLowerCase()===filter.ProductCode.toLowerCase())};
-    }
+//     return  {products: inventory.filter((item)=>item.ProductCode.toLowerCase()===filter.ProductCode.toLowerCase())};
+//     }
  
     
 
-   const products= inventory.filter(
-    (item)=>Object.entries(filter).every(
-        ([key,value])=>item[key]?.toLowerCase().includes(value.toLowerCase())
-    ));
+//    const products= inventory.filter(
+//     (item)=>Object.entries(filter).every(
+//         ([key,value])=>item[key]?.toLowerCase().includes(value.toLowerCase())
+//     ));
 
-    const filterItems={
-        categories:[...new Set(products.map(p=>p.category))],
-        types:[...new Set(products.map(p=>p.type))],
-        sizes:[...new Set(products.map(p=>p.size))],
-        brands:[...new Set(products.map(p=>p.brand))],
-    }
-    return {products,filterItems};
-});
+//     const filterItems={
+//         categories:[...new Set(products.map(p=>p.category))],
+//         types:[...new Set(products.map(p=>p.type))],
+//         sizes:[...new Set(products.map(p=>p.size))],
+//         brands:[...new Set(products.map(p=>p.brand))],
+//     }
+//     return {products,filterItems};
+// });
 
 
-ipcMain.handle('newPurchase',()=>{
-    const purchases =[
-    {id:1,billNo:"A101", date:"01/01/2010",Name:"JK Traders",Amount:1000,phone:"55345",gst:"GA234324",address:"london",prevBalance:0},
-    {id:2,billNo:"A102", date:"23/01/2010",Name:"JRK associates",Amount:3000,phone:"34564356",gst:"GB376567",address:"Dubai",prevBalance:100},
-    {id:3,billNo:"A103", date:"23/01/2010",Name:"M&M Agencies",Amount:200,phone:"43545",gst:"GH435435",address:"canada",prevBalance:5},
-    {id:4,billNo:"A104", date:"23/01/2010",Name:"Johnsons Stores",Amount:500,phone:"34534",gst:"GK345345",address:"US",prevBalance:10},
-];
-    const digit= purchases.length+1;
-    const today=new Date();
-   return {billNo:`B10${digit}`,date:today};
-});
+// ipcMain.handle('newPurchase',()=>{
+//     const purchases =[
+//     {id:1,billNo:"A101", date:"01/01/2010",Name:"JK Traders",Amount:1000,phone:"55345",gst:"GA234324",address:"london",prevBalance:0},
+//     {id:2,billNo:"A102", date:"23/01/2010",Name:"JRK associates",Amount:3000,phone:"34564356",gst:"GB376567",address:"Dubai",prevBalance:100},
+//     {id:3,billNo:"A103", date:"23/01/2010",Name:"M&M Agencies",Amount:200,phone:"43545",gst:"GH435435",address:"canada",prevBalance:5},
+//     {id:4,billNo:"A104", date:"23/01/2010",Name:"Johnsons Stores",Amount:500,phone:"34534",gst:"GK345345",address:"US",prevBalance:10},
+// ];
+//     const digit= purchases.length+1;
+//     const today=new Date();
+//    return {billNo:`B10${digit}`,date:today};
+// });
 
 ipcMain.handle('savePurchase',(event,purchase)=>{
      console.log("Purchase received ",purchase);

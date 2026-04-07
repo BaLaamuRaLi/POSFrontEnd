@@ -21,6 +21,8 @@ export default function({onClose,isPurchase,context ,openWindow}){
     const [companies,setCompanies]=useState(null)
     const [listProduct,setlistProd]=useState([])
     const [filters,setFilters]=useState({ProductCode:"",ProductName:"",type:"",size:"",brand:"",category:""})
+    const [productName,setprodName]=useState('');
+    const [productCode,setprodCode]=useState('');
     const [productSelected,setProductsel]=useState({
         type: 'include',
         ids: new Set()
@@ -29,7 +31,8 @@ export default function({onClose,isPurchase,context ,openWindow}){
     const [productFetchedColumns,setFetchedCol]=useState([]);
        const [checkedItems, setChecked] = useState(new Set());
     
-    const debouncefilters=useDebounce(filters,600);
+    const debounceProdName=useDebounce(productName,600);
+    const debounceProdCode=useDebounce(productCode,600);
     const isFirstRender= useRef(true);
     const categoriesFetched=useRef(null);
     const {setBillItems} = useContext(context);
@@ -49,8 +52,11 @@ export default function({onClose,isPurchase,context ,openWindow}){
 
   
       useEffect(()=>{
+        if(!isFirstRender.current) return;
+        isFirstRender.current=false;
         async function getCategories(){
         const res = await api.getCategories();
+        console.log('categories is',res)
         setCategories(res);
         categoriesFetched.current=res;
         }
@@ -61,6 +67,14 @@ export default function({onClose,isPurchase,context ,openWindow}){
 
 function handleFilterChange(e){
     const {name,value}=e.target;
+    if(name==="ProductName"){
+       setprodName (value);
+       return;
+    }
+    if(name==="ProductCode"){
+       setprodCode(value);
+       return;
+    }
 
     setFilters(prev=>{
 
@@ -84,28 +98,6 @@ function handleFilterChange(e){
     }
 
 
-    if(name==="ProductName"){
-        return{
-            ...prev,
-            [name]:value,
-            category:"",
-            type:"",
-            size:"",
-            brand:"",
-            ProductCode:""
-        }
-    }
-    if(name==="ProductCode"){
-        return{
-            ...prev,
-            [name]:value,
-            type:"",
-            size:"",
-            brand:"",
-            ProductName:"",
-            category:""
-        }
-    }
 
     return {
       ...prev,
@@ -118,8 +110,8 @@ function handleFilterChange(e){
 
 
     const filterConfigs=[
-    {id:"code", Component:Input,type:"text",placeholder:"Product Code",name:"ProductCode",onChange:handleFilterChange,value:filters.ProductCode},
-    {id:"name", Component:Input,type:"text",placeholder:"Product Name",name:"ProductName",onChange:handleFilterChange,value:filters.ProductName,},
+    {id:"code", Component:Input,type:"text",placeholder:"Product Code",name:"ProductCode",onChange:handleFilterChange,value:productCode},
+    {id:"name", Component:Input,type:"text",placeholder:"Product Name",name:"ProductName",onChange:handleFilterChange,value:productName,},
     {id:"category", Component:DropBox,message:"Category",name:"category",items:categories,setClick:handleFilterChange,setValue:filters.category},
     {id:"type", Component:DropBox,message:"Type",items:types,name:"type",setClick:handleFilterChange,setValue:filters.type},
     {id:"size", Component:DropBox,message:"Size",items:sizes,name:"size",setClick:handleFilterChange,setValue:filters.size},
@@ -128,6 +120,33 @@ function handleFilterChange(e){
 
     ]; 
 
+    useEffect(()=>{
+        setFilters(prev=>({
+            ...prev,
+            ProductName:debounceProdName,
+            category:"",
+            type:"",
+            size:"",
+            brand:"",
+            ProductCode:""
+        })
+    )
+    },[debounceProdName])
+
+       useEffect(()=>{
+        setFilters(prev=>({
+            ...prev,
+            ProductCode:productCode,
+            type:"",
+            size:"",
+            brand:"",
+            ProductName:"",
+            category:"",
+            
+        })
+    )
+    },[debounceProdCode])
+    
 
     useEffect(()=>{
          
@@ -139,7 +158,9 @@ function handleFilterChange(e){
       
         async function getProduct(){
 
-         const res = await api.getProducts(debouncefilters);
+         const res = await api.getProducts(filters);
+         console.log('products received is',res);
+        
          const {products,filterItems} = res;
          setlistProd(products);
          setTypes(filterItems?.types);
@@ -160,7 +181,7 @@ function handleFilterChange(e){
 
        getProduct();
 
-    },[debouncefilters])
+    },[filters])
 
        
 
@@ -264,7 +285,7 @@ useEffect(()=>{ if(listProduct?.length) {
        minWidth: key === "ProductName" ? 150 : 0,
         flex:0,
     })))
-
+ 
 }else{
     setFetchedCol([]);
 

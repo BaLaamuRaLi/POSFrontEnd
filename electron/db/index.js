@@ -6,9 +6,9 @@ const db = knex({
         filename: './electron/db/pos.sqlite3'
     },
     useNullAsDefault: true,
-    migrations:{
-      directory:'./electron/db/migrations',
-    },
+    // migrations:{
+    //   directory:'./electron/db/migrations',
+    // },
     pool:{
       afterCreate: (conn, done) => {
        conn.prepare('PRAGMA foreign_keys = ON').run();

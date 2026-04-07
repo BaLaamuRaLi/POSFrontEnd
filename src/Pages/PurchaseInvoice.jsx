@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import CloseButton from "../Components/CloseButton";
 import RightPane from "../Components/RightPane";
 import Button from "../Components/Button";
@@ -10,29 +10,15 @@ import { PurchaseContext } from "../utils/PurchaseContext";
 import TableMui from "../Components/TableMui";
 import { roundoff } from "../utils/utils";
 import CircularBackdrop from "../Components/CircularBackdrop";
-import { api } from "../services/api";
- 
+import { api } from "../services/api"; 
 
 export default function({onClose,openWindow,invoice,setaccount}){
     const{bill,setBill,billItems,setBillItems,setSelectedItem}=useContext(PurchaseContext);
     const [checked,setChecked]=useState(new Set());
     const {date,billNo,discount,invoiceDate,gstType,Supplier}=bill;
-    const {Name,gst,phone ,address,prevBalance}=Supplier||{}
+    const {name:Name,gst_no:gst,phone ,address,prevBalance}=Supplier||{}
     const [open,setOpen]=useState(false);
 
-    
-    useEffect(()=>{
-        async function createNewPurchase(){
-        const res=await api.createPurchase();
-        const {billNo,date}=res;
-        setBill(prev=>({
-            ...prev,
-            billNo:billNo,
-            date:date
-        }));
-        }
-    createNewPurchase();
-    },[])
 
     const supplier ={name:"JRK",amount:"1000.0"}
    if(invoice)
@@ -77,7 +63,7 @@ function handleInput(e){
     ];
     
     const rheaderConfig =[
-    {id:"Date", Component:Display ,label:"Date",text:new Date(date).toLocaleDateString()},
+    {id:"Date", Component:Display ,label:"Date",text:new Date(date?.split(' ')[0]).toLocaleDateString()},
     {id:"Purchaseno", Component:Display ,label:"Bill No",text:billNo},
     {id:"Name", Component:Display ,label:"Name",text:Name},
     {id:"GST", Component:Display ,label:"GSTIN",text:gst},
@@ -149,6 +135,10 @@ const calculatedItems=billItems.map((item)=>{
     {field:"ProductCode",header:"Code"},
     {field:"ProductName",header:"Product"},
     {field:"HSN",header:"HSN"},
+    {field:"expiry",header:"Expiry Date",
+        render:(row)=>(row.expiry? new Date(row.expiry).toLocaleDateString():'')
+        
+    },
     {field:"quantity",header:"Quantity"},
     {field:"rate",header:"Rate"},
     {field:"amount",header:"Amount",},
@@ -203,13 +193,30 @@ function handleSave(isPending="Bill"){
     }
 
     async function submitPurchase() {
-        const {Supplier}=bill;
-      const purchaseItems=billItems.map((b)=>{
-    const {Expirable,HSN,ProductName,brand,category,size,type,...others}=b;
+    const {Supplier}=bill;
+    const purchaseItems=billItems.map((b)=>{
+    const {p_id,...others}=b;
       return {...others}
 
       });
- 
+ /**
+  * p_id:3,
+      gstRate: 18,//p
+      expiry: '2026-04-16', //batch table
+      cost: null, //batch table
+      rate: '5', //batch
+      stock: null,//batch
+      quantity: '8',//batch
+      discountPercent: '5',//purchase
+      amount: 0,//p
+      taxable: 0,//p
+      taxAmt: 0,//p
+      total: 0,//p
+      discount2percent: '5',//p
+      discount3percent: '5',//p
+      discount4percent: '5'//p
+
+*/
     
         const res=await api.submitPurchase({
             bill:{
@@ -270,7 +277,7 @@ function handleClose(){
             rfootcomps={rfooterConfig}
             />
           
-            
+                        
             </div>
     </div>
 

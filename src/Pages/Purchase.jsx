@@ -2,7 +2,6 @@ import AddButton from "../Components/AddButton";
 import ContentFilter from "../Components/ContentFilter";
 import ContentHeader from "../Components/ContentHeader";
 import PrintButton from "../Components/PrintButton";
-import ResultTable from "../Components/ResultTable";
 import SearchBox from "../Components/SearchBox";
 import SearchComponents from "../Components/ComponentsExtractor";
 import Input from "../Components/Input";
@@ -17,6 +16,7 @@ import EditProfit from "./EditProfit";
 import AddProduct from "./AddProduct";
 import {PurchaseContext} from "../utils/PurchaseContext"
 import TableMui from "../Components/TableMui";
+import { api } from "../services/api";
 
 export default function(){
     const [WindowsOpen, setWindow] = useState([]);
@@ -64,8 +64,20 @@ export default function(){
         "last 5 years", "last 10 years" ,"custom"
     ];
 
+async function handleAddPurchase(){
+    const res=await api.createPurchase();
+            console.log('res is ',res)
+            const {billNo,date}=res;
+            setPurchaseBill(prev=>({
+                ...prev,
+                billNo:billNo,
+                date:date
+            }));
+    
+}
+
      const headerConfig =[
-            {id: "add",component:AddButton,onClick:()=>setWindow(["PurchaseInvoice"])},
+            {id: "add",component:AddButton,onClick:()=>{setWindow(["PurchaseInvoice"]);}},
             {id: "search",component:SearchBox, placeholder:"Invoice number"},
             {id: "print",component:PrintButton}
     ];

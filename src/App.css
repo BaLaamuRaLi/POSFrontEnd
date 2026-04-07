@@ -491,10 +491,10 @@ justify-content: flex-end;
 }
 
 .addProduct{
-  height: 50%;
-  width: 50%;
+  height: 60%;
+  width: 60%;
 
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: 100%;
 
 }

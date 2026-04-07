@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Button from "../Components/Button";
 import CloseButton from "../Components/CloseButton";
 import ComponentsExtractor from "../Components/ComponentsExtractor";
@@ -11,16 +11,17 @@ import { PurchaseContext } from "../utils/PurchaseContext";
 export default function({onClose,openWindow}){
 const {selectedItem,setSelectedItem,setBillItems}=useContext(PurchaseContext);
 const {ProductCode,ProductName,quantity,rate,discountPercent
-   ,discount2percent,discount3percent,discount4percent,gstRate
+   ,discount2percent,discount3percent,discount4percent,gstRate,expiry
 }=selectedItem;
 
+useEffect(()=>console.log('expiry in selected item is ',expiry),[expiry])
 
     const lheadConfigs=[
        {id:"ProductCode" ,Component:LabelInput,label:"Product Code",readOnly:true,value:ProductCode},
        {id:"Batch" ,Component:LabelInput,label:"Batch",readOnly:true,value:""},
        {id:"ProductName" ,Component:LabelInput,label:"Product Name",readOnly:true,value:ProductName},
        {id:"tax" ,Component:DropBox,label:"Tax Category",name:"tax",items:[18,5,10,40],message:"tax category",setValue:gstRate,setClick:handleInput},
-       {id:"Expiry" ,Component:LabelInput,label:"Expiry Date",type:"date"},
+       {id:"Expiry" ,Component:LabelInput,label:"Expiry Date",type:"date" ,name:"expiry",onChange:handleInput,value:expiry||''}
        
     ]
 
@@ -55,6 +56,8 @@ function handleInput(e){
       return {...prev,discount4percent:value}
    case "tax": 
       return {...prev,gstRate:value}
+   case "expiry": 
+      return {...prev,expiry:value}
     default:
        return {...prev};
     }

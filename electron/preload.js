@@ -20,7 +20,13 @@ contextBridge.exposeInMainWorld('api',{
     },
     product:{
         categories:()=>ipcRenderer.invoke('fetch-categories'),
-        products:(filter)=>ipcRenderer.invoke('getProduct',filter),
+        types:()=>ipcRenderer.invoke('fetch-types'),
+        sizes:()=>ipcRenderer.invoke('fetch-sizes'),
+        brands:()=>ipcRenderer.invoke('fetch-brands'),
+        units:()=>ipcRenderer.invoke('fetch-units'),
+        taxes:()=>ipcRenderer.invoke('fetch-taxes'),
+        products:(filter)=>ipcRenderer.invoke('get-product',filter),
+        addProduct:(product)=>ipcRenderer.invoke('add-product',product),
     },
     popup:{
         dialogBox:(message,buttons)=>ipcRenderer.invoke('show-dialog',message,buttons)
@@ -28,28 +34,3 @@ contextBridge.exposeInMainWorld('api',{
 
 });
 
-// contextBridge.exposeInMainWorld('salesApi',{
-//     pending:()=>ipcRenderer.invoke('sales-pending'),
-//     newOrder:()=>ipcRenderer.invoke('newSalesOrder'),
-//     submitOrder:(order)=>ipcRenderer.invoke('saveOrder',order),
-// });
-
-// contextBridge.exposeInMainWorld('partyApi',{
-//     search:(party)=>ipcRenderer.invoke('searchParty',party),
-//     add:(party)=>ipcRenderer.invoke('addParty',party),
-// })
-
-// contextBridge.exposeInMainWorld('popupApi',{
-//     dialogBox:(message)=>ipcRenderer.invoke('show-dialog',message)
-// });
-
-// contextBridge.exposeInMainWorld('productApi',{
-//     categories:()=>ipcRenderer.invoke('fetch-categories'),
-//     products:(filter)=>ipcRenderer.invoke('getProduct',filter),
-// });
-
-// contextBridge.exposeInMainWorld('purchaseApi',{
-//     new:()=>ipcRenderer.invoke('newPurchase'),
-//     save:(purchase)=>ipcRenderer.invoke('savePurchase',purchase),
-   
-// })
