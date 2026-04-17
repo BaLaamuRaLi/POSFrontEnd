@@ -52,7 +52,7 @@ export default function({accountType,onClose,context ,newAccount,parent}){
                     case "Agent":
                     return {...prev,Agent:accountMap.get(pCode)}
                     case "Supplier":
-                    return {...prev,Supplier:accountMap.get(pCode)}
+                    return {...prev,supplier:accountMap.get(pCode)}
                     default:
                     return {...prev}
                 }

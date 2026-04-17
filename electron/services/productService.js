@@ -33,8 +33,14 @@ export function createProductService(db){
                 ? value.trim() !== ''
                 : value != null
                 )) return 'error:invalid product';
-            const res= await insertProduct(db,product);
-           return res;
+            try {
+             await insertProduct(db,product);
+             return 'success';
+                
+            } catch (error) {
+                 console.log('cannot add product',error)
+            }
+           
         },
         getProduct:async (filter)=>{
             return await fetchProducts(db,filter);

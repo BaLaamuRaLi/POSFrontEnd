@@ -24,7 +24,7 @@ export default function(){
     const [accountType,setaccount] =useState(null);
     const[purchaseBill,setPurchaseBill]=useState({
         gstType:"SGST",
-        Supplier: '',
+        supplier: '',
         invoiceNo: '',
         invoiceDate: '',
     });
@@ -65,15 +65,21 @@ export default function(){
     ];
 
 async function handleAddPurchase(){
-    const res=await api.createPurchase();
+   
+    try {
+         const res=await api.createPurchase();
             console.log('res is ',res)
-            const {billNo,date}=res;
+            const {purchaseID,billNo,date}=res;
             setPurchaseBill(prev=>({
                 ...prev,
+                purchaseID:purchaseID,
                 billNo:billNo,
                 date:date
             }));
-    
+    } catch (error) {
+        throw error;
+        
+    }
 }
 
      const headerConfig =[

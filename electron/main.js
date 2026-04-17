@@ -276,9 +276,9 @@ if(buttons){
 //    return {billNo:`B10${digit}`,date:today};
 // });
 
-ipcMain.handle('savePurchase',(event,purchase)=>{
-     console.log("Purchase received ",purchase);
-    return "success";
-})
+// ipcMain.handle('savePurchase',(event,purchase)=>{
+//      console.log("Purchase received ",purchase);
+//     return "success";
+// })
 
 

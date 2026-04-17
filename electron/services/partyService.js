@@ -10,7 +10,13 @@ return {
             throw new Error("invalid party");
         }
         console.log('party received is of type ',partyData.type,'paryt is',party);
-    return insertParty(db,partyData);
+    
+        try {
+        await insertParty(db,partyData); 
+         return {sucess:true,message:`${partyData.type} added successfully`}
+        } catch (error) {
+            throw error
+        }
     },
     findParty:async(party)=>{
            if(!Object.values(party).every(item =>item!==null && item!=="")){

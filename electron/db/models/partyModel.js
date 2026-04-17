@@ -2,7 +2,7 @@ export async function insertParty(db,partyData){
 
     const {type,party}=partyData;
     const { partyCode,Name ,gst ,address ,phone} = party;
- try {
+ 
     await db.transaction(async (trx)=>{
     
     const [{type_id}]= await trx('party_types').where({party_type:type.toLowerCase()}).select('type_id')
@@ -17,11 +17,6 @@ export async function insertParty(db,partyData){
     ]);
     });
     
- } catch (error) {
-    throw new Error(`cannot add ${type} ,error:`,error);
-    
- }
-  return {sucess:true,message:`${type} added successfully`};
 }
 
 

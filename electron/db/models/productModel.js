@@ -10,7 +10,7 @@ export async function fetchProducts(db,filter) {
 
  
 const baseQuery=db('products as p')
-  .leftJoin('batches as b','p.p_id','b.product_id')
+  .leftJoin('product_batches as b','p.p_id','b.product_id')
   .innerJoin('units as u','p.unit_id','u.u_id')
   .innerJoin('gst as g','p.gst_id','g.gst_id')
   .innerJoin('product_categories as c','p.category','c.cat_id')
@@ -48,22 +48,23 @@ const baseQuery=db('products as p')
   
   const [products,categories,types,sizes,brands]= await Promise.all([  
     baseQuery.clone().select(
-  'p.p_id',
+  'p.p_id as productID',
   'p.product_code as ProductCode',
   'p.product_name as ProductName',
   'p.hsn_code as HSN',
   'u.unit',
+  'b.cost',
+  'b.price',
   'g.gst_value as gstRate',
+  'b.stock',
+  'p.profit_margin as profit',
+  'b.expiry_date as expiry',
   'c.product_category as category',
   't.product_type as type',
   's.product_size as size',
   'br.brand',
   'p.isExpirable',
-  'b.batch_no as batch',
-  'b.expiry_date as expiry',
-  'b.cost',
-  'b.rate',
-  'b.stock'
+  
   ),
     baseQuery.clone().distinct('c.product_category'),
     baseQuery.clone().distinct('t.product_type'),
@@ -153,7 +154,7 @@ async function getID( trx,table,column,condition_col,valToInsert){
     return insertedRow[column];
 }
 
-    try {
+
         
 await db.transaction(async (trx)=>{
    
@@ -187,10 +188,8 @@ await db.transaction(async (trx)=>{
 
   })
     
-  return 'success';
+ 
 
-} catch (error) {
-        console.log('cannot add product',error)
-    }
+
   
 }

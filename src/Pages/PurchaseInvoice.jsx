@@ -15,18 +15,18 @@ import { api } from "../services/api";
 export default function({onClose,openWindow,invoice,setaccount}){
     const{bill,setBill,billItems,setBillItems,setSelectedItem}=useContext(PurchaseContext);
     const [checked,setChecked]=useState(new Set());
-    const {date,billNo,discount,invoiceDate,gstType,Supplier}=bill;
-    const {name:Name,gst_no:gst,phone ,address,prevBalance}=Supplier||{}
+    const {date,billNo,discount,invoiceDate,gstType,supplier}=bill;
+    const {name:Name,gst_no:gst,phone ,address,prevBalance}=supplier||{}
     const [open,setOpen]=useState(false);
 
 
-    const supplier ={name:"JRK",amount:"1000.0"}
-   if(invoice)
-    {
-        supplier.name=invoice.client;
-        supplier.amount=invoice.amount;
+//     const supplier ={name:"JRK",amount:"1000.0"}
+//    if(invoice)
+//     {
+//         supplier.name=invoice.client;
+//         supplier.amount=invoice.amount;
 
-    }
+//     }
 
 
 function handleInput(e){
@@ -193,14 +193,14 @@ function handleSave(isPending="Bill"){
     }
 
     async function submitPurchase() {
-    const {Supplier}=bill;
+    const {supplier}=bill;
     const purchaseItems=billItems.map((b)=>{
-    const {p_id,...others}=b;
-      return {...others}
+    const {productID,quantity,rate,discountPercent,discount2percent,discount3percent,discount4percent,gstRate,profit,...others}=b;
+      return {productID,quantity,rate,discountPercent,discount2percent,discount3percent,discount4percent,gstRate,profit}
 
       });
  /**
-  * p_id:3,
+  *   productID:3,
       gstRate: 18,//p
       expiry: '2026-04-16', //batch table
       cost: null, //batch table
@@ -221,7 +221,7 @@ function handleSave(isPending="Bill"){
         const res=await api.submitPurchase({
             bill:{
                 ...bill,
-                Supplier:Supplier?.partyCode||"pending",
+                supplier:supplier?.party_id||"pending",
                 status:isPending
             },
             billItems:purchaseItems,
@@ -230,7 +230,7 @@ function handleSave(isPending="Bill"){
             setTimeout(()=>{
             setBill({
             gstType:"SGST",
-            Supplier: '',
+            supplier: '',
             invoiceNo: '',
             invoiceDate: '',
         });
