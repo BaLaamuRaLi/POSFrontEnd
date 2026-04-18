@@ -244,7 +244,7 @@ export function createPurchaseService(db){
         });
         const finalBatches=Object.values(groupedBatch);
     
-            
+
             return await savePurchase(db,formattedPurchase,formattedPurchaseItems,finalBatches);
         }
     }
