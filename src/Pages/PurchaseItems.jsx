@@ -37,7 +37,7 @@ function calculateProductDetails(){
       const profitMargin=parseFloat(profit)||0;
       let cost=0,price=0;
 
-        if(qty){
+        if(qty){ 
          cost = roundoff(taxable/qty,2);
          price=roundoff(cost *(1+profitMargin/100),2)
         }
