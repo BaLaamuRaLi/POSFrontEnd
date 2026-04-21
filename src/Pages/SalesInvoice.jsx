@@ -158,10 +158,10 @@ const value = e.target.value;
 }
 
 function calculateRowValues(row){
-    const discount = parseFloat(row.discountPercent) || 0;
-    const rate = parseFloat(row.rate) || 0;
-    const quantity = parseFloat(row.quantity) || 0;
-    const gst = parseFloat(row.gstRate) || 0;
+    const discount = Number(row.discountPercent) || 0;
+    const rate = Number(row.rate) || 0;
+    const quantity = Number(row.quantity) || 0;
+    const gst = Number(row.gstRate) || 0;
     const gross = rate * quantity; 
     const discountAmt=discount *gross/100;
     const taxable = gross -discountAmt;
@@ -278,14 +278,14 @@ function handlePrint(selected){
 }
 
 function calculateAmount(){
-    const billDiscount=parseFloat(bill?.totalDiscount)||0;
+    const billDiscount=Number(bill?.totalDiscount)||0;
     const amount=billItems?.reduce((sum,p)=>{
         const quantity=p?.quantity||0;
         const rate=p?.rate||0;
         const discountPercent=p?.discountPercent||0;
         const gst=p?.gstRate;
-        const discount=parseFloat(discountPercent)*(rate*parseFloat(quantity))/100;
-            const taxable=rate*parseFloat(quantity)-discount;
+        const discount=Number(discountPercent)*(rate*Number(quantity))/100;
+            const taxable=rate*Number(quantity)-discount;
             const taxAmt=taxable*gst/100;
             return sum+taxable+taxAmt;
     },0)*(1-billDiscount/100) // subtracting discount applied to invoice

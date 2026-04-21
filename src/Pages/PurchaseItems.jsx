@@ -17,14 +17,14 @@ const {ProductCode,ProductName,quantity,rate,discountPercent
 
 useEffect(()=>console.log('expiry in selected item is ',expiry),[expiry])
 function calculateProductDetails(){
-   const formatRate=Math.max(0,parseFloat(rate)||0);
-   const qty=Math.max(0,parseFloat(quantity)||0);
+   const formatRate=Math.max(0,Number(rate)||0);
+   const qty=Math.max(0,Number(quantity)||0);
    const amount=roundoff(formatRate*qty,2);
    let remaining=amount;
-    const discount1Percent= parseFloat(discountPercent)||0;
-    const discount2Percent= parseFloat(discount2percent)||0;
-    const discount3Percent= parseFloat(discount3percent)||0;
-    const discount4Percent= parseFloat(discount4percent)||0;
+    const discount1Percent= Number(discountPercent)||0;
+    const discount2Percent= Number(discount2percent)||0;
+    const discount3Percent= Number(discount3percent)||0;
+    const discount4Percent= Number(discount4percent)||0;
    const discAmt1=roundoff((discount1Percent* remaining)/100,2);
    remaining-=discAmt1;
     const discAmt2 =roundoff(remaining* discount2Percent/100,2);
@@ -34,7 +34,7 @@ function calculateProductDetails(){
     const discAmt4 =roundoff(remaining*discount4Percent/100,2);
     remaining-=discAmt4;
      const taxable= Math.max(0,roundoff(remaining,2));
-      const profitMargin=parseFloat(profit)||0;
+      const profitMargin=Number(profit)||0;
       let cost=0,price=0;
 
         if(qty){ 

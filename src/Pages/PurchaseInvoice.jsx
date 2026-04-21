@@ -91,14 +91,14 @@ function handleRemove(){
 
 
 function calculateRowValues(row){
-    const discount1 = parseFloat(row.discountPercent) || 0;
-    const discount2 = parseFloat(row.discount2percent )|| 0;
-    const discount3 = parseFloat(row.discount3percent) || 0;
-    const discount4 = parseFloat(row.discount4percent) || 0;
+    const discount1 = Number(row.discountPercent) || 0;
+    const discount2 = Number(row.discount2percent )|| 0;
+    const discount3 = Number(row.discount3percent) || 0;
+    const discount4 = Number(row.discount4percent) || 0;
 
-    const rate = parseFloat(row.rate) || 0;
-    const quantity = parseFloat(row.quantity) || 0;
-    const gst = parseFloat(row.gstRate) || 0;
+    const rate = Number(row.rate) || 0;
+    const quantity = Number(row.quantity) || 0;
+    const gst = Number(row.gstRate) || 0;
 
     const amount = rate * quantity;
 
@@ -162,7 +162,7 @@ function handleTableClick(row){
     ];
 
 function calcInvoiceAmt(){
-    const billDiscount = parseFloat(discount)||0
+    const billDiscount = Number(discount)||0
     const invAmount=billItems?.reduce((sum,p)=>{
         const {total}=calculateRowValues(p);
             return sum+total;
