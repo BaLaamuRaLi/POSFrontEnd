@@ -98,12 +98,11 @@ function handleDiscount(e){
     
 
     const lbillConfig =[
-        {id:"Discount", Component:LabelInput,type:"text",label:"Discount %",onChange:handleDiscount,value:bill?.totalDiscount||""},
+        // {id:"Discount", Component:LabelInput,type:"text",label:"Discount %",onChange:handleDiscount,value:bill?.totalDiscount||""},
         {id:"Commision", Component:Input,type:"text",placeholder:"Agent Commision:"},
         {id:"Charge", Component:Input,type:"text",placeholder:"Delivery Charge:"},
         {id:"otherCharge", Component:Input,type:"text",placeholder:"Service Charge:"},
         
-
     ];
 
 //#endregion

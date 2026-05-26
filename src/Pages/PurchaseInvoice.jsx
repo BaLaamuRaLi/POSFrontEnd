@@ -57,7 +57,7 @@ function handleInput(e){
     
     
     const billconfigs=[
-    {id:"Discount", Component:LabelInput,label:"Discount",type:"text",name:"discount",onChange:handleInput,value:bill?.discount||""},
+    // {id:"Discount", Component:LabelInput,label:"Discount",type:"text",name:"discount",onChange:handleInput,value:bill?.discount||""},
     {id:"Order No", Component:LabelInput,label:"Order No",type:"text"},
     {id:"payment", Component:LabelInput,label:"Payment",type:"text"},       
     ];
