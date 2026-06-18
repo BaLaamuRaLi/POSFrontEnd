@@ -7,15 +7,15 @@ import DropBox from "../Components/DropBox";
 import LabelInput from "../Components/LabelInput";
 import SidebySide from "../Components/SidebySide";
 import { PurchaseContext } from "../utils/PurchaseContext";
-import { roundoff } from "../utils/utils";
+import { roundoff } from "../utils/utils.js";
 
 export default function({onClose,openWindow}){
 const {selectedItem,setSelectedItem,setBillItems}=useContext(PurchaseContext);
-const {ProductCode,ProductName,quantity,rate,discountPercent
+const {productCode,productName,quantity,rate,discountPercent
    ,discount2percent,discount3percent,discount4percent,gstRate,expiry,profit
 }=selectedItem;
 
-useEffect(()=>console.log('expiry in selected item is ',expiry),[expiry])
+useEffect(()=>console.log('selected item is',selectedItem),[selectedItem])
 function calculateProductDetails(){
    const formatRate=Math.max(0,Number(rate)||0);
    const qty=Math.max(0,Number(quantity)||0);
@@ -49,9 +49,9 @@ const {cost,price,amount,discAmt1,discAmt2,discAmt3,discAmt4}=calculateProductDe
 
 
     const lheadConfigs=[
-       {id:"ProductCode" ,Component:LabelInput,label:"Product Code",readOnly:true,value:ProductCode},
+       {id:"productCode" ,Component:LabelInput,label:"Product Code",readOnly:true,value:productCode},
        {id:"Batch" ,Component:LabelInput,label:"Batch",readOnly:true,value:""},
-       {id:"ProductName" ,Component:LabelInput,label:"Product Name",readOnly:true,value:ProductName},
+       {id:"productName" ,Component:LabelInput,label:"Product Name",readOnly:true,value:productName},
        {id:"tax" ,Component:DropBox,label:"Tax Category",name:"tax",items:[18,5,10,40],message:"tax category",setValue:gstRate,setClick:handleInput},
        {id:"Expiry" ,Component:Button,text:"Add Expiry"}
        
@@ -128,7 +128,7 @@ function handleInput(e){
 function handleSave(){
   setBillItems(prev =>
     prev.map(p =>{
-     if( p.ProductCode === ProductCode){
+     if( p.productCode === productCode){
 
       return selectedItem;
      }

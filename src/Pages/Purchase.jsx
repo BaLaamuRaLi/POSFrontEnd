@@ -83,7 +83,7 @@ async function handleAddPurchase(){
 }
 
      const headerConfig =[
-            {id: "add",component:AddButton,onClick:()=>{setWindow(["PurchaseInvoice"]);}},
+            {id: "add",component:AddButton,onClick:()=>{setWindow(["PurchaseInvoice"]);handleAddPurchase()}},
             {id: "search",component:SearchBox, placeholder:"Invoice number"},
             {id: "print",component:PrintButton}
     ];

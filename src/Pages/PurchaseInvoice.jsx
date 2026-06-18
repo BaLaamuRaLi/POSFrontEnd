@@ -8,15 +8,16 @@ import LabelInput from "../Components/LabelInput";
 import DropBox from "../Components/DropBox";
 import { PurchaseContext } from "../utils/PurchaseContext";
 import TableMui from "../Components/TableMui";
-import { roundoff } from "../utils/utils";
+import { roundoff } from "../utils/utils.js";
 import CircularBackdrop from "../Components/CircularBackdrop";
 import { api } from "../services/api"; 
+import { invoiceStatus } from "../utils/enums.js";
 
 export default function({onClose,openWindow,invoice,setaccount}){
     const{bill,setBill,billItems,setBillItems,setSelectedItem}=useContext(PurchaseContext);
     const [checked,setChecked]=useState(new Set());
     const {date,billNo,discount,invoiceDate,gstType,supplier}=bill;
-    const {name:Name,gst_no:gst,phone ,address,prevBalance}=supplier||{}
+    const {party_id,name:Name,gst_no,phone ,address,prevBalance}=supplier||{}
     const [open,setOpen]=useState(false);
 
 
@@ -66,7 +67,7 @@ function handleInput(e){
     {id:"Date", Component:Display ,label:"Date",text:new Date(date?.split(' ')[0]).toLocaleDateString()},
     {id:"Purchaseno", Component:Display ,label:"Bill No",text:billNo},
     {id:"Name", Component:Display ,label:"Name",text:Name},
-    {id:"GST", Component:Display ,label:"GSTIN",text:gst},
+    {id:"GST", Component:Display ,label:"GSTIN",text:gst_no},
     {id:"phone", Component:Display ,label:"phone",text:phone},
     {id:"Address", Component:Display ,label:"Address",text:address},
         
@@ -75,7 +76,7 @@ function handleInput(e){
 function handleRemove(){
     if(billItems?.length&&checked){      
 
-    setBillItems(prev=> prev.filter((item) => !checked.has(item.ProductCode)));
+    setBillItems(prev=> prev.filter((item) => !checked.has(item.productCode)));
     setChecked(new Set());
  
 }
@@ -132,9 +133,9 @@ const calculatedItems=billItems.map((item)=>{
 });
 
     const columns =[
-    {field:"ProductCode",header:"Code"},
-    {field:"ProductName",header:"Product"},
-    {field:"HSN",header:"HSN"},
+    {field:"productCode",header:"Code"},
+    {field:"productName",header:"Product"},
+    {field:"hsnCode",header:"HSN"},
     {field:"expiry",header:"Expiry Date",
         render:(row)=>(row.expiry? new Date(row.expiry).toLocaleDateString():'')
         
@@ -170,10 +171,10 @@ function calcInvoiceAmt(){
     return roundoff(invAmount,2);
 }
 
-function handleSave(isPending="Bill"){
+function handleSave(pendingStatus=invoiceStatus.CONFIRMED){
     setOpen(true)
     let invalidKey=null;
-    if(isPending!=="pending"){ 
+    if(pendingStatus!=="pending"){ 
         Object.entries(bill).some(([key, value]) => {
         if (!value) {
             invalidKey=key;
@@ -195,10 +196,9 @@ function handleSave(isPending="Bill"){
     async function submitPurchase() {
     const {supplier}=bill;
     const purchaseItems=billItems.map((b)=>{
-    const {productID,quantity,rate,discountPercent,discount2percent,discount3percent,discount4percent,gstRate,profit,...others}=b;
-      return {productID,quantity,rate,discountPercent,discount2percent,discount3percent,discount4percent,gstRate,profit}
-
-      });
+        const {productID,productName,hsnCode,quantity,rate,discountPercent,discount2percent,discount3percent,discount4percent,gstRate,profit,...others}=b;
+        return {productID,productName,hsnCode,quantity,rate,discountPercent,discount2percent,discount3percent,discount4percent,gstRate,profit}
+    });
  /**
   *   productID:3,
       gstRate: 18,//p
@@ -221,8 +221,13 @@ function handleSave(isPending="Bill"){
         const res=await api.submitPurchase({
             bill:{
                 ...bill,
-                supplier:supplier?.party_id||"pending",
-                status:isPending
+                status:pendingStatus,
+                supplier:{
+                    supplierId:party_id||null,//null is to bypass foreign key constraint while saving pending bill
+                    supplierName:Name,
+                    supplierGst:gst_no,
+                    supplierAddress:address,
+                }
             },
             billItems:purchaseItems,
         });

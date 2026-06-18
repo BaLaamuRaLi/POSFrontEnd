@@ -63,7 +63,7 @@ useEffect(()=>{
 function handleRemove(){
     if(billItems?.length&&checked){      
 
-    setBillItems(prev=> prev.filter((item) => !checked.has(item.ProductCode)));
+    setBillItems(prev=> prev.filter((item) => !checked.has(item.productCode)));
     setChecked(new Set());
  
 }
@@ -133,7 +133,7 @@ const value = e.target.value;
 
   setBillItems(prev =>
     prev.map(p =>{
-     if( p.ProductCode === item.ProductCode){
+     if( p.productCode === item.productCode){
 
     switch (field) {
     case "quantity":
@@ -190,8 +190,8 @@ const calculatedItems=billItems.map((item)=>{
 });
 
     const columns =[
-    {field:"ProductCode",header:"Code"},
-    {field:"ProductName",header:"Product"},
+    {field:"productCode",header:"Code"},
+    {field:"productName",header:"Product"},
     {field:"quantity",header:"Quantity",
         render:(row)=>
             (<TableInput onInputChange={handleInputChange} row={row} field={"quantity"} defaultValue=""/> )
@@ -237,7 +237,7 @@ function handleSave(status){
 async function submitSalesOrder(){
       const {Customer,Agent}=bill;
       const salesItems=billItems.map((b)=>({
-       ProductCode: b.ProductCode,  
+       productCode: b.productCode,  
         quantity: b.quantity,
         discountPercent: b.discountPercent
 

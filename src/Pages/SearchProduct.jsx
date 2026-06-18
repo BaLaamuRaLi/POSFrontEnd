@@ -20,7 +20,7 @@ export default function({onClose,isPurchase,context ,openWindow}){
     const [sizes,setSizes]=useState(null)
     const [companies,setCompanies]=useState(null)
     const [listProduct,setlistProd]=useState([])
-    const [filters,setFilters]=useState({ProductCode:"",ProductName:"",type:"",size:"",brand:"",category:""})
+    const [filters,setFilters]=useState({productCode:"",productName:"",type:"",size:"",brand:"",category:""})
     const [productName,setprodName]=useState('');
     const [productCode,setprodCode]=useState('');
     const [productSelected,setProductsel]=useState({
@@ -39,8 +39,8 @@ export default function({onClose,isPurchase,context ,openWindow}){
  
 
    const columns =[
-    {field:"ProductCode",header:"Code"},
-    {field:"ProductName",header:"Product"},
+    {field:"productCode",header:"Code"},
+    {field:"productName",header:"Product"},
     {field:"quantity",header:"Quantity",
         render:(row)=>
             (<TableInput onInputChange={handleInputChange} row={row} field={"quantity"} defaultValue=""/> )
@@ -71,7 +71,7 @@ function handleFilterChange(e){
        setprodName (value);
        return;
     }
-    if(name==="ProductCode"){
+    if(name==="productCode"){
        setprodCode(value);
        return;
     }
@@ -93,7 +93,7 @@ function handleFilterChange(e){
         type:"",
         size:"",
         brand:"",
-        ProductCode:""
+        productCode:""
       }
     }
 
@@ -110,7 +110,7 @@ function handleFilterChange(e){
 
 
     const filterConfigs=[
-    {id:"code", Component:Input,type:"text",placeholder:"Product Code",name:"ProductCode",onChange:handleFilterChange,value:productCode},
+    {id:"code", Component:Input,type:"text",placeholder:"Product Code",name:"productCode",onChange:handleFilterChange,value:productCode},
     {id:"name", Component:Input,type:"text",placeholder:"Product Name",name:"ProductName",onChange:handleFilterChange,value:productName,},
     {id:"category", Component:DropBox,message:"Category",name:"category",items:categories,setClick:handleFilterChange,setValue:filters.category},
     {id:"type", Component:DropBox,message:"Type",items:types,name:"type",setClick:handleFilterChange,setValue:filters.type},
@@ -128,7 +128,7 @@ function handleFilterChange(e){
             type:"",
             size:"",
             brand:"",
-            ProductCode:""
+            productCode:""
         })
     )
     },[debounceProdName])
@@ -136,7 +136,7 @@ function handleFilterChange(e){
        useEffect(()=>{
         setFilters(prev=>({
             ...prev,
-            ProductCode:productCode,
+            productCode:productCode,
             type:"",
             size:"",
             brand:"",
@@ -191,10 +191,10 @@ function selectButtonHandler(){
 if(productSelected.type==="exclude"){
    
     setCart(prev=>{
-        const cartSet= new Set(prev.map((p)=>p.ProductCode));
+        const cartSet= new Set(prev.map((p)=>p.productCode));
         const updated=[...prev];
         for (const p of listProduct){
-            if(!cartSet.has(p.ProductCode)){
+            if(!cartSet.has(p.productCode)){
                 updated.push(p);
             }
         }
@@ -212,15 +212,15 @@ if(productSelected.type==="exclude"){
 
     const productMap = new Map( //map for efficient searching
     listProduct.map((p) => {
-       return [p.ProductCode, {
+       return [p.productCode, {
             ...p,
-            quantity:"",           
-    }]
+            quantity:"",                       
+        }]
 })
     );
 
     setCart(prev=>{
-        const cartSet= new Set(prev.map((p)=>p.ProductCode));
+        const cartSet= new Set(prev.map((p)=>p.productCode));
         const updated=[...prev];
         for (const p of productSelectedIds){
             if(!cartSet.has(p)){
@@ -237,7 +237,7 @@ function RemoveButtonHandler(){
  
     if(cart?.length&&checkedItems){      
 
-    setCart(prev=> prev.filter((item) => !checkedItems.has(item.ProductCode)));
+    setCart(prev=> prev.filter((item) => !checkedItems.has(item.productCode)));
     setChecked(new Set());
  
 }
@@ -256,17 +256,20 @@ function addButtonHandler(){
         }
     }
      const productMap = new Map( //map for efficient searching
-    cart.map((p) => [p.ProductCode, p])
+    cart.map((p) => [p.productCode, p])
     );
     setBillItems(prev=>{
-        const orderSet= new Set(prev.map((p)=>p.ProductCode));
+        const orderSet= new Set(prev.map((p)=>p.productCode));
         const updated=[...prev];
         for (const p of cart){
-            if(!orderSet.has(p.ProductCode)){
+            if(!orderSet.has(p.productCode)){
                 updated.push({
-                    ...productMap.get(p.ProductCode),
-                   ...isPurchase?{rate:""}:{},
-                    discountPercent:""
+                    ...productMap.get(p.productCode),
+                   ...(isPurchase?{rate:""}:{}),
+                    discountPercent:0,
+                    discount2percent:0,
+                    discount3percent:0,
+                    discount4percent:0,
                 });
             }
         }
@@ -313,7 +316,7 @@ const value = e.target.value;
 
   setCart(prev =>
     prev.map(p =>
-      p.ProductCode === item.ProductCode
+      p.productCode === item.productCode
         ? { ...p, quantity: value } 
         : p
     )
@@ -349,7 +352,7 @@ const value = e.target.value;
                 onRowSelectionModelChange={(rowSelections)=>{
                 setProductsel(rowSelections);
                 }}  
-                getRowId={(row) =>row.ProductCode}
+                getRowId={(row) =>row.productCode}
                 sx={{
                     '& .MuiDataGrid-cell': {
                     fontWeight:'500'

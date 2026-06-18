@@ -122,7 +122,7 @@ function handleFilterChange(name,value){
 //#region left
     const code= {Component:LabelInput,label:"Product Code",type:"text",name:'code',onChange:handleInputChange,value:product?.productCode};
     const name= {Component:LabelInput,label:"Product Name",type:"text",name:'name',onChange:handleInputChange,value:product?.productName};
-    const hsn= {Component:LabelInput,label:"HSN code",type:"text",name:'hsn',onChange:handleInputChange,value:product?.hsn};
+    const hsn= {Component:LabelInput,label:"hsnCode code",type:"text",name:'hsn',onChange:handleInputChange,value:product?.hsn};
     const batch= {Component:LabelInput,label:"Batch No",type:"text",name:'batch'};
     const taxCategory= {Component:DropBox,label:"Tax" ,items:taxes?.taxNames,message:"--select--" ,name:'tax',setClick:handleInputChange,setValue:product?.tax};
     const unit= {Component:DropBox,label:"Unit" ,items:units?.unitNames,message:"--select--" ,name:'unit',setClick:handleInputChange,setValue:product?.unit};
