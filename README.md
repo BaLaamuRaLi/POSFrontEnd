@@ -1,3 +1,9 @@
+
+![Status](https://shields.io)
+[![Electron](https://shields.io)](https://electronjs.org)
+[![React](https://shields.io)](https://react.dev)
+[![Vite](https://shields.io)](https://vite.dev)
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
