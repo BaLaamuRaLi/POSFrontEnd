@@ -2,6 +2,7 @@
 
 ---
 ![status](https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge)
+<br/>
 React front-end for point of sales app built with electron
   <p >
   <img src="https://img.shields.io/badge/v19.2.0-React-violet" alt="React" />
