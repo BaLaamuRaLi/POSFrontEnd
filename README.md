@@ -9,9 +9,9 @@ React front-end for point of sales app built with electron
   <img src="https://img.shields.io/badge/v6-MaterialUI-violet" alt="MUI" />
 </p>
 ## Stack<br/>
-🔹 [!React](https://react.dev) - The library for web and native user interfaces.<br/>
-🔹 [vite](https://vite.dev/) - Ultra-fast front-end build tool and dev server<br/>
-🔹 [MaterialUI](https://mui.com/material-ui/) - Component library powering the checkout interface.<br/>
+* [React](https://react.dev) - The library for web and native user interfaces.<br/>
+* [vite](https://vite.dev/) - Ultra-fast front-end build tool and dev server<br/>
+* [MaterialUI](https://mui.com/material-ui/) - Component library powering the checkout interface.<br/>
 
 ## Preview
 
