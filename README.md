@@ -15,12 +15,11 @@ React front-end for point of sales app built with electron
  - **[MaterialUI](https://mui.com/material-ui/)** - Component library powering the checkout interface.<br/>
 
 ## Preview
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/b3bb1226-4133-4cba-86fe-f697afa25a60" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/8ea7c3ae-775a-4f49-bca6-27ea85f0850d" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/895b2981-c643-4abf-bc33-e9cc73031953" />
 
-![[Pasted image 20260619122924.png]]
- ![[Pasted image 20260619122621.png]]
-
-
- ![[Pasted image 20260619121607.png]]
+ 
 ## Architecture 
 * **Decoupled Monorepo/Structure:** Separated the React UI from the Electron core to enable web-based simulation, isolating state management from hardware-level processes. 
 * **IPC Communication:** Implemented a secure preload script context bridge to safely pass transaction payloads between the React UI layer and the native Node.js environment.
