@@ -1,22 +1,42 @@
+# POS Desktop Application — Frontend UI
 
-![Status](https://shields.io)
-[![Electron](https://shields.io)](https://electronjs.org)
-[![React](https://shields.io)](https://react.dev)
-[![Vite](https://shields.io)](https://vite.dev)
+---
+![status](https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge)
+React front-end for point of sales app built with electron
+  <p >
+  <img src="https://img.shields.io/badge/v19.2.0-React-violet" alt="React" />
+  <img src="https://img.shields.io/badge/v7.3.1-Vite-violet" alt="Vite" />
+  <img src="https://img.shields.io/badge/v6-MaterialUI-violet" alt="MUI" />
+</p>
+## Stack
+🔹 **[React](https://react.dev)** - The library for web and native user interfaces.
+🔹 **[vite](https://vite.dev/)** - Ultra-fast front-end build tool and dev server
+🔹 **[MaterialUI](https://mui.com/material-ui/)** - Component library powering the checkout interface.
 
-# React + Vite
+## Preview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![[Pasted image 20260619122924.png]]
+ ![[Pasted image 20260619122621.png]]
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ ![[Pasted image 20260619121607.png]]
+## Architecture 
+* **Decoupled Monorepo/Structure:** Separated the React UI from the Electron core to enable web-based simulation, isolating state management from hardware-level processes. 
+* **IPC Communication:** Implemented a secure preload script context bridge to safely pass transaction payloads between the React UI layer and the native Node.js environment.
 
-## React Compiler
+## Core Features Built 
+* **Secure Access:** Built a dedicated username-password authentication page.
+* **Product Discovery:** Implemented an optimised client-side search engine for inventory lookup. 
+* **User Management:** Designed structural interfaces for staff accounts and permission levels. 
+* **Catalog Organization:** Engineered modular views for handling products and dynamic categories. 
+* **State Navigation:** Configured seamless client-side page routing optimized for low-latency transitions.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Installation 
+1. Clone the repository: `git clone <repo-url>` 
+2. Install dependencies: `npm install` 
+3. Run web-simulation dev server: `npm run dev`
 
-## Expanding the ESLint configuration
+ 
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
