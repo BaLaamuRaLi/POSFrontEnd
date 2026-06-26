@@ -16,9 +16,10 @@ React front-end for point of sales app built with electron
  - **[MaterialUI](https://mui.com/material-ui/)** - Component library powering the checkout interface.<br/>
 
 ## Preview
+<img width="1365" height="670" alt="readme" src="https://github.com/user-attachments/assets/f6cecd34-3627-4409-81b0-844f01a1c08c" />
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/b3bb1226-4133-4cba-86fe-f697afa25a60" />
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/8ea7c3ae-775a-4f49-bca6-27ea85f0850d" />
-<img width="1365" height="670" alt="readme" src="https://github.com/user-attachments/assets/f6cecd34-3627-4409-81b0-844f01a1c08c" />
+
 
 
  
